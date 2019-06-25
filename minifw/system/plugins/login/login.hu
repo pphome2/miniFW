@@ -1,0 +1,11 @@
+<?php
+
+$LOGIN_LANG_NAME="név";
+$LOGIN_LANG_PASS="jelszó";
+$LOGIN_LANG_MAIL="e-mail cím";
+$LOGIN_LANG_CREATE="Felhasználó regisztrálása";
+$LOGIN_LANG_LOGIN="Belépés";
+$LOGIN_LANG_NOREGIST="Nem regiszrált még?";
+$LOGIN_LANG_REGISTERED="Már felhasználónk?";
+
+?>

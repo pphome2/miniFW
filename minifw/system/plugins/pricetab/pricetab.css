@@ -1,0 +1,103 @@
+<style>
+
+.pt-container{
+	width:90%;
+	display:block;
+	margin:auto;
+	padding-top:30px;
+	padding-bottom:30px;
+    background-color: lightgray;
+}
+
+.pt-header{
+	text-align:center;
+    font-size: 1.5em;
+}
+
+.pt-headerx{
+    background-color: gray;
+    color: white;
+    font-size: 1.5em;
+	text-align:center;
+}
+
+.pt-headerx-active{
+    background-color: green;
+}
+
+.ppt-row{
+	width:100%;
+	display:inline-block;
+	padding-left:5%;
+	padding-right:5%;
+    clear:both;
+}
+
+.pt-row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.pt-columns {
+	float:left;
+	padding-left:1%;
+    overflow:hidden;
+}
+.pt-columns:hover {
+	transform: scale(1.1);
+	z-index:2;
+    transition: 1s ease-in-out;
+}
+
+.pt-price {
+    list-style-type: none;
+    border: 1px solid darkgray;
+    margin: 0;
+    padding: 0;
+}
+
+.pt-price:hover {
+    box-shadow: 8px 8px 8px 8px rgba(0.2,0.2,0.2,0.2);
+}
+
+.pt-price {
+    background-color: #eee;
+    color: black;
+}
+
+.pt-price li {
+    border: 1px solid darkgray;
+    padding: 20px;
+    text-align: center;
+}
+
+.pt-price .pt-grey {
+    background-color: #eee;
+}
+
+.pt-red {
+    background-color: #eee;
+    color:red;
+    font-size: 1.2em;
+}
+
+.pt-button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 10px 25px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 1em;
+    cursor:pointer;
+}
+
+@media only screen and (max-width: 600px) {
+    .pt-columns {
+        width: 100%;
+    }
+}
+
+
+</style>

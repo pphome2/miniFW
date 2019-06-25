@@ -1,0 +1,73 @@
+<style>
+
+
+.foot-footer {
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    margin: 0;
+    background-color: #333;
+    display: block;
+    ppadding:20px 0px 20px 0px;
+    color: white;
+}
+
+
+.foot-footer a{
+    display: inline-block;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    cursor:pointer;
+}
+
+
+.foot-footer ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+
+.foot-copyright{
+    float:left;
+    text-decoration: none;
+    cursor:pointer;
+}
+
+
+.foot-developer{
+    float:right;
+    text-decoration: none;
+    cursor:pointer;
+}
+
+
+
+.foot-footer li {
+    cursor:pointer;
+    padding-left: 18px;
+}
+
+
+.foot-footer li a{
+    padding: 18px;
+    display: inline-block;
+    color: white;
+    text-decoration: none;
+    cursor:pointer;
+}
+
+
+.foot-footer li a:hover{
+    background-color: red;
+}
+
+.foot-footer li label:hover{
+    background-color: red;
+}
+
+
+</style>

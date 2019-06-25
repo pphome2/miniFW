@@ -1,0 +1,137 @@
+<style>
+
+.user-icon:before{
+    content: "person";
+    font-family: "Material Icons";
+    font-size:1.5em;
+    padding:5px;
+    color:gray;
+}
+
+.pass-icon:before{
+    content: "vpn_key";
+    font-family: "Material Icons";
+    font-size:1.5em;
+    padding:5px;
+    color:gray;
+}
+
+.go-icon:before{
+    content: "send";
+    font-family: "Material Icons";
+    font-size:1.5em;
+    position:relative;
+    top:3px;
+    left:3px;
+    color:white;
+}
+
+.login-page {
+  width: 360px;
+  padding: 8% 0 0;
+  margin: auto;
+}
+
+.login-main-form {
+  position: relative;
+  z-index: 1;
+  background: #FFFFFF;
+  max-width: 360px;
+  margin: 0 auto 100px;
+  padding: 45px;
+  text-align: center;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+
+.login-main-form input {
+  outline: 0;
+  background: #f2f2f2;
+  width: auto;
+  border: 0;
+  margin:5px;
+  padding: 15px;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+
+.login-main-form button {
+  display:none;
+  outline: 0;
+  background: #4CAF50;
+  width: 100%;
+  border: 0;
+  padding: 15px;
+  color: #FFFFFF;
+  font-size: 14px;
+  -webkit-transition: all 0.3 ease;
+  transition: all 0.3 ease;
+  cursor: pointer;
+}
+
+.login-main-form button:hover,
+.login-main-form button:active,
+.login-main-form button:focus {
+  background: #43A047;
+}
+
+.login-main-form .login-message {
+  margin: 15px 0 0;
+  color: #b3b3b3;
+  font-size: 12px;
+}
+
+.login-main-form .login-message a {
+  color: #4CAF50;
+  text-decoration: none;
+}
+
+.login-main-form .login-register-form {
+  display: none;
+}
+
+.login-main-form .login-login-form {
+  display: block;
+}
+
+.login-main-container {
+  position: relative;
+  z-index: 1;
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+.login-main-container:before, 
+.login-main-container:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+.login-main-container .login-info {
+  margin: 50px auto;
+  text-align: center;
+}
+
+.login-main-container .login-info h1 {
+  margin: 0 0 15px;
+  padding: 0;
+  font-size: 36px;
+  font-weight: 300;
+  color: #1a1a1a;
+}
+
+.login-main-container .login-info span {
+  color: #4d4d4d;
+  font-size: 12px;
+}
+
+.login-main-container .login-info span a {
+  color: #000000;
+  text-decoration: none;
+}
+
+.login-main-container .login-info span .login-fa {
+  color: #EF3B3A;
+}
+
+</style>
