@@ -1,7 +1,7 @@
 <?php
 
  #
- # MiniCMS
+ # MiniFW
  #
  # System main prebuild
  #

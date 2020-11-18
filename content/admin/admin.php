@@ -1,12 +1,5 @@
 <?php
 
- #
- # MiniCMS - demo
- #
- # info: main folder copyright file
- #
- #
-
 
 if (file_exists($LOCAL_JS_BEGIN)){
     include("$LOCAL_JS_BEGIN");

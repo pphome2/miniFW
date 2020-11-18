@@ -16,7 +16,7 @@ $SYS_DEVELOPER_MAIL="wswdteam@gmail.com";
 $SYS_ADMIN_NAME="admin";
 $SYS_ADMIN_PASS="5f4dcc3b5aa765d61d8327deb882cf99";
 
-$SYS_SITENAME="MiniCMS - example.com";
+$SYS_SITENAME="MiniFW - example.com";
 $SYS_SITE_HOME="http://www.example.com";
 
 
@@ -41,7 +41,7 @@ $SYS_META=array("<!DOCTYPE html>",
 				"<head>",
 				"<meta charset=\"utf-8\">",
 				"<meta http-equiv=\"Content-Type\" content=\"text/html;charset=UTF-8\">",
-				"<title>MiniCMS</title>",
+				"<title>MiniFW</title>",
 				"<meta name=\"viewport\" content=\"initial-scale=1.0\">",
 				"<link rel=\"shortcut icon\" href=\"$SYS_IMG_FAVICON\">",
 				"<link href=\"https://fonts.googleapis.com/icon?family=Material+Icons\" rel=\"stylesheet\">",

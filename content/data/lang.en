@@ -1,7 +1,7 @@
 <?php
 
  #
- # MiniCMS
+ # MiniFW
  #
  # info: main folder copyright file
  #
