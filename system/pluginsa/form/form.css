@@ -1,0 +1,114 @@
+<style>
+
+
+.form-form input[type=text] {
+    width:95%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+}
+
+.form-form input[type=password] {
+    width: 95%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+}
+.form-form textarea {
+    width: 95%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+    font-family: inherit;
+    font-size: inherit;
+}
+
+.form-form select {
+    width: 95%;
+    text-decoration:none;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+    box-sizing:content-box;
+}
+
+.form-form input[type=rardio] {
+    width: 10%;
+    float:left;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+}
+
+.form-form label {
+    padding: 12px 12px 12px 0;
+    display: inline-block;
+    font-size:1em;
+}
+.form-labelcl {
+    margin-left: 20px;
+    display: inline-block;
+    font-size:1em;
+    cclear:right;
+}
+
+.form-form input[type=submit] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    margin-top:20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    float: right;
+}
+
+.form-form input[type=submit]:hover {
+    background-color: #45a049;
+}
+
+.form-form{
+	padding:20px;
+}
+
+.form-container {
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    width:90%;
+    margin:auto;
+}
+
+.form-col-25 {
+    float: left;
+    width: 25%;
+    margin-top: 6px;
+}
+
+.form-col-75 {
+    float: left;
+    width: 75%;
+    margin-top: 6px;
+}
+
+/* Clear floats after the columns */
+.form-row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+    .form-col-25, .form-col-75, .form-form input[type=submit] {
+        width: 100%;
+        margin-top: 10px;
+    }
+}
+
+
+</style>

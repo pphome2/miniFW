@@ -1,0 +1,86 @@
+<style>
+
+
+.ig-row{
+	width:100%;
+}
+
+
+/* The grid: Four equal columns that floats next to each other */
+
+.ig-column {
+    float: left;
+    margin:auto;
+    text-align:center;
+}
+
+/* Style the images inside the grid */
+
+.ig-column img {
+    border-radius: 5px 25px;
+    box-shadow: 0 0 10px black;
+}
+
+.ig-column img {
+    opacity: 0.8; 
+    cursor: pointer;
+    text-align:center;
+    float:middle;
+    width:95%;
+    margin:auto;
+}
+
+.ig-column img:hover {
+    opacity: 1;
+}
+
+/* Clear floats after the columns */
+.ig-row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* The expanding image container */
+.ig-container {
+    position: relative;
+    display: none;
+    padding:10px;
+    border-radius:5px;
+}
+
+/* Expanding image text */
+#ig-imgtext {
+    position: absolute;
+    bottom: 25px;
+    left: 25px;
+    color: white;
+    font-size: 20px;
+    opacity:1;
+}
+
+#ig-expandedImg {
+    border-radius:5px;
+    box-shadow: 0 0 10px black;
+}
+
+/* Closable button inside the expanded image */
+.ig-closebtn {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    color: white;
+    font-size: 35px;
+    cursor: pointer;
+}
+
+
+.ig-closebtn:after {
+    content:"close";
+    font-family: "Material Icons";
+    font-size:1em;
+}
+
+
+
+</style>

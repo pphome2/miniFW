@@ -1,0 +1,11 @@
+<?php
+
+$LOGIN_LANG_NAME="name";
+$LOGIN_LANG_PASS="password";
+$LOGIN_LANG_MAIL="e-mail address";
+$LOGIN_LANG_CREATE="Registration";
+$LOGIN_LANG_LOGIN="Enter";
+$LOGIN_LANG_NOREGIST="Not yet registered?";
+$LOGIN_LANG_REGISTERED="You are already a user?";
+
+?>
