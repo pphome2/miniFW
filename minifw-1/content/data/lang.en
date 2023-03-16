@@ -1,0 +1,14 @@
+<?php
+
+ #
+ # MiniFW
+ #
+ # info: main folder copyright file
+ #
+ #
+
+# language file
+
+$L_SITEHOME="Homepage";
+
+?>

@@ -1,0 +1,92 @@
+<style>
+
+.tab-search-icon:before{
+    content: "search";
+    font-family: "Material Icons";
+    font-size:1em;
+    position:relative;
+    top:3px;
+    left:3px;
+    color:gray;
+}
+
+.tab-frame{
+    max-height: 85vh;
+    width: 100%;
+    overflow-y: auto;
+    /* border:1px solid; */
+    /* overflow-y: scroll; */
+}
+
+
+.tab-center {
+  width:90%;
+  margin:auto;
+}
+
+.tab-myinput{
+  width:100%;
+  border: 1px solid #ddd;
+  margin-bottom:20px;
+}
+
+.tab-filtmyinput{
+  width:100%;
+  border: 0px solid #ddd;
+  margin-bottom:20px;
+}
+
+.tab-tabInput{
+  width:85%;
+  font-size: 1em;
+  padding: 12px 0px 12px 10px;
+  border:1px;
+  outline:none;
+}
+
+.tab-filtInput{
+  width: 85%;
+  font-size: 1em;
+  padding: 12px 0px 12px 10px;
+  border: 0px solid #ddd;
+  outline:none;
+}
+
+.tab-tabTable {
+  border-collapse: collapse;
+  width: 100%;
+  margin:auto;
+  border: 1px solid #ddd;
+  font-size: 1em;
+}
+
+.tab-filtTable {
+  border-collapse: collapse;
+  width: 100%;
+  margin:auto;
+  font-size: 1em;
+}
+
+.tab-filtTable tr{
+  width:100%;
+  border: 0px solid #ddd;
+}
+.tab-filtTable td{
+  border: 1px solid #ddd;
+}
+
+.tab-tabTable th, .tab-tabTable td {
+  text-align: left;
+  padding: 12px;
+  cursor:pointer;
+}
+
+.tab-tabTable tr {
+  border-bottom: 1px solid #ddd;
+}
+
+.tab-tabTable tr.header, .tab-tabTable tr:hover {
+  background-color: #f1f1f1;
+}
+
+</style>
