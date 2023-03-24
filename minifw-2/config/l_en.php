@@ -7,10 +7,8 @@
  #
  #
 
-# app zone
-$L_SITENAME="Demo";
-$L_ROOTHOME="Google search";
-$L_SITEHOME="Demo page";
+# user role
+$L_USER_ROLE_NAME=array("Administrator","User","Guest");
 
 # system zone
 $L_THEME="Next theme";

@@ -1,6 +1,7 @@
 <?php
+
  #
- # MiniApps - demo main config
+ # MiniApps - framework
  #
  # info: main folder copyright file
  #
@@ -13,14 +14,23 @@ $MA_APP_TEMPLATE="miniapp";
 # language
 $MA_LANGFILE="l_hu.php";
 
-# local app main and css file
-$MA_APPFILE=array("$MA_LANGFILE",
-                "dcfg.php",
-                "d.php"
-            );
-$MA_APPCSSFILE=array("d.css");
-$MA_APPJSFILE=array("d.js");
+# app files
+$MA_APPFILE=array("$MA_LANGFILE");
+
+# local app css files
+$MA_APPCSSFILE=array();
+
+# local app js files
+$MA_APPJSFILE=array();
+
+# local app privacy file
 $MA_APPPRIVACYFILE="privacy.txt";
+
+# pages
+$MA_ENABLE_PRIVACY=true;
+$MA_ENABLE_PRINT=true;
+$MA_ENABLE_SEARCH=true;
+$MA_ENABLE_THEME=true;
 
 # login
 $MA_ENABLE_LOGIN=true;

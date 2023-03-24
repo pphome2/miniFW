@@ -1,11 +1,12 @@
 <?php
 
  #
- # MiniApp
+ # MiniApp - Demo language
  #
  # info: main folder copyright file
  #
  #
+ 
 
 # rendszer
 $L_SITENAME="Iktatás";

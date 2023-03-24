@@ -13,6 +13,6 @@ $L_ROOTHOME="Intranet";
 $L_SITEHOME="Demo app";
 
 # applikáció
-$I_MENU=array("Demo page","","","");
+$D_MENU=array("Demo page","","","");
 
 ?>

@@ -10,7 +10,7 @@ function page(){
 
 function main(){
     global $S_TEMPLATE_DIR,$S_TEMPLATE_CSS,$S_TEMPLATE_HEADER,$S_TEMPLATE_FOOTER,
-            $S_FAVICON,$S_SITENAME,$S_JS_HEAD,$S_JS_FOOT;
+            $S_FAVICON,$S_SITENAME,$S_JS_HEAD,$S_JS_FOOT,$S_DOCTYPE;
 
     if (file_exists("$S_TEMPLATE_DIR/$S_TEMPLATE_HEADER")){
         include("$S_TEMPLATE_DIR/$S_TEMPLATE_HEADER");

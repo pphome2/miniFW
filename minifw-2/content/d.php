@@ -1,29 +1,28 @@
 <?php
 
  #
- # MiniApp
+ # MiniApp - demo
  #
  # info: main folder copyright file
  #
  #
 
 
-function searchpage(){
-    global $D_TITLE,$MA_BUTTON_TEXT,$MA_SEARCH_TEXT;
+function mainsearch(){
+    global $D_TITLE,$L_BUTTON_NEXT,$L_SEARCH;
 
-    searchview($D_TITLE,$MA_BUTTON_TEXT,$MA_SEARCH_TEXT);
+    searchview($D_TITLE,$L_BUTTON_NEXT,$L_SEARCH);
 }
 
 
-function privacypage(){
+function mainprivacy(){
     global $D_TITLE,$MA_APPPRIVACYFILE;
 
     privacyview($D_TITLE,$MA_APPPRIVACYFILE);
 }
 
 
-function printpage(){
-
+function mainprint(){
     echo("<a href='start.php' style='text-decoration:none;color:black;'>");
     #d_print();
     echo("</a>");
@@ -46,13 +45,13 @@ function d_table(){
 
 
 function d_data(){
-    global $MA_MENU_FIELD,$I_MENUCODE;;
+    global $MA_MENU_FIELD,$D_MENUCODE;
 
     echo("<div class=spaceline></div>");
     echo("<div class=content>");
     if (isset($_GET[$MA_MENU_FIELD])){
         switch ($_GET[$MA_MENU_FIELD]){
-            case $I_MENUCODE[0]:
+            case $D_MENUCODE[0]:
                 break;
             default:
                 d_table();
@@ -77,14 +76,6 @@ function main(){
     #loadplugin("cards");
     d_header();
     d_data();
-    d_footer();
-}
-
-function view(){
-    #loadplugin("table");
-    #loadplugin("cards");
-    d_header();
-    d_view();
     d_footer();
 }
 

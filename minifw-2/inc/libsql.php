@@ -10,42 +10,43 @@
 
 # sql parancs futtatása az sql szerveren
 
-function sql_run($sqlcomm="",$inst=false){
-  global $MA_SQL_SERVER,$MA_SQL_DB,$MA_SQL_USER,$MA_SQL_PASS,$MA_SQL_ERROR,$MA_SQL_RESULT;
+function sql_run($sqlcomm="",$genres=false){
+  global $MA_SQL_SERVER,$MA_SQL_DB,$MA_SQL_USER,$MA_SQL_PASS,$MA_SQL_ERROR,
+		  $MA_SQL_RESULT;
 
+  $ret=false;
   if (function_exists('mysqli_connect')){
     if ($sqlcomm<>""){
+      $MA_SQL_ERROR="";
       $MA_SQL_RESULT=array();
       $sqllink=mysqli_connect("$MA_SQL_SERVER","$MA_SQL_USER","$MA_SQL_PASS","$MA_SQL_DB");
       $MA_SQL_ERROR=mysqli_error($sqllink);
       if ($MA_SQL_ERROR===""){
         $result=mysqli_query($sqllink,$sqlcomm);
         $MA_SQL_ERROR=mysqli_error($sqllink);
-        if (!$inst){
-          if (($MA_SQL_ERROR==="")and($result)){
-            if (mysqli_num_rows($result)>0) {
+        if ($MA_SQL_ERROR===""){
+          if (!is_bool($result)){
+            if ($MA_SQL_ERROR===""){
               $i=0;
               while($row=mysqli_fetch_row($result)){
                 $MA_SQL_RESULT[$i]=$row;
                 $i++;
               }
+              $ret=true;
             }
+          }else{
+              $MA_SQL_ERROR=mysqli_error($sqllink);
+              $ret=$result;
           }
         }
         mysqli_close($sqllink);
       }
-      if ($MA_SQL_ERROR===""){
-        return(true);
-      }else{
-        return(false);
-      }
-    }else{
-      return(false);
     }
-  }else{
-  echo("---");
-    return(false);
   }
+  if ($MA_SQL_ERROR<>""){
+    echo("$MA_SQL_ERROR\n");
+  }
+  return($ret);
 }
 
 
@@ -119,8 +120,6 @@ function sql_install(){
       if (($v<>"")and(substr($v,0,1)<>"#")){
         $sqlc=$sqlc." ".$v;
         if (substr($v,strlen($v)-1,1)==";"){
-          #sql_run($sqlc,true);
-          #$sqlc="";
           $sqlc=$sqlc."\n";
         }
       }

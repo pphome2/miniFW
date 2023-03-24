@@ -11,6 +11,7 @@
 if (file_exists("config/config.php")){
     include("config/config.php");
 }
+echo($MA_SITECSS[0]);
 # nyelvi féjlok
 if (file_exists("$MA_MINIFW_DIR/$MA_CONFIG_DIR/$MA_LANGFILE")){
     include("$MA_MINIFW_DIR/$MA_CONFIG_DIR/$MA_LANGFILE");
@@ -18,11 +19,14 @@ if (file_exists("$MA_MINIFW_DIR/$MA_CONFIG_DIR/$MA_LANGFILE")){
 if (file_exists("$MA_CONTENT_DIR/$MA_LANGFILE")){
     include("$MA_CONTENT_DIR/$MA_LANGFILE");
 }
+# template beállítások
+if (file_exists("$MA_TEMPLATE_DIR/$MA_APP_TEMPLATE/$MA_TEMPLATE_CONFIG")){
+    include("$MA_TEMPLATE_DIR/$MA_APP_TEMPLATE/$MA_TEMPLATE_CONFIG");
+}
 # admin beállítások
-if (file_exists("$MA_CONTENT_DIR/$MA_ADMIN_CONGIG")){
+if (file_exists("$MA_CONTENT_DIR/$MA_ADMIN_CONFIG")){
     include("$MA_CONTENT_DIR/$MA_ADMIN_CONFIG");
 }
-
 # admin fájlok betöltése
 for($i=0;$i<count($A_APPFILES);$i++){
     if (file_exists("$MA_CONTENT_DIR/$A_APPFILES[$i]")){
@@ -32,7 +36,7 @@ for($i=0;$i<count($A_APPFILES);$i++){
 
 $MA_ENABLE_SYSTEM_CSS=true;
 
-#setcookienames();
+setcookienames();
 plugins();
 
 # css setting
@@ -41,12 +45,17 @@ setcss();
 # login
 if ($MA_ENABLE_LOGIN){
     login();
-}else{
-    $MA_LOGGEDIN=true;
 }
 
 # build page: header
-page_header();
+if (file_exists("$MA_TEMPLATE_DIR/$MA_APP_TEMPLATE/$MA_HEADER")){
+	include("$MA_TEMPLATE_DIR/$MA_APP_TEMPLATE/$MA_HEADER");
+}
+if ($MA_ENABLE_SYSTEM_JS){
+  	if (file_exists("$MA_INCLUDE_DIR/$MA_JS_BEGIN")){
+    	include("$MA_INCLUDE_DIR/$MA_JS_BEGIN");
+  	}
+}
 
 # CSS
 echo("<style>");
@@ -92,6 +101,14 @@ if ($MA_LOGGEDIN){
 # end local app file
 
 # page end
-page_footer();
+if ($MA_ENABLE_SYSTEM_JS){
+  	if (file_exists("$MA_INCLUDE_DIR/$MA_JS_END")){
+    	include("$MA_INCLUDE_DIR/$MA_JS_END");
+  	}
+}
+if (file_exists("$MA_TEMPLATE_DIR/$MA_APP_TEMPLATE/$MA_FOOTER")){
+	include("$MA_TEMPLATE_DIR/$MA_APP_TEMPLATE/$MA_FOOTER");
+}
+
 
 ?>

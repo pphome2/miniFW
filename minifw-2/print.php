@@ -13,47 +13,69 @@ if (!isset($MA_CONFIG_DIR)){
     if (file_exists("config/config.php")){
 	    include("config/config.php");
     }
-    if (file_exists("$MA_CONFIG_DIR/$MA_LANGFILE")){
-	    include("$MA_CONFIG_DIR/$MA_LANGFILE");
-	}
+}
+# default app and template config
+if (file_exists("$MA_CONFIG_DIR/config-app.php")){
+    include("$MA_CONFIG_DIR/config-app.php");
+}
+if (file_exists("$MA_CONFIG_DIR/config-template.php")){
+    include("$MA_CONFIG_DIR/config-template.php");
 }
 
+# system language
+if (file_exists("$MA_CONFIG_DIR/$MA_LANGFILE")){
+    include("$MA_CONFIG_DIR/$MA_LANGFILE");
+}
 
+# app config
+if (file_exists("$MA_CONTENT_DIR/$MA_APP_CONFIG_FILE")){
+    include("$MA_CONTENT_DIR/$MA_APP_CONFIG_FILE");
+}
+
+# template config
+if (file_exists("$MA_TEMPLATE_DIR/$MA_APP_TEMPLATE/$MA_TEMPLATE_CONFIG_FILE")){
+    include("$MA_TEMPLATE_DIR/$MA_APP_TEMPLATE/$MA_TEMPLATE_CONFIG_FILE");
+}
+
+# system lib
 for ($i=0;$i<count($MA_LIB);$i++){
 	if (file_exists("$MA_INCLUDE_DIR/$MA_LIB[$i]")){
 		include("$MA_INCLUDE_DIR/$MA_LIB[$i]");
 	}
 }
 
-$MA_NOPAGE=true;
-
-# build page
-#page_header_view();
-
-echo($MA_DOCTYPE);
-
-if (file_exists("$MA_INCLUDE_DIR/$MA_CSSPRINT")){
-    echo("<style>");
-    include("$MA_INCLUDE_DIR/$MA_CSSPRINT");
-    echo("</style>");
-}
-echo("<body onclick=\"window.close();\">");
-
-# load local app file
-for ($i=0;$i<count($MA_APPFILE);$i++){
-	if (file_exists("$MA_CONTENT_DIR/$MA_APPFILE[$i]")){
-		include("$MA_CONTENT_DIR/$MA_APPFILE[$i]");
+# local app files
+for ($k=0;$k<count($MA_APPFILE);$k++){
+	if (file_exists("$MA_CONTENT_DIR/$MA_APPFILE[$k]")){
+		include("$MA_CONTENT_DIR/$MA_APPFILE[$k]");
 	}
 }
 
-if (function_exists("printpage")){
-	printpage();
+setcookienames();
+plugins();
+
+# css setting
+setcss();
+
+# build page: header
+
+# load local app jsfile
+for ($i=0;$i<count($MA_APPJSFILE);$i++){
+	if (file_exists("$MA_CONTENT_DIR/$MA_APPJSFILE[$i]")){
+		include("$MA_CONTENT_DIR/$MA_APPJSFILE[$i]");
+	}
 }
 
-# end
 
-echo("<script>window.print();</script>");
+# user/admin menu start
+if (function_exists("mainprint")){
+    mainprint();
+}
 
-#page_footer_view();
+
+# end local app file
+
+# page end
+
 
 ?>

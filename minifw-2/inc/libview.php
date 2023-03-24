@@ -164,21 +164,15 @@ function mess_warning($m){
 # login box
 function login_form(){
 	global $MA_COOKIE_STYLE,$MA_STYLEINDEX,$L_PASSWORD,$MA_COOKIE_PASS,
-	        $L_BUTTON_NEXT,$MA_ENABLE_USERNAME,
-			$MA_USERS,$L_USERNAME,$L_PASS,$MA_COOKIE_USER,$L_USER,$L_PASSWORD;
+	        $L_BUTTON_NEXT,$MA_USERS,$L_USERNAME,$L_PASS,$MA_COOKIE_USER,$L_USER,$L_PASSWORD;
 
 	echo("<div class=spaceline100></div>");
 	echo("<div class=row100>");
 	echo("<div class=col4><br /></div>");
 	echo("<div class=col2>");
 	echo("<form  method='post' enctype='multipart/form-data'>");
-	if ($MA_ENABLE_USERNAME){
-		echo("	<input type='text' name='$MA_COOKIE_USER' id='$MA_COOKIE_USER' placeholder='$L_USER' autofocus>");
-		echo("	<input type='password' name='$MA_COOKIE_PASS' id='$MA_COOKIE_PASS' placeholder='$L_PASSWORD'>");	
-	}else{
-		echo("	$L_PASS:");
-		echo("	<input type='password' name='$MA_COOKIE_PASS' id='$MA_COOKIE_PASS' autofocus>");
-	}
+	echo("	<input type='text' name='$MA_COOKIE_USER' id='$MA_COOKIE_USER' placeholder='$L_USER' autofocus>");
+	echo("	<input type='password' name='$MA_COOKIE_PASS' id='$MA_COOKIE_PASS' placeholder='$L_PASSWORD'>");	
 	echo("	<div class=spaceline></div>");
 	echo("	<input type='submit' value='$L_BUTTON_NEXT' name='submit'>");
 	echo("</form>");

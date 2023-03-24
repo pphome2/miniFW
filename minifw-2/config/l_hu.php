@@ -7,16 +7,14 @@
  #
  #
 
-
-# app zone / applikációhoz szükséges
-$L_SITENAME="Demo";
-$L_ROOTHOME="Google kereső";
-$L_SITEHOME="Demo oldal";
+# user role
+$L_USER_ROLE_NAME=array("Adminisztrátor","Felhasználó","Vendég");
 
 # system zone / rendszerhez szükséges
 $L_PRIVACY_MENU="Adatvédelem";
 $L_THEME="Témaváltás";
 $L_BUTTON_NEXT="Tovább";
+$L_SEARCH="Keresés...";
 $L_PASS="Hozzáférési kód";
 $L_USER="Felhasználó";
 $L_PASSWORD="Jelszó";
