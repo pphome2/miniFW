@@ -10,7 +10,7 @@
 
 # sql parancs futtatása az sql szerveren
 
-function sql_run($sqlcomm="",$genres=false){
+function sql_run($sqlcomm=""){
   global $MA_SQL_SERVER,$MA_SQL_DB,$MA_SQL_USER,$MA_SQL_PASS,$MA_SQL_ERROR,
 		  $MA_SQL_RESULT;
 

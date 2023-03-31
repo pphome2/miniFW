@@ -60,6 +60,8 @@ setcss();
 # build page: header
 if (file_exists("$MA_TEMPLATE_DIR/$MA_APP_TEMPLATE/$MA_HEADER")){
 	include("$MA_TEMPLATE_DIR/$MA_APP_TEMPLATE/$MA_HEADER");
+}else{
+  page_header_view();
 }
 if ($MA_ENABLE_SYSTEM_JS){
   	if (file_exists("$MA_INCLUDE_DIR/$MA_JS_BEGIN")){
@@ -91,6 +93,8 @@ if ($MA_ENABLE_SYSTEM_JS){
 }
 if (file_exists("$MA_TEMPLATE_DIR/$MA_APP_TEMPLATE/$MA_FOOTER")){
 	include("$MA_TEMPLATE_DIR/$MA_APP_TEMPLATE/$MA_FOOTER");
+}else{
+  page_footer_view();
 }
 
 

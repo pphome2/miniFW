@@ -7,6 +7,7 @@
  #
  #
 
+
 if ($L_SITENAME<>""){
   $MA_TITLE=$MA_TITLE." - ".$L_SITENAME;
 }
@@ -32,28 +33,16 @@ if ($MA_ENABLE_SYSTEM_CSS){
     }
   }
 }
-if (file_exists("$MA_CONTENT_DIR/$MA_APPCSSFILE[$MA_STYLEINDEX]")){
-  include("$MA_CONTENT_DIR/$MA_APPCSSFILE[$MA_STYLEINDEX]");
+if ((isset($MA_TEMPLATE_CSS[$MA_STYLEINDEX])) and (file_exists("$MA_TEMPLATE_DIR/$MA_APP_TEMPLATE/$MA_TEMPLATE_CSS[$MA_STYLEINDEX]"))){
+  include("$MA_TEMPLATE_DIR/$MA_APP_TEMPLATE/$MA_TEMPLATE_CSS[$MA_STYLEINDEX]");
 }else{
-  if (file_exists("$MA_CONTENT_DIR/$MA_APPCSSFILE[0]")){
-    include("$MA_CONTENT_DIR/$MA_APPCSSFILE[0]");
-  }
-}
-for($i=0;$i<count($MA_TEMPLATE_CSS);$i++){
-  if (file_exists("$MA_TEMPLATE_DIR/$MA_APP_TEMPLATE/$MA_TEMPLATE_CSS[$i]")){
-    include("$MA_TEMPLATE_DIR/$MA_APP_TEMPLATE/$MA_TEMPLATE_CSS[$i]");
+  if ((isset($MA_TEMPLATE_CSS[0])) and (file_exists("$MA_TEMPLATE_DIR/$MA_APP_TEMPLATE/$MA_TEMPLATE_CSS[0]"))){
+    include("$MA_TEMPLATE_DIR/$MA_APP_TEMPLATE/$MA_TEMPLATE_CSS[0]");
   }
 }
 echo("</style>");
-
 echo("</head>");
-echo("<body>");
 
-if ($MA_ENABLE_HEADER){
-  echo("<div class=\"all-page\">");
-  echo("<header>");
-  echo("</header>");
-  echo("<div class=\"content\">");
-}
+echo("<body>");
 
 ?>

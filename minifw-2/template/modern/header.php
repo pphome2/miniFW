@@ -8,7 +8,7 @@
  #
 
 
-if ($L_SITENAME<>""){
+if ((isset($L_SITENAME))and($L_SITENAME<>"")){
   $MA_TITLE=$MA_TITLE." - ".$L_SITENAME;
 }
 
@@ -36,7 +36,6 @@ if ($MA_ENABLE_SYSTEM_CSS){
 
 if ((isset($MA_APPCSSFILE[$MA_STYLEINDEX])) and (file_exists("$MA_CONTENT_DIR/$MA_APPCSSFILE[$MA_STYLEINDEX]"))){
   include("$MA_CONTENT_DIR/$MA_APPCSSFILE[$MA_STYLEINDEX]");
-  echo("$MA_CONTENT_DIR/$MA_APPCSSFILE[$MA_STYLEINDEX]");
 }else{
   if ((isset($MA_APPCSSFILE[0]) and (file_exists("$MA_CONTENT_DIR/$MA_APPCSSFILE[0]")))){
     include("$MA_CONTENT_DIR/$MA_APPCSSFILE[0]");
@@ -57,8 +56,7 @@ echo("<div class=all-page>");
 
 if ($MA_ENABLE_HEADER){
   echo("<header>");
-  echo("<div class=\"menu\">");
-  echo("<ul class=\"sidenav\">");
+  echo("<div class=\"headerline\">");
   if ($MA_BACKPAGE){
     echo("<li><a onclick=\"window.history.back();\" href=\"\">&#8592;</a></li>");
   }
@@ -80,6 +78,7 @@ if ($MA_ENABLE_HEADER){
   }
 
   if ($MA_LOGGEDIN){
+    echo("");
     if ($MA_ADMIN_USER){
       if (count($MA_ADMINMENU)>0){
         $db=count($MA_ADMINMENU);
@@ -115,7 +114,6 @@ if ($MA_ENABLE_HEADER){
       }
     }
   }
-  echo("</ul>");
   echo("</div>");
   echo("</header>");
 }

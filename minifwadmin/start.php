@@ -11,7 +11,6 @@
 if (file_exists("config/config.php")){
     include("config/config.php");
 }
-echo($MA_SITECSS[0]);
 # nyelvi féjlok
 if (file_exists("$MA_MINIFW_DIR/$MA_CONFIG_DIR/$MA_LANGFILE")){
     include("$MA_MINIFW_DIR/$MA_CONFIG_DIR/$MA_LANGFILE");

@@ -14,11 +14,8 @@ if ($nextstyle>(count($MA_CSS)-1)){
   $nextstyle=0;
 }
 
-if ((!$MA_LOGGEDIN)and(!$MA_PRIVACY_PAGE)and(!$MA_SEARCH_PAGE)and($MA_ENABLE_PRIVACY)){
-  echo("<p class=cookietext>$L_COOKIE_TEXT <a class=\"privacybutton\" href=\"$MA_PRIVACYFILE\">$L_PRIVACY_MENU</a></p>");
-}
-
 if ($MA_ENABLE_FOOTER){
+  echo("<footer>");
   echo("<ul class=\"sidenav\">");
   if (substr($MA_COPYRIGHT,0,2)==="<a"){
       echo("<li class=\"lileft\">$MA_COPYRIGHT</li>");
@@ -27,11 +24,6 @@ if ($MA_ENABLE_FOOTER){
   }
   if ($MA_LOGGEDIN){
     echo("<li class=\"liright\">");
-    #echo("<a href=#
-    #   onclick=\"document.cookie='$MA_COOKIE_LOGIN=$L_LOGOUT; expires=Thu, 01 Jan 1970 00:00:00 UTC;';
-    #   window.history.replaceState(null, null, window.location.pathname);window.location = window.location.href;\">
-    #   $L_LOGOUT</a>");
-    #echo("</li>");
     for($i=count($MA_FOOTERMENU)-1;$i>=0;$i--){
       echo("<li class=\"liright\">");
       echo("<a href=\"?$MA_MENU_FIELD=".$MA_FOOTERMENU[$i][1]."\">".$MA_FOOTERMENU[$i][0]."</a>");

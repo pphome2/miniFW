@@ -27,8 +27,8 @@ $MA_HEADER="header.php";
 $MA_FOOTER="footer.php";
 $MA_HEADER_VIEW="header_view.php";
 $MA_FOOTER_VIEW="footer_view.php";
-$MA_HEADER_PRINT="header_print.php";
-$MA_FOOTER_PRINT="footer_print.php";
+$MA_HEADER_PRINT="";
+$MA_FOOTER_PRINT="";
 $MA_FAVICON="favicon.png";
 
 # header, footer
@@ -40,13 +40,14 @@ $MA_ENABLE_FOOTER_VIEW=false;
 $MA_ENABLE_PRIVACY=false;
 $MA_ENABLE_PRINT=true;
 $MA_ENABLE_SEARCH=true;
-$MA_ENABLE_THEME=false;
+$MA_ENABLE_THEME=true;
+$MA_LOGOUT_IN_HEADER=true;
 
 # template variables
 $MA_STYLEINDEX=0;
 
 # template files
-$MA_TEMPLATE_CSS=array();
-$MA_TEMPLATE_FILES=array($MA_LANGFILE,"");
+$MA_TEMPLATE_CSS=array("modern-light.css","modern-dark.css");;
+$MA_TEMPLATE_FILES=array($MA_LANGFILE);
 
 ?>

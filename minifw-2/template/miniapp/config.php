@@ -27,6 +27,8 @@ $MA_HEADER="header.php";
 $MA_FOOTER="footer.php";
 $MA_HEADER_VIEW="header_view.php";
 $MA_FOOTER_VIEW="footer_view.php";
+$MA_HEADER_PRINT="";
+$MA_FOOTER_PRINT="";
 $MA_FAVICON="favicon.png";
 
 # header, footer
@@ -45,6 +47,7 @@ $MA_LOGOUT_IN_HEADER=true;
 $MA_STYLEINDEX=0;
 
 # template files
+$MA_TEMPLATE_CSS=array();
 $MA_TEMPLATE_FILES=array($MA_LANGFILE,"");
 
 ?>

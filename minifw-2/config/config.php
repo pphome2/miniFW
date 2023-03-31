@@ -37,10 +37,10 @@ $MA_LANGFILE="l_hu.php";
 # system css
 $MA_ENABLE_SYSTEM_CSS=true;
 $MA_CSS=array(
-			"sitew.css",
-			"siteb.css"
+			"site-light.css",
+			"site-dark.css"
 			);
-$MA_CSSPRINT="sitepr.css";
+$MA_CSSPRINT="site-print.css";
 
 # system js
 $MA_JS_BEGIN="js_begin.js";
@@ -75,6 +75,15 @@ $MA_SQL_FILE="inst.sql";
 # 0 => admin user
 $MA_USER_ROLE=array("0","1","2");
 $MA_ROLE="9999";
+
+# include files
+$MA_DEF_HEADER="header.php";
+$MA_DEF_FOOTER="footer.php";
+$MA_DEF_HEADER_VIEW="header_view.php";
+$MA_DEF_FOOTER_VIEW="footer_view.php";
+$MA_DEF_HEADER_PRINT="header_print.php";
+$MA_DEF_FOOTER_PRINT="footer_print.php";
+$MA_DEF_FAVICON="favicon.png";
 
 # other variables
 $MA_HASH_FIRST="$2y$";

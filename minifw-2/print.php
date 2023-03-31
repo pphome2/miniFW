@@ -58,6 +58,11 @@ plugins();
 setcss();
 
 # build page: header
+if (file_exists("$MA_INCLUDE_DIR/$MA_HEADER_PRINT")){
+  include("$MA_INCLUDE_DIR/$MA_HEADER_PRINT");
+}else{
+  page_header_print();
+}
 
 # load local app jsfile
 for ($i=0;$i<count($MA_APPJSFILE);$i++){
@@ -65,7 +70,6 @@ for ($i=0;$i<count($MA_APPJSFILE);$i++){
 		include("$MA_CONTENT_DIR/$MA_APPJSFILE[$i]");
 	}
 }
-
 
 # user/admin menu start
 if (function_exists("mainprint")){
@@ -76,6 +80,11 @@ if (function_exists("mainprint")){
 # end local app file
 
 # page end
+if (file_exists("$MA_INCLUDE_DIR/$MA_FOOTER_PRINT")){
+  include("$MA_INCLUDE_DIR/$MA_FOOTER_PRINT");
+}else{
+  page_foter_print();
+}
 
 
 ?>

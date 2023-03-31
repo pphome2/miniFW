@@ -22,9 +22,12 @@ function mainprivacy(){
 }
 
 
+function d_print(){
+}
+
 function mainprint(){
     echo("<a href='start.php' style='text-decoration:none;color:black;'>");
-    #d_print();
+    d_print();
     echo("</a>");
 }
 

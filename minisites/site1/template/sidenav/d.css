@@ -1,0 +1,95 @@
+.demo{
+  color:red;
+}
+
+.mainnav {
+  height:30px;
+  width:100%;
+  position:fixed;
+  z-index:1;
+  top:0;
+  left:0;
+  background-color:#111;
+  overflow-x:hidden;
+  font-size:1em;
+  padding-top:10px;
+}
+
+.sidenav {
+  height:100%;
+  width:150px;
+  position:fixed;
+  z-index:1;
+  top:25px;
+  left:0;
+  background-color:#111;
+  overflow-x:hidden;
+  padding-top:20px;
+}
+
+.sidenav a, .subbutton{
+  padding:8px;
+  text-decoration:none;
+  font-size:1em;
+  color:#818181;
+  display:block;
+  border:none;
+  width:90%;
+  background:none;
+  float:left;
+  text-align:left;
+  cursor: pointer;
+  outline:none;
+}
+
+.fontbutton{
+  font-size:1.1em;
+}
+
+.sidenav a:hover, .subbutton:hover{
+  color: #f1f1f1;
+}
+
+.subicon{
+  float:right;
+}
+
+.subcont{
+  padding-left:10px;
+  display:none;
+}
+
+.subcont2{
+  padding-left:10px;
+  display:block;
+}
+
+.main {
+  margin-left:150px;
+  margin-top:40px;
+  padding:5px;
+}
+
+.mainnav a {
+  padding:10px;
+  text-decoration:none;
+  font-size:1em;
+  color:#818181;
+  ddisplay:block;
+}
+
+.mainnav a:hover {
+  color:#f1f1f1;
+}
+
+a.actmenu{
+  color:lightgreen;
+}
+
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top:15px;}
+  .sidenav a {font-size:2em;}
+}
+
+
