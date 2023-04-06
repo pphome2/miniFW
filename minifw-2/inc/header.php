@@ -53,6 +53,10 @@ if ($MA_ENABLE_HEADER){
   if ($MA_BACKPAGE){
     echo("<li><a onclick=\"window.history.back();\" href=\"\">&#8592;</a></li>");
   }
+  $mp=1000;
+  if (isset($_GET[$MA_MENU_FIELD])){
+    $mp=array_search($_GET[$MA_MENU_FIELD],$MA_MENUCODE);
+  }
   if ($MA_ROOT_HOME<>""){
     if ($L_ROOTHOME<>""){
       echo("<li><a class=\"active\" href=\"$MA_ROOT_HOME\">$L_ROOTHOME</a></li>");
@@ -64,10 +68,18 @@ if ($MA_ENABLE_HEADER){
   if ($MA_SITE_HOME<>""){
     $MA_ADMINFILE=$MA_SITE_HOME;
   }
-  if ($L_SITEHOME<>""){
-    echo("<li><a href=\"$MA_ADMINFILE\">$L_SITEHOME</a></li>");
+  if ($mp==1000){
+    if ($L_SITEHOME<>""){
+      echo("<li><a class=actmenu href=\"$MA_ADMINFILE\">$L_SITEHOME</a></li>");
+    }else{
+      echo("<li><a class=actmenu href=\"$MA_ADMINFILE\">$MA_SITENAME</a></li>");
+    }
   }else{
-    echo("<li><a href=\"$MA_ADMINFILE\">$MA_SITENAME</a></li>");
+    if ($L_SITEHOME<>""){
+      echo("<li><a href=\"$MA_ADMINFILE\">$L_SITEHOME</a></li>");
+    }else{
+      echo("<li><a href=\"$MA_ADMINFILE\">$MA_SITENAME</a></li>");
+    }
   }
 
   if ($MA_LOGGEDIN){
@@ -75,7 +87,11 @@ if ($MA_ENABLE_HEADER){
       if (count($MA_ADMINMENU)>0){
         $db=count($MA_ADMINMENU);
         for ($i=0;$i<$db;$i++){
-          echo("<li><a href=\"?$MA_MENU_FIELD=".$MA_ADMINMENU[$i][1]."\">".$MA_ADMINMENU[$i][0]."</a></li>");
+          if ($mp==$i){
+            echo("<li><a class=actmenu href=\"?$MA_MENU_FIELD=".$MA_ADMINMENU[$i][1]."\">".$MA_ADMINMENU[$i][0]."</a></li>");
+          }else{
+            echo("<li><a href=\"?$MA_MENU_FIELD=".$MA_ADMINMENU[$i][1]."\">".$MA_ADMINMENU[$i][0]."</a></li>");
+          }
         }
       }
     }else{

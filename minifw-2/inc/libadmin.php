@@ -102,7 +102,7 @@ function setcookienames2(){
 
 # login from cookie or param
 function login(){
-	global $MA_LOGGEDIN,$MA_COOKIE_LOGIN,$MA_ROLE,$MA_SQL_RESULT,
+	global $MA_LOGGEDIN,$MA_COOKIE_LOGIN,$MA_ROLE,$MA_SQL_RESULT,$MA_USERNAME;
 			$MA_ADMIN_USER,$MA_COOKIE_PASS,$MA_COOKIE_USER;
 
 	$MA_LOGGEDIN=false;
@@ -131,10 +131,12 @@ function login(){
     	    if ($pass<>""){
         	    if (($user===$r[1])and(password_verify($pass,$r[2]))){
 	  	        	$MA_LOGGEDIN=true;
+	  	        	$MA_USERNAME=$r[1];
 	            	$MA_ROLE=$r[3];
     	        }
 	        }else{
     	        if ($user===$r[1]){
+	  	        	$MA_USERNAME=$r[1];
 	  	        	$MA_LOGGEDIN=true;
     	        	$MA_ROLE=$r[3];
 	            }

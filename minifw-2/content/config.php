@@ -28,6 +28,7 @@ $MA_ENABLE_LOGIN_VIEW=true;
 
 # menu
 $MA_MENU_FIELD="m";
+$MA_MENUCODE=array();
 # user menu
 $MA_MENU=array();
 # adminmenu

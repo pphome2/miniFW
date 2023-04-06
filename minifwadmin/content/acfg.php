@@ -14,16 +14,16 @@ $MA_COPYRIGHT="© ".date("Y").". <a href=https://github.com/pphome2>Github</a>";
 #$MA_COPYRIGHT="<a href=https://github.com/pphome2>Github</a>";
 
 # menü
-$A_MENUCODE=array("0","1","2");
+$MA_MENUCODE=array("0","1","2");
 $MA_ADMINMENU=array(
-            array("$A_MENUTITLE[0]","$A_MENUCODE[0]"),
-            array("$A_MENUTITLE[1]","$A_MENUCODE[1]"),
-            array("$A_MENUTITLE[2]","$A_MENUCODE[2]")
+            array("$A_MENUTITLE[0]","$MA_MENUCODE[0]"),
+            array("$A_MENUTITLE[1]","$MA_MENUCODE[1]"),
+            array("$A_MENUTITLE[2]","$MA_MENUCODE[2]")
             );
 $MA_FOOTERMENU=array(
-            array("$A_MENUTITLE[0]","$A_MENUCODE[0]"),
-            array("$A_MENUTITLE[1]","$A_MENUCODE[1]"),
-            array("$A_MENUTITLE[2]","$A_MENUCODE[2]")
+            array("$A_MENUTITLE[0]","$MA_MENUCODE[0]"),
+            array("$A_MENUTITLE[1]","$MA_MENUCODE[1]"),
+            array("$A_MENUTITLE[2]","$MA_MENUCODE[2]")
             );
 
 # mentés

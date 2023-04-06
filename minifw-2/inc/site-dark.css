@@ -98,7 +98,7 @@ li a, .dropbtn{
 	text-decoration: none;
 }
 
-li a:hover, .dropdown:hover .dropbtn {
+li a:hover, .dropdown:hover, .dropbtn, .actmenu {
 	background-color: red;
 }
 

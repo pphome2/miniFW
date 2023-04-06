@@ -23,10 +23,18 @@ if ($MA_ENABLE_FOOTER){
       echo("<li class=\"padleft\">$MA_COPYRIGHT</li>");
   }
   if ($MA_LOGGEDIN){
+    $mp=1000;
+    if (isset($_GET[$MA_MENU_FIELD])){
+      $mp=array_search($_GET[$MA_MENU_FIELD],$MA_MENUCODE);
+    }
     echo("<li class=\"liright\">");
     for($i=count($MA_FOOTERMENU)-1;$i>=0;$i--){
       echo("<li class=\"liright\">");
-      echo("<a href=\"?$MA_MENU_FIELD=".$MA_FOOTERMENU[$i][1]."\">".$MA_FOOTERMENU[$i][0]."</a>");
+      if ($mp==$i){
+        echo("<a class=actmenu href=\"?$MA_MENU_FIELD=".$MA_FOOTERMENU[$i][1]."\">".$MA_FOOTERMENU[$i][0]."</a>");
+      }else{
+        echo("<a href=\"?$MA_MENU_FIELD=".$MA_FOOTERMENU[$i][1]."\">".$MA_FOOTERMENU[$i][0]."</a>");
+      }
       echo("</li>");
     }
   }else{

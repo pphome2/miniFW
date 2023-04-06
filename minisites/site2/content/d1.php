@@ -58,7 +58,7 @@ function menu(){
 }
 
 function page(){
-    global $S_MENU_LETTER,$S_MENU;
+    global $S_MENU_LETTER,$S_MENU,$S_MENUCODE;
 
     $m=menu();
     echo("<div class=main>");

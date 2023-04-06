@@ -8,11 +8,11 @@
  #
 
 
-$D_MENUCODE=array("n");
+$MA_MENUCODE=array("n");
 
 # app menu
 $MA_MENU=array(
-        array($D_MENU[0],$D_MENUCODE[0])
+        array($D_MENU[0],$MA_MENUCODE[0])
             );
 
 ?>

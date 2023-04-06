@@ -71,6 +71,7 @@ $MA_SQL_PASS="minifwadmin";
 $MA_SQL_ERROR="";
 $MA_SQL_RESULT=array();
 $MA_SQL_FILE="inst.sql";
+$MA_SQL_ERROR_ECHO=true;
 
 # 0 => admin user
 $MA_USER_ROLE=array("0","1","2");
@@ -90,6 +91,7 @@ $MA_HASH_FIRST="$2y$";
 $MA_NOPAGE=false;
 $MA_LOGGEDIN=false;
 $MA_ADMIN_USER=false;
+$MA_USERNAME="";
 $MA_COOKIE_USER="user";
 $MA_COOKIE_PASS="pass";
 

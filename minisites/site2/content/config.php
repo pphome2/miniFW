@@ -27,6 +27,7 @@ $S_JS="d.js";
 
 # menü
 $S_MENU_LETTER="m";
+$S_MENUCODE=array();
 $S_MENU=array(
           array("Kezdőlap"),
           array("Vezérlőpult"),
@@ -37,7 +38,9 @@ $S_MENU=array(
           array("Testreszabás"),
           array("Menük","Almenü1","Almenü2","Almenü3","Almenü4","Almenü5","Almenü5","Hetedik"),
           array("Médiatár"),
-          array("Bővítmények")
+          array("Bővítmények"),
+          array("Még egy menü","Almenü1","Almenü2","Almenü3","Almenü4","Almenü5","Almenü5","Hetedik"),
+          array("következő menü","Almenü1","Almenü2","Almenü3","Almenü4","Almenü5","Almenü5","Hetedik")
           );
 $S_MENU_COLDB=2;
 

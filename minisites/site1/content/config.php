@@ -27,6 +27,8 @@ $S_JS="d.js";
 
 # menü
 $S_MENU_LETTER="m";
+$S_MENUCODE=array();
+
 $S_MENU=array(
           array("Kezdőlap"),
           array("Vezérlőpult"),

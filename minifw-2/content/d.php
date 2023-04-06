@@ -48,13 +48,13 @@ function d_table(){
 
 
 function d_data(){
-    global $MA_MENU_FIELD,$D_MENUCODE;
+    global $MA_MENU_FIELD,$MA_MENUCODE;
 
     echo("<div class=spaceline></div>");
     echo("<div class=content>");
     if (isset($_GET[$MA_MENU_FIELD])){
         switch ($_GET[$MA_MENU_FIELD]){
-            case $D_MENUCODE[0]:
+            case $MA_MENUCODE[0]:
                 break;
             default:
                 d_table();

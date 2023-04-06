@@ -31,19 +31,19 @@ function a_mainpage(){
 
 
 function a_page(){
-	global $MA_MENU_FIELD,$A_MENUCODE;
+	global $MA_MENU_FIELD,$MA_MENUCODE;
 
 	echo("<div class=spaceline></div>");
 	echo("<div class=content>");
 	if (isset($_GET[$MA_MENU_FIELD])){
 		switch ($_GET[$MA_MENU_FIELD]){
-			case $A_MENUCODE[0]:
+			case $MA_MENUCODE[0]:
 				a_user();
 				break;
-			case $A_MENUCODE[1]:
+			case $MA_MENUCODE[1]:
 				a_param();
 				break;
-			case $A_MENUCODE[2]:
+			case $MA_MENUCODE[2]:
 				a_backup();
 				break;
 			default:
