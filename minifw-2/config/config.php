@@ -30,6 +30,7 @@ $MA_VIEWFILE="view.php";
 $MA_SEARCHFILE="search.php";
 $MA_PRIVACYFILE="privacy.php";
 $MA_PRINTFILE="print.php";
+$MA_DOWNLOADFILE="dl.php";
 
 # language
 $MA_LANGFILE="l_hu.php";
