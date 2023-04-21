@@ -9,16 +9,16 @@
 
 
 function mainsearch(){
-    global $D_TITLE,$L_BUTTON_NEXT,$L_SEARCH;
+    global $D_SEARCH_TEXT,$L_BUTTON_NEXT,$L_SEARCH;
 
-    searchview($D_TITLE,$L_BUTTON_NEXT,$L_SEARCH);
+    searchview($D_SEARCH_TEXT,$L_BUTTON_NEXT,$L_SEARCH);
 }
 
 
 function mainprivacy(){
-    global $D_TITLE,$MA_APPPRIVACYFILE;
+    global $D_PRIV_TEXT,$MA_APPPRIVACYFILE;
 
-    privacyview($D_TITLE,$MA_APPPRIVACYFILE);
+    privacyview($D_PRIV_TEXT,$MA_APPPRIVACYFILE);
 }
 
 
