@@ -59,6 +59,9 @@ $MA_LIB=array(
 # add directory: load dirname.php, .css, .js from directory
 $MA_PLUGINS=array();
 
+# cookies
+$MA_COOKIES=array();
+
 # local app php files (no css os js) file
 $MA_APPFILE=array(
 				"config.php"

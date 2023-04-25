@@ -51,10 +51,9 @@ for ($k=0;$k<count($MA_APPFILE);$k++){
 	}
 }
 
-setcookienames();
+# prepare
+startcookies();
 plugins();
-
-# css setting
 setcss();
 
 # login
