@@ -14,26 +14,31 @@ if ($nextstyle>(count($MA_CSS)-1)){
   $nextstyle=0;
 }
 
+if ((!$MA_LOGGEDIN)and(!$MA_PRIVACY_PAGE)and(!$MA_SEARCH_PAGE)and($MA_ENABLE_PRIVACY)){
+  echo("<p class=cookietext>$L_COOKIE_TEXT <a class=\"privacybutton\" href=\"$MA_PRIVACYFILE\">$L_PRIVACY_MENU</a></p>");
+}
+
 if ($MA_ENABLE_FOOTER){
   echo("<footer>");
   echo("<ul class=\"sidenav\">");
-  if (substr($MA_COPYRIGHT,0,2)==="<a"){
-      echo("<li class=\"lileft\">$MA_COPYRIGHT</li>");
-  }else{
-      echo("<li class=\"padleft\">$MA_COPYRIGHT</li>");
-  }
-  if ($MA_LOGGEDIN){
-    $mp=1000;
-    if (isset($_GET[$MA_MENU_FIELD])){
-      $mp=array_search($_GET[$MA_MENU_FIELD],$MA_MENUCODE);
-    }
+  echo("<li class=\"lileft\">$MA_COPYRIGHT</li>");
+  if (($MA_LOGGEDIN)and(!$MA_PRIVACY_PAGE)and(!$MA_SEARCH_PAGE)){
     echo("<li class=\"liright\">");
+    #echo("<a href=#
+    #   onclick=\"document.cookie='$MA_COOKIE_LOGIN=$L_LOGOUT; expires=Thu, 01 Jan 1970 00:00:00 UTC;';
+    #   window.history.replaceState(null, null, window.location.pathname);window.location = window.location.href;\">
+    #   $L_LOGOUT</a>");
+    #echo("</li>");
+  $mp=1000;
+    if (isset($_GET[$MA_MENU_FIELD])){
+    $mp=array_search($_GET[$MA_MENU_FIELD],$MA_MENUCODE);
+    }
     for($i=count($MA_FOOTERMENU)-1;$i>=0;$i--){
       echo("<li class=\"liright\">");
       if ($mp==$i){
-        echo("<a class=actmenu href=\"?$MA_MENU_FIELD=".$MA_FOOTERMENU[$i][1]."\">".$MA_FOOTERMENU[$i][0]."</a>");
+      echo("<a class=actmenu href=\"?$MA_MENU_FIELD=".$MA_FOOTERMENU[$i][1]."\">".$MA_FOOTERMENU[$i][0]."</a>");
       }else{
-        echo("<a href=\"?$MA_MENU_FIELD=".$MA_FOOTERMENU[$i][1]."\">".$MA_FOOTERMENU[$i][0]."</a>");
+      echo("<a href=\"?$MA_MENU_FIELD=".$MA_FOOTERMENU[$i][1]."\">".$MA_FOOTERMENU[$i][0]."</a>");
       }
       echo("</li>");
     }

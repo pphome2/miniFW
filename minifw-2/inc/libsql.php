@@ -8,15 +8,27 @@
  #
 
 
-# sql parancs futtatása az sql szerveren
+# formázás
+function sqlinput($d){
+  $d=trim($d);
+  $d=stripslashes($d);
+  $d=strip_tags($d);
+  #$d=htmlspecialchars($d);
+  return($d);
+}
 
-function sql_run($sqlcomm=""){
+
+# sql parancs futtatása az sql szerveren
+function sql_run($sqlcomm="",$html=false){
   global $MA_SQL_SERVER,$MA_SQL_DB,$MA_SQL_USER,$MA_SQL_PASS,$MA_SQL_ERROR,
     $MA_SQL_RESULT,$MA_SQL_ERROR_ECHO;
 
   $ret=false;
   if (function_exists('mysqli_connect')){
     if ($sqlcomm<>""){
+      if (!$html){
+      $sqlcomm=sqlinput($sqlcomm);
+      }
       $MA_SQL_ERROR="";
       $MA_SQL_RESULT=array();
       $sqllink=mysqli_connect("$MA_SQL_SERVER","$MA_SQL_USER","$MA_SQL_PASS","$MA_SQL_DB");
@@ -44,19 +56,17 @@ function sql_run($sqlcomm=""){
     }
   }
   if (($MA_SQL_ERROR<>"")and($MA_SQL_ERROR_ECHO)){
-    echo("$MA_SQL_ERROR - $sqlcomm \n");
+  echo("$sqlcomm\n");
+    echo("$MA_SQL_ERROR\n");
   }
   return($ret);
 }
 
 
 # többszörös utasítás futtatása SQL szerveren
-
 function sql_multi_run($sqlcomm=""){
-  global $MA_SQL_SERVER,$MA_SQL_DB,$MA_SQL_USER,$MA_SQL_PASS,$MA_SQL_ERROR,
-      $MA_SQL_RESULT,$MA_SQL_ERROR;
+  global $MA_SQL_SERVER,$MA_SQL_DB,$MA_SQL_USER,$MA_SQL_PASS,$MA_SQL_ERROR,$MA_SQL_RESULT;
 
-  $ret=true;
   if (function_exists("mysqli_connect")){
     if ($sqlcomm<>""){
       $sqllink=mysqli_connect("$MA_SQL_SERVER","$MA_SQL_USER","$MA_SQL_PASS","$MA_SQL_DB");
@@ -66,19 +76,17 @@ function sql_multi_run($sqlcomm=""){
         $MA_SQL_ERROR=mysqli_error($sqllink);
         mysqli_close($sqllink);
       }
-      if ($MA_SQL_ERROR<>""){
-        $ret=false;;
+      if ($MA_SQL_ERROR===""){
+        return(true);
+      }else{
+        return(false);
       }
     }else{
-      $ret=false;
+      return(false);
     }
   }else{
-    $ret=false;;
+    return(false);
   }
-  if (($MA_SQL_ERROR<>"")and($MA_SQL_ERROR_ECHO)){
-    echo("$MA_SQL_ERROR - $sqlcomm \n");
-  }
-  return($ret);
 }
 
 
@@ -89,7 +97,7 @@ function sql_test(){
 
   $sqlc="show databases;";
   if (sql_run($sqlc)){
-	echo("<br />SQL: $sqlc<br /><br />");
+  echo("<br />SQL: $sqlc<br /><br />");
     $db=count($MA_SQL_RESULT);
     echo("DB: $db<br /><br />");
     for ($i=0;$i<$db;$i++){
@@ -103,7 +111,6 @@ function sql_test(){
 
 
 # sql adatbázis, táblák létrehozása
-
 function sql_install(){
   global $MA_CONFIG_DIR,$MA_SQL_FILE;
 
@@ -128,7 +135,6 @@ function sql_install(){
         }
       }
     }
-    #echo($sqlc);
     sql_multi_run($sqlc);
   }
 }
