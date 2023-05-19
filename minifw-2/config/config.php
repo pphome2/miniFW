@@ -7,7 +7,19 @@
  #
  #
 
+#
+# NO TOUCH - ne módosítsd
+#
+# use content/config.php and change this variable if need
+# módosítsd a content/config.sys fájlban ezeket a változókat
+#
+# update function overwrite this file - frissítéskor felülíródik ez a fájl
+#
+
 # configuration
+
+$MA_VERSION="20230501";
+$MA_UPDATE_SRC="http://localhost/minisys/miniappframe/public";
 
 # directories
 $MA_CONFIG_DIR="config";
@@ -51,8 +63,9 @@ $MA_ENABLE_SYSTEM_JS=true;
 # system libraries
 $MA_LIB=array(
 			"lib.php",
-			"libview.php",
 			"libadmin.php",
+			"libview.php",
+			"libsys.php",
 			"libsql.php"
 			);
 
@@ -98,5 +111,16 @@ $MA_ADMIN_USER=false;
 $MA_USERNAME="";
 $MA_COOKIE_USER="user";
 $MA_COOKIE_PASS="pass";
+
+
+#
+# APPLICATION ZONE
+#
+
+
+#
+# TEMPLATE ZONE
+#
+
 
 ?>
