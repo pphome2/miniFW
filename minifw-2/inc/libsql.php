@@ -112,14 +112,14 @@ function sql_test(){
 
 # sql adatbázis, táblák létrehozása
 function sql_install(){
-  global $MA_CONFIG_DIR,$MA_SQL_FILE;
+  global $MA_CONFIG_DIR,$MA_SQL_INSTALL_FILE;
 
   $sqlfile="";
-  if (file_exists("$MA_CONFIG_DIR/$MA_SQL_FILE")){
-      $sqlfile="$MA_CONFIG_DIR/$MA_SQL_FILE";
+  if (file_exists("$MA_CONFIG_DIR/$MA_SQL_INSTALL_FILE")){
+      $sqlfile="$MA_CONFIG_DIR/$MA_SQL_INSTALL_FILE";
   }else{
-      if (file_exists("$MA_SQL_FILE")){
-          $sqlfile="$MA_SQL_FILE";
+      if (file_exists("$MA_SQL_INSTALL_FILE")){
+          $sqlfile="$MA_SQL_INSTALL_FILE";
       }
   }
   if ($sqlfile<>""){

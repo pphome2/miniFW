@@ -1,0 +1,3 @@
+# sql restore
+
+use minifw;

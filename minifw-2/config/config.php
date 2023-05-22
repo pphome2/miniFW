@@ -87,8 +87,11 @@ $MA_SQL_USER="admin";
 $MA_SQL_PASS="minifwadmin";
 $MA_SQL_ERROR="";
 $MA_SQL_RESULT=array();
-$MA_SQL_FILE="inst.sql";
 $MA_SQL_ERROR_ECHO=true;
+$MA_SQL_INSTALL_FILE="sql_install.sql";
+$MA_SQL_UPDATE_FILE="sql_update.sql";
+$MA_SQL_BACKUP_FILE="sql_backup.sql";
+$MA_SQL_RESTORE_FILE="sql_restore.sql";
 
 # 0 => admin user
 $MA_USER_ROLE=array("0","1","2");
