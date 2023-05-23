@@ -14,6 +14,13 @@ $MA_APP_TEMPLATE="miniapp";
 # language
 $MA_LANGFILE="l_hu.php";
 
+# SQL
+$MA_SQL_SERVER="localhost";
+$MA_SQL_DB="minifw";
+$MA_SQL_USER="admin";
+$MA_SQL_PASS="minifwadmin";
+$MA_SQL_ERROR_ECHO=true;
+
 # app files
 $MA_APPFILE=array("$MA_LANGFILE");
 

@@ -49,3 +49,12 @@ delete from ik_partner where id=12;
 Lekérdez:
 ---------
 select * from ik_partner;
+
+Tábla export:
+-------------
+select * from táblanév where feltétel into outfile 'fájlnév' fields enclosed by '"' terminated by ';' escaped by '"' lines terminated by '\r\n';
+
+Tábla import:
+-------------
+load data infile 'fájlnév' into table táblanév fileds terminated by ';' enclosed by '"' lines terminated by '\n' ignore 1 rows;
+(ha az első sor a fejléc vagy mezőnév)

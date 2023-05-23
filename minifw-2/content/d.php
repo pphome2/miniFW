@@ -43,6 +43,7 @@ function d_footer(){
 
 
 function d_table(){
+    sql_backup();
     echo("123...");
 }
 

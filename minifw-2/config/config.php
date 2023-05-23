@@ -29,6 +29,7 @@ $MA_MEDIA_DIR="media";
 $MA_INCLUDE_DIR="inc";
 $MA_CONTENT_DIR="content";
 $MA_PLUGIN_DIR="plugins";
+$MA_SERVER_DIR=__DIR__;
 
 # cookie names
 $MA_COOKIE_STYLE="st";
@@ -46,6 +47,19 @@ $MA_DOWNLOADFILE="dl.php";
 
 # language
 $MA_LANGFILE="l_hu.php";
+
+# SQL
+$MA_SQL_SERVER="localhost";
+$MA_SQL_DB="";
+$MA_SQL_USER="";
+$MA_SQL_PASS="";
+$MA_SQL_ERROR="";
+$MA_SQL_RESULT=array();
+$MA_SQL_ERROR_ECHO=true;
+$MA_SQL_INSTALL_FILE="sql_install.sql";
+$MA_SQL_UPDATE_FILE="sql_update.sql";
+$MA_SQL_BACKUP_FILE="sql_backup.sql";
+$MA_SQL_RESTORE_FILE="sql_restore.sql";
 
 # system css
 $MA_ENABLE_SYSTEM_CSS=true;
@@ -76,22 +90,7 @@ $MA_PLUGINS=array();
 $MA_COOKIES=array();
 
 # local app php files (no css os js) file
-$MA_APPFILE=array(
-				"config.php"
-			);
-
-# SQL
-$MA_SQL_SERVER="localhost";
-$MA_SQL_DB="minifw";
-$MA_SQL_USER="admin";
-$MA_SQL_PASS="minifwadmin";
-$MA_SQL_ERROR="";
-$MA_SQL_RESULT=array();
-$MA_SQL_ERROR_ECHO=true;
-$MA_SQL_INSTALL_FILE="sql_install.sql";
-$MA_SQL_UPDATE_FILE="sql_update.sql";
-$MA_SQL_BACKUP_FILE="sql_backup.sql";
-$MA_SQL_RESTORE_FILE="sql_restore.sql";
+$MA_APPFILE=array("config.php");
 
 # 0 => admin user
 $MA_USER_ROLE=array("0","1","2");

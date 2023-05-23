@@ -140,4 +140,35 @@ function sql_install(){
 }
 
 
+# sql táblák mentése
+function sql_backup(){
+    global $MA_SQL_BACKUP_FILE,$MA_SERVER_DIR,$MA_CONFIG_DIR;
+
+  $sqlfile="";
+  if (file_exists("$MA_CONFIG_DIR/$MA_SQL_BACKUP_FILE")){
+      $sqlfile="$MA_CONFIG_DIR/$MA_SQL_BACKUP_FILE";
+  }else{
+      if (file_exists("$MA_SQL_BACKUP_FILE")){
+          $sqlfile="$MA_SQL_BACKUP_FILE";
+      }
+  }
+  echo($sqlfile."!!!");
+  if ($sqlfile<>""){
+    $line=file_get_contents("$sqlfile");
+    $lines=explode(PHP_EOL,$line);
+    $db=count($lines);
+    $sqlc="";
+    foreach ($lines as $v) {
+      if (($v<>"")and(substr($v,0,1)<>"#")){
+        $sqlc=$sqlc." ".$v;
+        if (substr($v,strlen($v)-1,1)==";"){
+          $sqlc=$sqlc."\n";
+        }
+      }
+    }
+    echo($sqlc);
+    sql_multi_run($sqlc);
+  }
+}
+
 ?>
