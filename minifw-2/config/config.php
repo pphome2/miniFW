@@ -34,6 +34,7 @@ $MA_SERVER_DIR="/".substr(__DIR__,1,strlen(__DIR__)-strlen($MA_CONFIG_DIR)-2);
 # cookie names
 $MA_COOKIE_STYLE="st";
 $MA_COOKIE_LOGIN="l";
+$MA_COOKIE_UPDATE="u";
 
 # include files
 $MA_APP_CONFIG_FILE="config.php";
@@ -107,6 +108,8 @@ $MA_DEF_FAVICON="favicon.png";
 
 # other variables
 $MA_HASH_FIRST="$2y$";
+$MA_UPDATE_EXT=".tar.gz";
+$MA_UPDATE_FILE="";
 $MA_NOPAGE=false;
 $MA_LOGGEDIN=false;
 $MA_ADMIN_USER=false;

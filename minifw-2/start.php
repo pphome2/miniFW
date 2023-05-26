@@ -53,6 +53,7 @@ for ($k=0;$k<count($MA_APPFILE);$k++){
 
 # prepare
 startcookies();
+update_system();
 plugins();
 setcss();
 
