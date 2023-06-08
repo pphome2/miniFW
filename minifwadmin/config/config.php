@@ -8,7 +8,7 @@
  #
 
 # configuration
-$MA_MINIFW_DIR="../minifw-2";
+$MA_MINIFW_DIR="../minifw";
 
 $MA_APP_CODENAME="admin";
 $MA_APP_TEMPLATE="miniapp";

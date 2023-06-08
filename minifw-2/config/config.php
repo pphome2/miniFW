@@ -19,7 +19,16 @@
 # configuration
 
 $MA_VERSION="20230501";
-$MA_UPDATE_SRC="http://localhost/minisys/miniappframe/public";
+$MA_UPDATE_SRC="https://localhost/files";
+$MA_UPDATE_CHECK_DAYS=1;
+
+$MA_SITE_VERSION="";
+$MA_SITE_UPDATE_SRC="";
+$MA_SITE_UPDATE_CHECK_DAYS=1;
+
+$MA_TEMPLATE_VERSION="";
+$MA_TEMPLATE_UPDATE_SRC="";
+$MA_TEMPLATE_UPDATE_CHECK_DAYS=1;
 
 # directories
 $MA_CONFIG_DIR="config";
@@ -30,6 +39,7 @@ $MA_INCLUDE_DIR="inc";
 $MA_CONTENT_DIR="content";
 $MA_PLUGIN_DIR="plugins";
 $MA_SERVER_DIR="/".substr(__DIR__,1,strlen(__DIR__)-strlen($MA_CONFIG_DIR)-2);
+$MA_TMP_DIR="tmp";
 
 # cookie names
 $MA_COOKIE_STYLE="st";
@@ -88,6 +98,8 @@ $MA_LIB=array(
 $MA_PLUGINS=array();
 
 # cookies
+#$MA_COOKIES=array(array("minifw","adat","1"));
+# name , data, day to store
 $MA_COOKIES=array();
 
 # local app php files (no css os js) file

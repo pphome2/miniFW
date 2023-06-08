@@ -51,10 +51,15 @@ for ($k=0;$k<count($MA_APPFILE);$k++){
 	}
 }
 
-setcookienames();
-plugins();
+# cookies
+startcookies();
+if(function_exists("main_cookies")){
+    main_cookies();
+    setcookies();
+}
 
-# css setting
+# prepare
+plugins();
 setcss();
 
 # build page: header

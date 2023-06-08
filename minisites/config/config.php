@@ -9,7 +9,7 @@
 
 # configuration
 
-$MA_MINIFW_DIR="../../minifw-2";
+$MA_MINIFW_DIR="../../minifw";
 
 if (file_exists("$MA_MINIFW_DIR/config/config.php")){
     include("$MA_MINIFW_DIR/config/config.php");

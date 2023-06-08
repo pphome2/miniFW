@@ -11,6 +11,11 @@
 
 # search in site
 function searchview($title="",$button="",$search=""){
+    global $L_SEARCH_HEADER;
+
+    if($title=""){
+        $title=$L_SEARCH_HEADER;
+    }
     $rp=refererpage();
     $st="";
 	echo("<header><h3>$title</h3></header>");

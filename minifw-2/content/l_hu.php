@@ -9,7 +9,7 @@
  
 
 # rendszer
-$L_SITENAME="Iktatás";
+$L_SITENAME="Próba";
 $L_ROOTHOME="Intranet";
 $L_SITEHOME="Demo program";
 

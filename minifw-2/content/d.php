@@ -43,7 +43,7 @@ function d_footer(){
 
 
 function d_table(){
-    sql_backup();
+    #sql_backup();
     echo("123...");
 }
 
@@ -81,6 +81,15 @@ function main(){
     d_header();
     d_data();
     d_footer();
+}
+
+
+function main_cookies(){
+    global $MA_COOKIES;
+
+    #$c=$MA_COOKIES[0];
+    #$d=cookiedata($c[0]);
+    #echo("$c[0] - $d --");
 }
 
 

@@ -21,9 +21,12 @@ $L_BACKPAGE="Go back";
 $L_JUMP="Go next page";
 $L_SEARCH="Search";
 $L_NO_AVAILABLE="This fuunction not available.";
-
-# cookie
 $L_COOKIE_TEXT="The site use cokies. Please read the Privacy page.";
 $L_PRIVACY_HEADER="Privacy page address";
+$L_SEARCH_HEADER="Search for stored items";
+
+# error
+$L_UPDATE_ERROR="Update error.";
+$L_SQL_ERROR="An error occurred while executing the SQL statement";
 
 ?>

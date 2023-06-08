@@ -51,8 +51,14 @@ for ($k=0;$k<count($MA_APPFILE);$k++){
 	}
 }
 
-# prepare
+# cookies
 startcookies();
+if(function_exists("main_cookies")){
+    main_cookies();
+    setcookies();
+}
+
+# prepare
 plugins();
 setcss();
 
