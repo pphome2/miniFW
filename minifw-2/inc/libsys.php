@@ -242,7 +242,7 @@ function update_sys($destdir=""){
         $pt=new PharData($ft);
         if(strpos($MA_UPDATE_FILE,"github")>0){
             $pt->extractTo("$MA_TMP_DIR/",null,true);
-		    $dir=opendir($$MA_TMP_DIR);
+		    $dir=opendir($MA_TMP_DIR);
   			while(false!==($file=readdir($dir))){
 		        if (($file!='.')&&($file!='..')){
 					if (is_dir("$MA_TMP_DIR/$file/$MA_UPDATE_SUBDIR")){
