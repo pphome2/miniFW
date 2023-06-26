@@ -19,8 +19,10 @@
 # configuration
 
 $MA_VERSION="20230501";
-$MA_UPDATE_SRC="https://localhost/files";
-#$MA_UPDATE_SRC="https://github.com/pphome2/miniFW/tags";
+#$MA_UPDATE_SRC="https://localhost/files";
+#$MA_UPDATE_SUBDIR="";
+$MA_UPDATE_SRC="https://github.com/pphome2/miniFW/tags";
+$MA_UPDATE_SUBDIR="miniFW-Minifw-alfa/minifw-2";
 $MA_UPDATE_CHECK_DAYS=1;
 
 $MA_SITE_VERSION="";
