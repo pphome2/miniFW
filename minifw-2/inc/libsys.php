@@ -73,9 +73,9 @@ function update_system(){
                 }
             }
         }
-        $t=$MA_UPDATE_CHECK_DAYS*86400;
-		setcookie($MA_COOKIE_UPDATE,$MA_VERSION,['expires'=>time()+$t,'samesite'=>'Strict']);
 		if ($ok){
+	        $t=$MA_UPDATE_CHECK_DAYS*86400;
+			setcookie($MA_COOKIE_UPDATE,$MA_VERSION,['expires'=>time()+$t,'samesite'=>'Strict']);
             header("Refresh:0");
 		}
     }
@@ -88,20 +88,23 @@ function update_site($ddir=""){;
             $MA_SERVER_DIR,$MA_CONTENT_DIR,$MA_VERSION;
 
 	if (!isset($_COOKIE[$MA_COOKIE_UPDATE])){
+		$ok=false;
         if (update_check($MA_SITE_VERSION,$MA_SITE_UPDATE_SRC)){
             if(update_download($MA_SITE_UPDATE_SRC)){
                 if($ddir===""){
                     $ddir=$MA_SERVER_DIR."/".$MA_CONTENT_DIR;
                 }
-                update_sys($ddir);
+                $ok=update_sys($ddir);
                 if(function_exists("sql_install")){
                     sql_install();
                     sql_update();
                 }
             }
         }
-        $t=$MA_SITE_UPDATE_CHECK_DAYS*86400;
-		setcookie($MA_COOKIE_UPDATE,$MA_VERSION,['expires'=>time()+$t,'samesite'=>'Strict']);
+        if ($ok){
+			$t=$MA_SITE_UPDATE_CHECK_DAYS*86400;
+			setcookie($MA_COOKIE_UPDATE,$MA_VERSION,['expires'=>time()+$t,'samesite'=>'Strict']);
+		}
     }
 }
 
@@ -112,20 +115,23 @@ function update_template($ddir=""){;
             $MA_SERVER_DIR,$MA_TEMPLATE_DIR,$MA_VERSION;
 
 	if (!isset($_COOKIE[$MA_COOKIE_UPDATE])){
+		$ok=false;
         if (update_check($MA_TEMPLATE_VERSION,$MA_TEMPLATE_UPDATE_SRC)){
             if(update_download($MA_TEMPLATE_UPDATE_SRC)){
                 if($ddir===""){
                     $ddir=$MA_SERVER_DIR."/".$MA_TEMPLATE_DIR;
                 }
-                update_sys($ddir);
+                $ok=update_sys($ddir);
                 if(function_exists("sql_install")){
                     sql_install();
                     sql_update();
                 }
             }
         }
-        $t=$MA_TEMPLATE_UPDATE_CHECK_DAYS*86400;
-		setcookie($MA_COOKIE_UPDATE, $MA_VERSION, ['expires'=>time()+$t,'samesite'=>'Strict']);
+        if ($ok){
+			$t=$MA_TEMPLATE_UPDATE_CHECK_DAYS*86400;
+			setcookie($MA_COOKIE_UPDATE, $MA_VERSION, ['expires'=>time()+$t,'samesite'=>'Strict']);
+		}
     }
 }
 
@@ -159,7 +165,7 @@ function update_check($ver="",$src=""){
                     $link="https://github.com$n";
                     $xx=explode("/",$link);
                     $xl=count($xx)-1;
-                    $newver=substr($xx[$xl],0,strlen($xx[$xl])-strlen($kit));
+                    $newver=substr($xx[$xl],0,strlen($xx[$xl])-strlen($MA_UPDATE_EXT));
                     if($newver>$ver){
                         #echo("$link - $newver<br />");
                         $MA_UPDATE_FILE=$link;
@@ -230,21 +236,23 @@ function update_sys($destdir=""){
     if (file_exists($ft)){
         unlink($ft);
     }
-    $sdx=explode("/",$MA_UPDATE_SUBDIR);
-    $sdxdb=count($sdx);
-    $sd=$sdx[$sdxdb];
     try{
         $p=new PharData("$f");
         $p->decompress();
         $pt=new PharData($ft);
-        #$pt->extractTo("../",null,true);
         if(strpos($MA_UPDATE_FILE,"github")>0){
             $pt->extractTo("$MA_TMP_DIR/",null,true);
-            #copyfiles("./$MA_TMP_DIR/$MA_UPDATE_SUBDIR","$destdir");
-            copyfiles("./$MA_TMP_DIR/$MA_UPDATE_SUBDIR",".");
-            rmfiles("./$MA_TMP_DIR/$sdx[0]");
+		    $dir=opendir($$MA_TMP_DIR);
+  			while(false!==($file=readdir($dir))){
+		        if (($file!='.')&&($file!='..')){
+					if (is_dir("$MA_TMP_DIR/$file/$MA_UPDATE_SUBDIR")){
+			            copyfiles("./$MA_TMP_DIR/$file/$MA_UPDATE_SUBDIR",".");
+          				rmfiles("./$MA_TMP_DIR/$file");
+					}
+		        }
+		    }
+  			closedir($dir);
         }else{
-            #$pt->extractTo("$destdir/",null,true);
             $pt->extractTo("./",null,true);
         }
     }catch (exception $e){
