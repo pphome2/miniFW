@@ -61,9 +61,12 @@ function update_system(){
     global $MA_COOKIE_UPDATE,$MA_UPDATE_FILE,$MA_UPDATE_CHECK_DAYS,$MA_VERSION;
 
 	if (!isset($_COOKIE[$MA_COOKIE_UPDATE])){
+	    $ok=false;
         if (update_check()){
             if(update_download()){
-                update_sys();
+                if (update_sys()){
+                    $ok=true;
+                }
                 if(function_exists("sql_install")){
                     sql_install();
                     sql_update();
@@ -72,6 +75,9 @@ function update_system(){
         }
         $t=$MA_UPDATE_CHECK_DAYS*86400;
 		setcookie($MA_COOKIE_UPDATE,$MA_VERSION,['expires'=>time()+$t,'samesite'=>'Strict']);
+		if ($ok){
+            header("Refresh:0");
+		}
     }
 }
 
@@ -210,7 +216,7 @@ function update_download($src=""){
 
 # frissítés telepítése
 function update_sys($destdir=""){
-    global $MA_TMP_DIR,$MA_UPDATE_FILE,$MA_SERVER_DIR,$L_UPDATE_ERROR;
+    global $MA_TMP_DIR,$MA_UPDATE_FILE,$MA_SERVER_DIR,$L_UPDATE_ERROR,$MA_UPDATE_SUBDIR;
 
     if($destdir===""){
         $destdir=$MA_SERVER_DIR;
@@ -224,21 +230,61 @@ function update_sys($destdir=""){
     if (file_exists($ft)){
         unlink($ft);
     }
+    $sdx=explode("/",$MA_UPDATE_SUBDIR);
+    $sdxdb=count($sdx);
+    $sd=$sdx[$sdxdb];
     try{
         $p=new PharData("$f");
         $p->decompress();
         $pt=new PharData($ft);
         #$pt->extractTo("../",null,true);
-        $pt->extractTo("$destdir/",null,true);
+        if(strpos($MA_UPDATE_FILE,"github")>0){
+            $pt->extractTo("$MA_TMP_DIR/",null,true);
+            #copyfiles("./$MA_TMP_DIR/$MA_UPDATE_SUBDIR","$destdir");
+            copyfiles("./$MA_TMP_DIR/$MA_UPDATE_SUBDIR",".");
+            rmfiles("./$MA_TMP_DIR/$sdx[0]");
+        }else{
+            #$pt->extractTo("$destdir/",null,true);
+            $pt->extractTo("./",null,true);
+        }
     }catch (exception $e){
 	    echo(date('Y.m.d')." - $n - $f - $ft - $MA_SERVER_DIR - $L_UPDATE_ERROR");
         $ok=false;
     }
     unlink($f);
     unlink($ft);
-    if($ok){
-        header("Refresh:0");
+    return($ok);
+}
+
+
+function copyfiles($src,$dst){
+    $dir=opendir($src);
+    while(false!==($file=readdir($dir))){
+        if (($file!='.')&&($file!='..')){
+            if (is_dir($src."/".$file)){
+                copyfiles($src."/".$file,$dst."/".$file);
+            }else{
+                copy($src."/".$file,$dst."/".$file);
+            }
+        }
     }
+    closedir($dir);
+}
+
+
+function rmfiles($src){
+    $dir=opendir($src);
+    while(false!==($file=readdir($dir))){
+        if (($file!='.')&&($file!='..')){
+            if (is_dir($src."/".$file)){
+                rmfiles($src."/".$file);
+            }else{
+                unlink($src."/".$file);
+            }
+        }
+    }
+    closedir($dir);
+    rmdir($src."/".$file);
 }
 
 

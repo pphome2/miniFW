@@ -237,7 +237,9 @@ function login(){
 		setcookie($MA_COOKIE_LOGIN, $user, ['expires'=>0,'samesite'=>'Strict']);
 		#setcookie($MA_COOKIE_LOGIN, $user, ['expires'=>strtotime("+1 day"),'samesite'=>'Strict']);
 	}else{
-		setcookie($MA_COOKIE_LOGIN, "", ['expires'=>-1,'samesite'=>'Strict']);
+    	if (isset($_COOKIE[$MA_COOKIE_LOGIN])){
+	    	setcookie($MA_COOKIE_LOGIN, "", ['expires'=>-1,'samesite'=>'Strict']);
+	  }
 	}
 }
 
