@@ -1,0 +1,7 @@
+ErrorDocument 403 /~peter/www/minifw/appfw/404.php
+ErrorDocument 404 /~peter/www/minifw/appfw/404.php
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteOptions Inherit
+</IfModule>

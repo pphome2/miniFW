@@ -63,7 +63,7 @@ if ($SYS_OK){
   }
   # app indítása, előkészítésa, beállítása
   if ($APP_OK){
-    $fwapp=new fw_app();
+    $fwapp=new fw_app($fwcfg->{'FW_CONTENT_DIR'});
     $fwcfg->{'FW_TEMPLATE_PHP'}=$fwapp->{'APP_TEMPLATE'}."/".$fwcfg->{'FW_TEMPLATE_PHP'};
   }
   # template betöltése
@@ -72,7 +72,10 @@ if ($SYS_OK){
   if (file_exists($fn)){
     $TEMP_OK=include($fn);
     if ($TEMP_OK){
-      $fwtemp=new fw_temp();
+      if (isset($fwapp->{'APP_TEMPLATE'})){
+        $fwtemp=new $fwapp->{'APP_TEMPLATE'}();
+      }
+      //$fwtemp=new fw_temp();
     }
   }
 

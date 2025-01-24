@@ -6,10 +6,10 @@
  # template
  #
 
-class fw_temp{
+class mini{
   # verzió adatok
   public $TEMP_VERSION="0";
-  public $TEMP_TITLE="minifw-3";
+  public $TEMP_TITLE="appfw";
   # include files
   public $TEMP_FAVICON="";
   public $TEMP_JS="template.js";
@@ -54,7 +54,7 @@ class fw_temp{
       include($fc);
     }
     echo("</script>\n");
-	echo($this->TEMP_FAVICON);
+	//echo($this->TEMP_FAVICON);
   }
 
   # lábrész

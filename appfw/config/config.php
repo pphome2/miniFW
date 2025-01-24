@@ -16,7 +16,7 @@ class fw_config{
   public $FW_TEMPLATE_DIR="template";
   public $FW_INCLUDE_DIR="inc";
   public $FW_CONTENT_DIR="content";
-  public $FW_MEDIA_DIR="content/media";
+  public $FW_MEDIA_DIR="media";
   public $FW_PLUGIN_DIR="plugins";
   public $FW_TMP_DIR="tmp";
   # nyelvi fájl
