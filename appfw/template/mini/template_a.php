@@ -35,7 +35,7 @@ class mini{
 
 
   # fejrész
-  function pagehead(){
+  function header(){
     echo("<!DOCTYPE html>\n");
     echo("<html lang=\"hu\">\n");
     echo("<head>\n");
@@ -62,21 +62,6 @@ class mini{
     }
     echo("</script>\n");
 	//echo($this->TEMP_FAVICON);
-  }
-
-
-
-  # fejrész
-  function header(){
-    global $fwapp;
-
-    foreach($fwapp->APP_MENU as $m){
-      echo("<a href=\"?$m[1]\">$m[0]</a> ");
-    }
-    echo("<br />");
-    echo("<br />");
-    echo("<header>\n");
-    echo("</header>\n");
   }
 
 

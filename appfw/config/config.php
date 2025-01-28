@@ -39,11 +39,13 @@ class fw_config{
   # APPLICATION ZONE
   #
   public $FW_APP_PHP="app.php";
+  public $FW_APP_ADMIN_PHP="app_a.php";
   #
   #
   # TEMPLATE ZONE
   #
   public $FW_TEMPLATE_PHP="template.php";
+  public $FW_TEMPLATE_ADMIN_PHP="template_a.php";
   #
 
 

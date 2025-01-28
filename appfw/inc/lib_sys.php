@@ -9,50 +9,54 @@
 
 
 
-# szöveg fordítása
-function fw_lang($s){
-  global $fwlang;
-
-  if (isset($fwlang)){
-    $s=$fwlang->lang($s);
+# indító url előállítása
+function starturl($dir=__DIR__){
+  $r="";
+  $dir=str_replace('\\','/',realpath($dir));
+  if (!empty($_SERVER['HTTPS'])){
+    $r=$r."https://";
   }else{
-    $s="_".$s."_";
+    $r=$r."http://";
   }
-  return($s);
+  $r=$r.$_SERVER['HTTP_HOST'];
+  if (!empty($_SERVER['CONTEXT_PREFIX'])){
+    $r=$r.$_SERVER['CONTEXT_PREFIX'];
+    $r=$r.substr($dir,strlen($_SERVER['CONTEXT_DOCUMENT_ROOT'])+1);
+  } else {
+    $r=$r.substr($dir,strlen($_SERVER['DOCUMENT_ROOT'])+1);
+  }
+  $r=$r."/";
+  return($r);
 }
 
 
 
 # cookie-k beolvasása
-function cookie_load(){
-    global $FW_COOKIES;
-
-    for($i=0;$i<count($FW_COOKIES);$i++){
-        $c=$FW_COOKIES[$i];
-        if($c[0]<>""){
-            $cn=$c[0];
-	        if(isset($_COOKIE[$cn])){
-	            $c[1]=$_COOKIE[$cn];
-	            $FW_COOKIES[$i]=$c;
-            }
-        }
+function cookie_load(&$cookiearr=array()){
+  for($i=0;$i<count($cookiearr);$i++){
+    $ca=$cookiearr[$i];
+    if($ca[0]<>""){
+      $cn=$ca[0];
+      if(isset($_COOKIE[$cn])){
+        $ca[1]=$_COOKIE[$cn];
+        $cookiearr[$i]=$ca;
+      }
     }
+  }
 }
 
 
 
 # cookie-k tárolása
-function cookie_set(){
-    global $FW_COOKIES;
-
-    for($i=0;$i<count($FW_COOKIES);$i++){
-        $c=$FW_COOKIES[$i];
-        if($c[0]<>""){
-            $t=$c[2]*86400;
-		    setcookie($c[0],$c[1],['expires'=>time()+$t,'samesite'=>'Strict']);
-            //echo("$c[0],$c[1],$t");
-        }
+function cookie_set($cookiearr=array()){
+  for($i=0;$i<count($cookiearr);$i++){
+    $c=$cookiearr[$i];
+    if($c[0]<>""){
+      $t=$c[2]*86400;
+      setcookie($c[0],$c[1],['expires'=>time()+$t,'samesite'=>'Strict']);
+      //echo("$c[0],$c[1],$t");
     }
+  }
 }
 
 
