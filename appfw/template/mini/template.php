@@ -6,6 +6,8 @@
  # template
  #
 
+
+
 class mini{
   # verzió adatok
   public $TEMP_VERSION="0";
@@ -61,33 +63,89 @@ class mini{
       include($fc);
     }
     echo("</script>\n");
-	//echo($this->TEMP_FAVICON);
+  }
+
+
+
+  # lap lezárás
+  function pageend(){
+    echo("</body>\n");
+    echo("</html>\n");
   }
 
 
 
   # fejrész
   function header(){
-    global $fwapp;
+    global $fwapp,$fwlang;
 
-    foreach($fwapp->APP_MENU as $m){
-      echo("<a href=\"?$m[1]\">$m[0]</a> ");
-    }
-    echo("<br />");
-    echo("<br />");
+    echo("<div class=all-page>");
     echo("<header>\n");
+    echo("<div class=\"menu\">");
+    echo("<ul class=\"sidenav\">");
+    $i=0;
+    foreach($fwapp->APP_MENU as $l){
+      if (($i+1)<>$fwapp->APP_MENU_ACT){
+        echo("<li><a href=\"?$l[1]\">$l[0]</a></li>");
+      }else{
+        echo("<li><a class=\"active\" href=\"?$l[1]\">$l[0]</a></li>");
+      }
+      $i++;
+    }
+    echo("</ul>");
+    echo("</div>");
     echo("</header>\n");
+    echo("<div class=\"content\">");
+    if (($fwapp->APP_USER_LOGIN)and($fwapp->APP_USER_NAME==="")){
+      if (isset($_POST['uname'])and(isset($_POST['upass']))and
+         ($_POST['uname']<>"")and($_POST['upass']<>"")){
+        $fwapp->APP_USER_NAME=$_POST['uname'];
+        $fwapp->APP_USER_PW=$_POST['upass'];
+      }else{
+        echo("<form id=db0 method=\"post\">");
+        echo("<div class=spaceline100></div>");
+        echo("<div class=spaceline100></div>");
+        echo("<label for=\"0\">".$fwlang->lang("Felhasználónév").":</label><br>");
+        echo("<input type=\"text\" id=\"uname\" name=\"uname\" placeholder=\"\" value=\"\"><br>");
+        echo("<br />");
+        echo("<label for=\"1\">".$fwlang->lang("Felhasználónév").":</label><br>");
+        echo("<input type=\"password\" id=\"upass\" name=\"upass\" placeholder=\"\" value=\"\"><br>");
+        echo("<br />");
+        echo("<br /><br />");
+        echo("<input type=submit id=\"db\" name=\"db\" value=\"".$fwlang->lang("Mehet")."\">");
+        echo("</form>");
+      }
+    }
   }
 
 
 
   # lábrész
   function footer(){
+    global $fwcfg,$fwapp,$fwlang;
+
+    echo("</div>\n");
     echo("<footer>\n");
-    echo("</footer>\n");
-    echo("</body>\n");
-    echo("</html>\n");
+    echo("<div class=\"menu\">");
+    echo("<ul class=\"sidenav\">");
+    echo("<li class=\"lileft\"><a>$fwapp->APP_COPYRIGHT</a></li>");
+    if ($fwcfg->FW_ADMIN_MODE){
+      echo("<li class=\"liright\"><a href=\"?\">");
+      echo($fwlang->lang("Kilépés"));
+      echo("</a></li>");
+    }else{
+      echo("<li class=\"liright\"><a href=\"?$fwcfg->FW_ADMIN_LINK=x\">");
+      echo($fwlang->lang("Belépés"));
+      echo(" [ ".$fwcfg->FW_ADMIN_LINK." ]");
+      echo("</a></li>");
+    }
+    echo("</ul>");
+    echo("</div>\n");
+    echo("</footer>");
   }
+
+
+
 }
 
 

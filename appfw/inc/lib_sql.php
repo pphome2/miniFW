@@ -13,6 +13,7 @@ mysqli_report(MYSQLI_REPORT_OFF);
 
 class fw_sql{
   public $SQL_VERSION="0";
+  public $SQL_VERSION_STR="SQL_VERSION";
   public $SQL_SERVER="";
   public $SQL_DB="";
   public $SQL_USER="";
@@ -23,82 +24,20 @@ class fw_sql{
   public $SQL_DEV_MODE=false;
   public $SQL_DEV_MODE_STR="DEV_MODE";
 
-  public $SQL_TABLE_PARAM="";
-  public $SQL_TABLE_PARAM_CREATE="";
-  public $SQL_TABLE_USERS="";
-  public $SQL_TABLE_USERS_CREATE="";
-
-
-
   function __construct($s="",$d="",$u="",$p="",$dm=""){
     $this->{'SQL_SERVER'}=$s;
     $this->{'SQL_DB'}=$d;
     $this->{'SQL_USER'}=$u;
     $this->{'SQL_PASS'}=$p;
     $this->{'SQL_DEV_MODE'}=$dm;
-    $this->SQL_TABLE_PARAM=$this->SQL_PREFIX."param";
-    $this->SQL_TABLE_PARAM_CREATE="CREATE TABLE IF NOT EXISTS ".$this->SQL_TABLE_PARAM." (
-                                      id mediumint(9) NOT NULL AUTO_INCREMENT,
-                                      name tinytext NOT NULL,
-                                      text text NOT NULL,
-                                      PRIMARY KEY  (id)
-                                      );";
-    $this->SQL_TABLE_USERS=$this->SQL_PREFIX."users";
-    $this->SQL_TABLE_USERS_CREATE="CREATE TABLE IF NOT EXISTS ".$this->SQL_TABLE_USERS." (
-                                      id mediumint(9) NOT NULL AUTO_INCREMENT,
-                                      uname tinytext NOT NULL,
-                                      upass tinytext NOT NULL,
-                                      urole int NOT NULL,
-                                      text text NOT NULL,
-                                      PRIMARY KEY  (id)
-                                      );";
-    $sql="SELECT * FROM $this->SQL_TABLE_PARAM;";
-    if (!$this->sql_run($sql)){
-      $this->sql_run($this->SQL_TABLE_PARAM_CREATE);
-      $sql="INSERT INTO $this->SQL_TABLE_PARAM (name,text) VALUES ('SQL_VERSION',\'$this->SQL_VERSION\');";
-      $this->sql_run($sql);
-      $sql="INSERT INTO $this->SQL_TABLE_PARAM (name,text) VALUES (\'$this->SQL_DEV_MODE_STR\',\'$this->SQL_DEV_MODE\');";
-      $this->sql_run($sql);
-    }
-    $sql="SELECT * FROM $this->SQL_TABLE_USERS;";
-    if (!$this->sql_run($sql)){
-      $this->sql_run($this->SQL_TABLE_USERS_CREATE);
-    }
   }
 
-
-
-  # paraméter mentése
-  function save_param($name="",$data=""){
-    $sql="SELECT * FROM $this->SQL_TABLE_PARAM WHERE name='$name';";
-    if ($this->sql_run($sql)){
-      if (count($this->SQL_RESULT)>0){
-        $sql="UPDATE $this->SQL_TABLE_PARAM SET text='$data' WHERE name='$name';";
-      }else{
-        $sql="INSERT INTO $this->SQL_TABLE_PARAM (name,text) VALUES ('$name','$data');";
-      }
-      $this->sql_run($sql);
-    }
-  }
-
-
-
-  # paraméter beolvasása
-  function get_param($name=""){
-    $r="";
-    $sql="SELECT * FROM $this->SQL_TABLE_PARAM WHERE name='$name';";
-    if ($this->sql_run($sql)){
-      foreach ($this->SQL_RESULT as $d){
-        $r=$r.$d[2];
-      }
-    }
-    return($r);
-  }
 
 
   # formázás
   function sqlinput($d){
     $d=trim($d);
+    $d=rtrim($d);
     $d=stripslashes($d);
     $d=strip_tags($d);
     #$d=htmlspecialchars($d);
@@ -168,7 +107,77 @@ class fw_sql{
   }
 
 
+
+  # adattáblák mentése
+  function sql_backup_tables($tables=array()){
+    global $fwsqlm;
+
+    $ret="";
+    foreach($tables as $tname){
+      if ($this->SQL_DEV_MODE){
+        echo($tname."<br />");
+      }
+      $sql="SELECT * FROM $tname;";
+      $this->sql_run($sql);
+      $resdata=$this->SQL_RESULT;
+      $ret=$ret."DROP TABLE IF EXISTS $tname;";
+      $sql="SHOW CREATE TABLE $tname;";
+      $this->sql_run($sql);
+      $rescreate=$this->SQL_RESULT;
+      $r=$rescreate[0];
+      $ret=$ret."\n\n".$r[1].";\n\n";
+      foreach($resdata as $rd){
+        $ret=$ret."INSERT INTO $tname VALUES(";
+        $i=0;
+        foreach($rd as $rdat){
+          if($i>0){
+            $ret=$ret.",'".$rdat."'";
+          }else{
+            $ret=$ret."'".$rdat."'";
+          }
+          $i++;
+        }
+        $ret=$ret.");\n";
+      }
+      $ret=$ret."\n\n\n";
+    }
+    return($ret);
+  }
+
+
+
+  // adat visszatöltés
+  function sql_restore_tables($file=""){
+    global $fwsqlm;
+
+    if (($file<>"")and(file_exists($file))){
+      if ($this->SQL_DEV_MODE){
+        echo($file."<br />");
+      }
+      try{
+        $r=file_read($file,$this->SQL_DEV_MODE);
+        $sql="";
+        foreach($r as $l){
+          $l=$this->sqlinput($l);
+          if (substr($l,-1)===";"){
+            $sql=$sql.$l;
+            $this->sql_run($sql);
+            $sql="";
+          }else{
+            $sql=$sql.$l;
+          }
+        }
+      }catch (Exception $e){
+        if ($this->SQL_DEV_MODE){
+          echo($e->getMessage());
+        }
+      }
+    }
+  }
+
+
 }
+
 
 
 ?>

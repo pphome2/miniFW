@@ -115,5 +115,16 @@ function genid(){
 
 
 
+# oldal úratörése
+function reload($page=""){
+  if ($page<>""){
+    header("Refresh:0; url=$page");
+  }else{
+    header("Refresh:0; url=/index.php");
+  }
+}
+
+
+
 
 ?>

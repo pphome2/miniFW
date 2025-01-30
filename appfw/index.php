@@ -8,35 +8,26 @@
 
 
 
-$SYS_OK=false;
-
-
 
 # beállítások betöltése
+$SYS_OK=false;
 if (file_exists("config/config.php")){
   include("config/config.php");
   $SYS_OK=true;
   $fwcfg=new fw_config();
+  $fwcfg->FW_FS_MAIN_DIR=__DIR__;
 }
 
+if (isset($_GET[$fwcfg->FW_ADMIN_LINK])){
+  $fwcfg->FW_ADMIN_MODE=true;
+}
 
 
 # rendszer felépítése
 if ($SYS_OK){
-  # nyelvi modul betöltése
-  $fn=$fwcfg->{'FW_CONFIG_DIR'}."/".$fwcfg->{'FW_LANGFILE'};
-  if (file_exists($fn)){
-    $SYS_OK=include($fn);
-    if ($SYS_OK){
-      $fwlang=new fw_lang();
-    }
-  }else{
-    $SYS_OK=false;
-  }
-
   # függvénykönyvtárak betöltése
-  for ($i=0;$i<count($fwcfg->{'FW_LIB'});$i++){
-    $fn=$fwcfg->{'FW_INCLUDE_DIR'}."/".$fwcfg->{'FW_LIB'}[$i];
+  foreach($fwcfg->{'FW_LIB'} as $f){
+    $fn=$fwcfg->{'FW_INCLUDE_DIR'}."/".$f;
 	if (file_exists($fn)){
 	  $SYS_OK=$SYS_OK and include($fn);
 	}else{
@@ -49,19 +40,17 @@ if ($SYS_OK){
 
 # sql alrendszer beállítása
 if ($SYS_OK){
+  $fwlang=new fw_lang();
   $fwsql=new fw_sql($fwcfg->{'FW_SQL_SERVER'},
-                  $fwcfg->{'FW_SQL_DB'},
-                  $fwcfg->{'FW_SQL_USER'},
-                  $fwcfg->{'FW_SQL_PASS'},
-                  $fwcfg->{'FW_DEV_MODE'});
-  #$sql->{'SQL_SERVER'}=$fwcfg->{'FW_SQL_SERVER'};
-  #$sql->{'SQL_DB'}=$fwcfg->{'FW_SQL_DB'};
-  #$sql->{'SQL_USER'}=$fwcfg->{'FW_SQL_USER'};
-  #$sql->{'SQL_PASS'}=$fwcfg->{'FW_SQL_PASS'};
-  #$sql->{'SQL_DEV_MODE'}=$fwcfg->{'FW_DEV_MODE'};
+                    $fwcfg->{'FW_SQL_DB'},
+                    $fwcfg->{'FW_SQL_USER'},
+                    $fwcfg->{'FW_SQL_PASS'},
+                    $fwcfg->{'FW_DEV_MODE'});
   $r=$fwsql->sql_test();
   if ($r===""){
     $SYS_OK=false;
+  }else{
+    $fwsqlm=new fw_sqlm();
   }
 }
 
@@ -79,6 +68,14 @@ if ($SYS_OK){
   if ($APP_OK){
     $fwapp=new fw_app($fwcfg->{'FW_CONTENT_DIR'});
     $fwcfg->{'FW_TEMPLATE_PHP'}=$fwapp->{'APP_TEMPLATE'}."/".$fwcfg->{'FW_TEMPLATE_PHP'};
+    foreach($fwapp->{'APP_FILES'} as $f){
+      $fn=$fwcfg->{'FW_CONTENT_DIR'}."/".$f;
+  	  if (file_exists($fn)){
+	    $SYS_OK=$SYS_OK and include($fn);
+	  }else{
+  	    $SYS_OK=false;
+	  }
+    }
   }
   # template betöltése
   $TEMP_OK=false;
@@ -108,6 +105,7 @@ if ($SYS_OK){
   # app futtatása
   if ($APP_OK){
     $fwapp->cookie_load();
+    $fwapp->main();
   }
 
   # fejrész
@@ -118,7 +116,7 @@ if ($SYS_OK){
 
   # app futtatása
   if ($APP_OK){
-    $fwapp->main();
+    $fwapp->center();
   }
 
   # lábrész
@@ -128,8 +126,14 @@ if ($SYS_OK){
 
   # hiányzó nyelvi lemek kiírása
   if ($fwcfg->FW_DEV_MODE){
-    $fwlang->lang_new();
+    #$fwlang->lang_new();
   }
+
+  # lábrész
+  if ($TEMP_OK){
+    $fwtemp->pageend();
+  }
+
 }
 
 
