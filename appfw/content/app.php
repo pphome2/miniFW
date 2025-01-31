@@ -43,11 +43,9 @@ class fw_app{
 
 
   function __construct($appdir=""){
-    global $fwlang,$fwsql,$fwcfg,$fwsqlm;
+    global $fwcfg,$fwlang,$fwsql,$fwsqlm;
 
     $this->APP_CONTENT_DIR=$appdir;
-    
-    # előkészítés
 
     # menü: név, link
     if ($fwcfg->FW_ADMIN_MODE){
@@ -66,32 +64,18 @@ class fw_app{
     }
     # cookie: név, érték, hány napig tárolja
     $this->APP_COOKIE=array(
-                        array("c1","1",1),
-                        array("c2","2",1)
+                        array("appfw-u","",1),
+                        array("appfw-x","",1)
                       );
-    $r=$fwsqlm->get_param($this->APP_VERSION_STR);
-    if ($r===""){
-      $fwsqlm->save_param($this->APP_VERSION_STR,"$this->APP_VERSION");
-    }
+
+    # tesz felhasználó
+    $fwsqlm->save_user("admin",password_hash("admin",PASSWORD_DEFAULT),0,"text");
   }
 
 
 
   # vezérlő
-  function center(){
-    global $fwsqlm;
-
-    # felhasználó ellenőrzése
-    echo($this->APP_USER_NAME);
-    if (($this->APP_USER_NAME<>"")and($this->APP_USER_PW<>"")){
-      # felhasznál ellenrzése
-      if ($fwsqlm->check_user($this->APP_USER_NAME,$this->APP_USER_PW)){
-      }else{
-        $this->APP_USER_NAME="";
-        $this->APP_MENU_ACT=9999;
-      }
-    }
-    echo($this->APP_USER_NAME);
+  function main(){
     $this->load_js_css();
     switch($this->APP_MENU_ACT){
       case 1:
@@ -99,43 +83,72 @@ class fw_app{
         break;
       case 2:
         if ($this->APP_USER_NAME<>""){
-          echo("Menüpont: 2 - belépve");
-        }else{
-          reload();
+          echo("Menüpont: 2 - belépve<br />");
+          echo($this->APP_USER_NAME);
         }
         break;
       case 3:
         if ($this->APP_USER_NAME<>""){
-          echo("Menüpont: 3 - belépve");
-        }else{
-          reload();
+          echo("Menüpont: 3 - belépve<br />");
+          echo($this->APP_USER_NAME);
         }
         break;
       case 4:
         if ($this->APP_USER_NAME<>""){
-          echo("Menüpont: 4 - belépve - ADMIN");
-        }else{
-          reload();
+          echo("Menüpont: 4 - belépve - ADMIN<br />");
+          echo($this->APP_USER_NAME);
         }
         break;
       default:
-        echo("Menüpont: egyéb");
+        echo("Főoldal<br />");
         break;
     }
   }
 
 
 
-  # vezérlő
-  function main(){
-    global $fwsql,$fwsqlm;
+  # app előkésztés: cookie, felhasználó, menürendszer
+  function appstart(){
+    global $fwcfg,$fwsql,$fwsqlm;
+
+    # cookie betöltése
+    $this->cookie_load();
+
+    # cookie beállítása
+    # felhasználó
+    $cuser=$this->APP_COOKIE[0];
+
+    # felhasználó ellenőrzése
+    if (($this->APP_USER_NAME<>"")and($this->APP_USER_PW<>"")){
+      # felhasználó ellenőrzése
+      if ($fwsqlm->check_user($this->APP_USER_NAME,$this->APP_USER_PW)){
+        $cuser[1]=$this->APP_USER_NAME;
+        $this->APP_COOKIE[0]=$cuser;
+      }else{
+        $cuser[1]="";
+        $this->APP_USER_NAME="";
+        $this->APP_MENU_ACT=999;
+      }
+    }else{
+      if ($cuser[1]<>""){
+        if ($fwsqlm->check_user_name($cuser[1])){
+          $this->APP_USER_NAME=$cuser[1];
+        }else{
+          $cuser[1]="";
+          $this->APP_USER_NAME="";
+          $this->APP_MENU_ACT=999;
+        }
+      }
+    }
 
     # cookie mentése
-    $c=$this->APP_COOKIE[0];
-    $c[1]=$this->APP_MENU_ACT;
-    $this->APP_COOKIE[0]=$c;
     $this->cookie_set();
 
+    # echo($cuser[1]."-".$this->APP_USER_NAME);
+    $fwsqlm->set_user_role($this->APP_USER_NAME,$this->APP_USER_ROLE);
+    if ($this->APP_USER_ROLE==="0"){
+      $fwcfg->FW_ADMIN_MODE=true;
+    }
     # menüoldal beállítása
     $l=$this->APP_MENU_LETTER;
     if (isset($_GET["$l"])){
@@ -193,9 +206,9 @@ class fw_app{
     $file=$fwcfg->{'FW_FS_MAIN_DIR'}."/".$fwcfg->{'FW_MEDIA_DIR'}."/".$this->APP_NAME;
     dir_backup($filesql,$fwcfg->{'FW_DEV_MODE'});
   }
-  
-  
-  
+
+
+
   # adat és fájlmentés
   function app_restore(){
     global $fwcfg,$fwsql;

@@ -61,6 +61,26 @@ class fw_sqlm{
 
 
 
+  # verzió ellenőrzése
+  function version_check(){
+    global $fwsql,$fwapp,$fwtemp;
+
+    $r=$this->get_param($fwapp->APP_VERSION_STR);
+    if ($r===""){
+      $this->save_param($fwapp->APP_VERSION_STR,"$fwapp->APP_VERSION");
+    }
+    $r=$this->get_param($fwsql->SQL_VERSION_STR);
+    if ($r===""){
+      $this->save_param($fwsql->SQL_VERSION_STR,"$fwsql->SQL_VERSION");
+    }
+    $r=$this->get_param($fwtemp->TEMP_VERSION_STR);
+    if ($r===""){
+      $this->save_param($fwtemp->TEMP_VERSION_STR,"$fwtemp->TEMP_VERSION");
+    }
+  }
+
+
+
   # paraméter mentése
   function save_param($name="",$data=""){
     global $fwsql;
@@ -95,13 +115,14 @@ class fw_sqlm{
 
 
   # felhasználó mentése
-  function save_user($uname="",$upass="",$urole,$text=""){
+  function save_user($uname="",$upass="",$urole="",$text=""){
     global $fwsql;
 
+    $upass=$this->pw($upass);
     $sql="SELECT * FROM $this->SQL_TABLE_USERS WHERE uname='$uname';";
     if ($fwsql->sql_run($sql)){
       if (count($fwsql->SQL_RESULT)>0){
-        $sql="UPDATE $this->SQL_TABLE_USERS SET upass=$upass,urole=$urole,text='$text' WHERE uname='$uname';";
+        $sql="UPDATE $this->SQL_TABLE_USERS SET upass='$upass',urole='$urole',text='$text' WHERE uname='$uname';";
       }else{
         $sql="INSERT INTO $this->SQL_TABLE_USERS (uname,upass,urole,text) VALUES ('$uname','$upass','$urole','$text');";
       }
@@ -127,15 +148,29 @@ class fw_sqlm{
 
 
 
+  # felhasználó szerep beállítása
+  function set_user_role($uname="",&$urole=""){
+    global $fwsql;
+
+    $sql="SELECT * FROM $this->SQL_TABLE_USERS WHERE uname='$uname';";
+    if ($fwsql->sql_run($sql)){
+      $r=$fwsql->SQL_RESULT[0];
+      $urole=$r[2];
+    }
+  }
+
+
+
   # felhasználó ellenőrzése
-  function check_user($uname="",$upasss=""){
+  function check_user($uname="",$upass=""){
     global $fwsql;
 
     $r=false;
     if (($uname<>"")and($upass<>"")){
-      $sql="SELECT * FROM $this->SQL_TABLE_USERS WHERE uname='$uname',upass='$upass';";
+      $up=$this->pw($upass);
+      $sql="SELECT * FROM $this->SQL_TABLE_USERS WHERE uname='$uname' and upass='$up';";
       if ($fwsql->sql_run($sql)){
-        if (count($fwsql->SQL_RESULT)>1){
+        if (count($fwsql->SQL_RESULT)>0){
           $r=true;
         }
       }
@@ -145,7 +180,35 @@ class fw_sqlm{
 
 
 
+  # felhasználó ellenőrzése
+  function check_user_name($uname=""){
+    global $fwsql;
+
+    $r=false;
+    if ($uname<>""){
+      $sql="SELECT * FROM $this->SQL_TABLE_USERS WHERE uname='$uname';";
+      if ($fwsql->sql_run($sql)){
+        if (count($fwsql->SQL_RESULT)>0){
+          $r=true;
+        }
+      }
+    }
+    return($r);
+  }
+
+
+
+  # jelszókezelés
+  function pw($upass=""){
+    $r=md5($upass);
+    return($r);
+  }
+
+
+
 }
+
+
 
 
 ?>

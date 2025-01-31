@@ -18,7 +18,9 @@ function starturl($dir=__DIR__){
   }else{
     $r=$r."http://";
   }
-  $r=$r.$_SERVER['HTTP_HOST'];
+  if (isset($_SERVER['HTTP_HOST'])){
+    $r=$r.$_SERVER['HTTP_HOST'];
+  }
   if (!empty($_SERVER['CONTEXT_PREFIX'])){
     $r=$r.$_SERVER['CONTEXT_PREFIX'];
     $r=$r.substr($dir,strlen($_SERVER['CONTEXT_DOCUMENT_ROOT'])+1);

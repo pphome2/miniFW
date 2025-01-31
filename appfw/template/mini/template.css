@@ -11,6 +11,19 @@ a {
 }
 
 
+.lbox{
+  position:relative;
+  display:block;
+  margin-left:30%;
+  margin-top:10%;
+  width:40%;
+  max-width:40%;
+  background-color:gray;
+  border:1px solid lightgray;
+  border-radius:1%;
+  padding:2%;
+}
+
 .all-page {
 	display: flex;
 	flex-direction: column;
@@ -421,6 +434,10 @@ input[type=submit]:hover {
 
 .spaceline100 {
 	padding-top:100px;
+}
+
+.placeholder {
+	padding-top:2em;
 }
 
 .privacybutton {

@@ -11,6 +11,7 @@
 class mini{
   # verzió adatok
   public $TEMP_VERSION="0";
+  public $TEMP_VERSION_STR="TEMP_VERSION";
   public $TEMP_TITLE="appfw";
   # include files
   public $TEMP_FAVICON="";
@@ -32,6 +33,19 @@ class mini{
     $this->TEMP_TITLE=$t;
     $this->TEMP_FAVICON=$fi;
     $this->TEMP_DIR=$td;
+  }
+
+
+
+  # beérkező adatok feldolgozása
+  function postdata(){
+    global $fwapp;
+
+    if (isset($_POST['uname'])and(isset($_POST['upass']))and
+       ($_POST['uname']<>"")and($_POST['upass']<>"")){
+      $fwapp->APP_USER_NAME=$_POST['uname'];
+      $fwapp->APP_USER_PW=$_POST['upass'];
+    }
   }
 
 
@@ -67,14 +81,6 @@ class mini{
 
 
 
-  # lap lezárás
-  function pageend(){
-    echo("</body>\n");
-    echo("</html>\n");
-  }
-
-
-
   # fejrész
   function header(){
     global $fwapp,$fwlang;
@@ -83,6 +89,7 @@ class mini{
     echo("<header>\n");
     echo("<div class=\"menu\">");
     echo("<ul class=\"sidenav\">");
+    echo("<li><a href=\"?\"> [ $fwapp->APP_NAME ] </a></li>");
     $i=0;
     foreach($fwapp->APP_MENU as $l){
       if (($i+1)<>$fwapp->APP_MENU_ACT){
@@ -92,29 +99,33 @@ class mini{
       }
       $i++;
     }
+    if ($fwapp->APP_USER_NAME<>""){
+      $c=$fwapp->APP_COOKIE[0];
+      echo("<li class=\"liright\">");
+      echo("<a href=? onclick=\"document.cookie='".$c[0]."=; expires=passedDate';\">".$fwlang->lang("Kilépés")." [ $fwapp->APP_USER_NAME ]</a>");
+      echo("</li>");
+    }
     echo("</ul>");
     echo("</div>");
     echo("</header>\n");
     echo("<div class=\"content\">");
+
+    # bejelentkezés kezelése
     if (($fwapp->APP_USER_LOGIN)and($fwapp->APP_USER_NAME==="")){
-      if (isset($_POST['uname'])and(isset($_POST['upass']))and
-         ($_POST['uname']<>"")and($_POST['upass']<>"")){
-        $fwapp->APP_USER_NAME=$_POST['uname'];
-        $fwapp->APP_USER_PW=$_POST['upass'];
-      }else{
-        echo("<form id=db0 method=\"post\">");
-        echo("<div class=spaceline100></div>");
-        echo("<div class=spaceline100></div>");
-        echo("<label for=\"0\">".$fwlang->lang("Felhasználónév").":</label><br>");
-        echo("<input type=\"text\" id=\"uname\" name=\"uname\" placeholder=\"\" value=\"\"><br>");
-        echo("<br />");
-        echo("<label for=\"1\">".$fwlang->lang("Felhasználónév").":</label><br>");
-        echo("<input type=\"password\" id=\"upass\" name=\"upass\" placeholder=\"\" value=\"\"><br>");
-        echo("<br />");
-        echo("<br /><br />");
-        echo("<input type=submit id=\"db\" name=\"db\" value=\"".$fwlang->lang("Mehet")."\">");
-        echo("</form>");
-      }
+      echo("<div class=lbox>");
+      echo("<form id=db0 method=\"post\">");
+      echo("<div class=prlaceholder></div>");
+      echo("<label for=\"0\">".$fwlang->lang("Felhasználónév").":</label><br>");
+      echo("<input type=\"text\" id=\"uname\" name=\"uname\" placeholder=\"\" value=\"\"><br>");
+      echo("<br />");
+      echo("<label for=\"1\">".$fwlang->lang("Jelszó").":</label><br>");
+      echo("<input type=\"password\" id=\"upass\" name=\"upass\" placeholder=\"\" value=\"\"><br>");
+      echo("<br />");
+      echo("<div class=prlaceholder></div>");
+      echo("<input type=submit id=\"db\" name=\"db\" value=\"".$fwlang->lang("Mehet")."\">");
+      echo("</form>");
+      echo("<div class=prlaceholder></div>");
+      echo("</div>");
     }
   }
 
@@ -135,13 +146,21 @@ class mini{
       echo("</a></li>");
     }else{
       echo("<li class=\"liright\"><a href=\"?$fwcfg->FW_ADMIN_LINK=x\">");
-      echo($fwlang->lang("Belépés"));
-      echo(" [ ".$fwcfg->FW_ADMIN_LINK." ]");
+      #echo($fwlang->lang("Belépés"));
+      echo(" [ ".$fwcfg->FW_ADMIN_LINK." ] ");
       echo("</a></li>");
     }
     echo("</ul>");
     echo("</div>\n");
     echo("</footer>");
+  }
+
+
+
+  # lap lezárás
+  function pageend(){
+    echo("</body>\n");
+    echo("</html>\n");
   }
 
 
