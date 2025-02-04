@@ -21,9 +21,18 @@ class mini{
 
 
   function __construct($t="",$fi="",$td=""){
+    global $fwapp;
+
     $this->TEMP_TITLE=$t;
     $this->TEMP_FAVICON=$fi;
     $this->TEMP_DIR=$td;
+
+    # beérkező adatok ellenőrzése
+    if (isset($_POST['uname'])and(isset($_POST['upass']))and
+       ($_POST['uname']<>"")and($_POST['upass']<>"")){
+      $fwapp->APP_USER_NAME=$_POST['uname'];
+      $fwapp->APP_USER_PW=$_POST['upass'];
+    }
   }
 
 
@@ -39,19 +48,31 @@ class mini{
 
   # beérkező adatok feldolgozása
   function postdata(){
-    global $fwapp;
+  }
 
-    if (isset($_POST['uname'])and(isset($_POST['upass']))and
-       ($_POST['uname']<>"")and($_POST['upass']<>"")){
-      $fwapp->APP_USER_NAME=$_POST['uname'];
-      $fwapp->APP_USER_PW=$_POST['upass'];
-    }
+
+
+  # template frissítés
+  function temp_update($oldver=""){
+    global $fwsqlm;
+
+    #echo("FRISSÍTÉS - $oldver - $his->SQL_VERSION");
+    $fwsqlm->save_param($this->TEMP_VERSION_STR,$his->TEMP_VERSION);
   }
 
 
 
   # fejrész
-  function pagehead(){
+  function page_start(){
+    global $fwsqlm;
+
+    # frissítés ellenőrzése
+    $ver=$fwsqlm->get_param($this->TEMP_VERSION_STR);
+    if ($ver<>$this->TEMP_VERSION){
+      $this->temp_update($ver);
+    }
+
+    # oldal fejrész
     echo("<!DOCTYPE html>\n");
     echo("<html lang=\"hu\">\n");
     echo("<head>\n");
@@ -158,7 +179,7 @@ class mini{
 
 
   # lap lezárás
-  function pageend(){
+  function page_end(){
     echo("</body>\n");
     echo("</html>\n");
   }

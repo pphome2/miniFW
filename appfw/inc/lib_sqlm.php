@@ -72,11 +72,42 @@ class fw_sqlm{
     $r=$this->get_param($fwsql->SQL_VERSION_STR);
     if ($r===""){
       $this->save_param($fwsql->SQL_VERSION_STR,"$fwsql->SQL_VERSION");
+    }else{
+      if ($r<>$fwsql->SQL_VERSION){
+        $this->sql_update($r);
+      }
     }
     $r=$this->get_param($fwtemp->TEMP_VERSION_STR);
     if ($r===""){
       $this->save_param($fwtemp->TEMP_VERSION_STR,"$fwtemp->TEMP_VERSION");
     }
+  }
+
+
+
+  # sql frissítés
+  function sql_update($oldver=""){
+    global $fwsqlm;
+
+    #echo("FRISSÍTÉS - $oldver - $his->SQL_VERSION");
+    $this->save_param($this->SQL_VERSION_STR,$his->SQL_VERSION);
+    $p=$this->pw("admin");
+  }
+
+
+
+  # verzió kiírás
+  function versions(){
+    global $fwcfg,$fwsql,$fwapp,$fwtemp;
+
+    $r=$this->get_param($fwcfg->FW_VERSION_STR);
+    echo("$fwcfg->FW_VERSION_STR - $fwcfg->FW_VERSION<br />");
+    $r=$this->get_param($fwsql->SQL_VERSION_STR);
+    echo("$fwsql->SQL_VERSION_STR - $fwsql->SQL_VERSION<br />");
+    $r=$this->get_param($fwapp->APP_VERSION_STR);
+    echo("$fwapp->APP_VERSION_STR - $fwapp->APP_VERSION<br />");
+    $r=$this->get_param($fwtemp->TEMP_VERSION_STR);
+    echo("$fwtemp->TEMP_VERSION_STR - $fwtemp->TEMP_VERSION<br />");
   }
 
 
@@ -167,11 +198,11 @@ class fw_sqlm{
 
     $r=false;
     if (($uname<>"")and($upass<>"")){
-      $up=$this->pw($upass);
-      $sql="SELECT * FROM $this->SQL_TABLE_USERS WHERE uname='$uname' and upass='$up';";
+      $sql="SELECT * FROM $this->SQL_TABLE_USERS WHERE uname='$uname';";
       if ($fwsql->sql_run($sql)){
         if (count($fwsql->SQL_RESULT)>0){
-          $r=true;
+          $u=$fwsql->SQL_RESULT[0];
+          $r=$this->pwchk($upass,$u[2]);
         }
       }
     }
@@ -200,7 +231,17 @@ class fw_sqlm{
 
   # jelszókezelés
   function pw($upass=""){
-    $r=md5($upass);
+    $r=password_hash($upass,PASSWORD_DEFAULT);
+    return($r);
+  }
+
+
+
+  # jelszó ellenőrzése
+  function pwchk($upass="",$stpass=""){
+    $r=password_verify("$upass","$stpass");
+    #if($r){echo("OK");}
+    #echo("$upass - $stpass");
     return($r);
   }
 

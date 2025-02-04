@@ -19,7 +19,7 @@ class fw_app{
   public $APP_CONTENT_DIR="";
   public $APP_JS="app.js";
   public $APP_CSS="app.css";
-  public $APP_FILES=array();
+  public $APP_FILES=array("app_a.php");
 
   # beállítások
   public $APP_TITLE="Tesztelő app";
@@ -28,6 +28,7 @@ class fw_app{
   public $APP_MENU_LETTER="m";
 
   # felhasználó
+  public $APP_USER_ADMIN="appfwadmin";
   public $APP_USER_NAME="";
   public $APP_USER_PW="";
   public $APP_USER_ROLE="";
@@ -68,14 +69,19 @@ class fw_app{
                         array("appfw-x","",1)
                       );
 
-    # tesz felhasználó
-    $fwsqlm->save_user("admin",password_hash("admin",PASSWORD_DEFAULT),0,"text");
+    # admin felhasználó
+    if ($fwsqlm->get_user($this->APP_USER_ADMIN)===""){
+      $pass=$this->APP_NAME.date('Ym');
+      $fwsqlm->save_user($this->APP_USER_ADMIN,$pass,0,"Admin felhasználó");
+      #echo("$this->APP_USER_ADMIN - $pass");
+    }
   }
 
 
 
   # vezérlő
   function main(){
+    global $fw_app_admin;
     $this->load_js_css();
     switch($this->APP_MENU_ACT){
       case 1:
@@ -95,8 +101,10 @@ class fw_app{
         break;
       case 4:
         if ($this->APP_USER_NAME<>""){
-          echo("Menüpont: 4 - belépve - ADMIN<br />");
-          echo($this->APP_USER_NAME);
+          $fwappadmin=new fw_app_admin();
+          if (method_exists($fwappadmin,'main')){
+            $fwappadmin->main();
+          }
         }
         break;
       default:
@@ -144,6 +152,12 @@ class fw_app{
     # cookie mentése
     $this->cookie_set();
 
+    # frissítés ellenőrzése
+    $ver=$fwsqlm->get_param($this->APP_VERSION_STR);
+    if ($ver<>$this->APP_VERSION){
+      $this->app_update($ver);
+    }
+
     # echo($cuser[1]."-".$this->APP_USER_NAME);
     $fwsqlm->set_user_role($this->APP_USER_NAME,$this->APP_USER_ROLE);
     if ($this->APP_USER_ROLE==="0"){
@@ -172,6 +186,21 @@ class fw_app{
         default:
           break;
       }
+    }
+  }
+
+
+
+  # az app frissítése
+  function app_update($oldver=""){
+    global $fwsqlm;
+
+    #echo("FRISSÍTÉS - $oldver - $his->APP_VERSION");
+    $fwsqlm->save_param($this->APP_VERSION_STR,$his->APP_VERSION);
+    if ($fwsqlm->get_user($this->APP_USER_ADMIN)===""){
+      $pass=$this->APP_NAME.date('Ym');
+      $fwsqlm->save_user($this->APP_USER_ADMIN,$pass,0,"Admin felhasználó");
+      #echo("$this->APP_USER_ADMIN - $pass");
     }
   }
 
