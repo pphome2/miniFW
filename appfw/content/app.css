@@ -1,22 +1,62 @@
 
-.placeh{
+.formbox {
+  position:relative;
+  display:block;
+  margin-left:20%;
+  width:60%;
+  max-width:60%;
+  bborder:1px solid lightgray;
+  bborder-radius:1%;
+  padding:2%;
+}
+
+.placeh {
   padding-top:2em;
 }
 
+.newbutton {
+  width:5%;
+  margin-left:5%;
+}
+
+.pagerbutton {
+  margin:5px;
+}
+
+.pagerbutton:disabled {
+  color:black;
+}
+
+.pagerform {
+  width:5%;
+  max-width:5%;
+  margin:5px;
+}
+
+.pagerline {
+  width:90%;
+  max-width:90%;
+  margin-left:5%;
+  margin-right:5%;
+  float:right;
+  display:flex;
+  justify-content:flex-end;
+}
+
 .frow {
-  width: 100%;
-  float: left;
+  width:100%;
+  float:left;
 }
 
 .fcol1 {
-  width: 20%;
-  float: left;
-  margin-top: 20px;
+  width:20%;
+  float:left;
+  margin-top:20px;
 }
 
 .fcol2 {
-  width: 80%;
-  float: left;
+  width:80%;
+  float:left;
 }
 
 .tbutton{
@@ -102,32 +142,5 @@
   color:white;
   text-align:center;
   padding:10px;
-}
-
-.colx2{
-  width:50%;
-  margin:20px;
-  float:left;
-}
-
-.colx1{
-  width:25%;
-  margin:20px;
-  float:left;
-}
-
-.pcol1{
-  width:50%;
-  float:left;
-}
-
-.pcol2{
-  width:25%;
-  float:left;
-}
-
-.pagerform{
-  margin:0px;
-  padding:0px;
 }
 

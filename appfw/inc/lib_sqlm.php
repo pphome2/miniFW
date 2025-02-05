@@ -129,6 +129,23 @@ class fw_sqlm{
 
 
 
+  # paraméter mentése id alapján
+  function save_param_id($id="",$name="",$data=""){
+    global $fwsql;
+
+    $sql="SELECT * FROM $this->SQL_TABLE_PARAM WHERE id='$id';";
+    if ($fwsql->sql_run($sql)){
+      if (count($fwsql->SQL_RESULT)>0){
+        $sql="UPDATE $this->SQL_TABLE_PARAM SET name='$name',text='$data' WHERE id='$id';";
+      }else{
+        $sql="INSERT INTO $this->SQL_TABLE_PARAM (name,text) VALUES ('$name','$data');";
+      }
+      $fwsql->sql_run($sql);
+    }
+  }
+
+
+
   # paraméter beolvasása
   function get_param($name=""){
     global $fwsql;
@@ -149,13 +166,45 @@ class fw_sqlm{
   function save_user($uname="",$upass="",$urole="",$text=""){
     global $fwsql;
 
-    $upass=$this->pw($upass);
     $sql="SELECT * FROM $this->SQL_TABLE_USERS WHERE uname='$uname';";
     if ($fwsql->sql_run($sql)){
       if (count($fwsql->SQL_RESULT)>0){
-        $sql="UPDATE $this->SQL_TABLE_USERS SET upass='$upass',urole='$urole',text='$text' WHERE uname='$uname';";
+        if (($upass==="")or(strlen($upass)===60)){
+          $d=$fwsql->SQL_RESULT[0];
+          $upass=$d[2];
+        }else{
+          $upass=$this->pw($upass);
+        }
+        $ur=(int)$urole;
+        $sql="UPDATE $this->SQL_TABLE_USERS SET upass='$upass',urole='$ur',text='$text' WHERE uname='$uname';";
       }else{
-        $sql="INSERT INTO $this->SQL_TABLE_USERS (uname,upass,urole,text) VALUES ('$uname','$upass','$urole','$text');";
+        $ur=(int)$urole;
+        $sql="INSERT INTO $this->SQL_TABLE_USERS (uname,upass,urole,text) VALUES ('$uname','$upass','$ur','$text');";
+      }
+      $fwsql->sql_run($sql);
+    }
+  }
+
+
+
+  # felhasználó mentése
+  function save_user_id($id="",$uname="",$upass="",$urole="",$text=""){
+    global $fwsql;
+
+    $sql="SELECT * FROM $this->SQL_TABLE_USERS WHERE id='$id';";
+    if ($fwsql->sql_run($sql)){
+      if (count($fwsql->SQL_RESULT)>0){
+        if (($upass==="")or(strlen($upass)===60)){
+          $d=$fwsql->SQL_RESULT[0];
+          $upass=$d[2];
+        }else{
+          $upass=$this->pw($upass);
+        }
+        $ur=(int)$urole;
+        $sql="UPDATE $this->SQL_TABLE_USERS SET uname='$uname',upass='$upass',urole='$ur',text='$text' WHERE id='$id';";
+      }else{
+        $ur=(int)$urole;
+        $sql="INSERT INTO $this->SQL_TABLE_USERS (uname,upass,urole,text) VALUES ('$uname','$upass','$ur','$text');";
       }
       $fwsql->sql_run($sql);
     }

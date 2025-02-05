@@ -41,6 +41,9 @@ class fw_app{
   # cookie
   public $APP_COOKIE=array();
 
+  # egyéb beállítások
+  public $APP_TABLE_ROW=2;
+
 
 
   function __construct($appdir=""){
