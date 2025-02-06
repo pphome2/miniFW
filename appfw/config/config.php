@@ -29,6 +29,7 @@ class fw_config{
   public $FW_PLUGIN_DIR="plugins";
   public $FW_TMP_DIR="tmp";
   public $FW_FS_MAIN_DIR="";
+  public $FW_URI_MAIN_DIR="";
 
   # nyelvi fájl
   public $FW_LANGFILE="lang-hu_HU.php";

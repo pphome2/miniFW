@@ -10,6 +10,9 @@
 
 class fw_app_admin{
 
+  public $ADMIN_PAGE=0;
+  public $ADMIN_TABLE_ROW=10;
+
 
 
   function __construct(){
@@ -19,21 +22,104 @@ class fw_app_admin{
 
   # vezérlő
   function main(){
-    $form=true;;
-    if (isset($_POST['nextp'])or(isset($_POST['delp']))){
-      $form=$this->admin_mod_param();
+    global $fwapp,$fwlang;
+
+    if ($fwapp->APP_USER_ROLE<>"0"){
+      echo($fwlang->lang("Nem megfelelő jogosultság."));
+    }else{
+      if (isset($_POST['page1'])){
+        $p1=$_POST['page1'];
+      }else{
+        $p1=0;
+      }
+      if (isset($_POST['page2'])){
+        $p2=$_POST['page2'];
+      }else{
+        $p2=0;
+      }
+      echo("<div class=\"amenuline\">");
+      echo("<form class=adminmenuform method=post>");
+      echo("<input type=hidden id=page1 name=page1 value=\"$p1\">");
+      echo("<input type=hidden id=page2 name=page2 value=\"$p2\">");
+      echo("<input type=hidden id=adminpage name=adminpage value=\"0\">");
+      echo("<input type=submit class=menubutton d=menu name=menu value=\"".$fwlang->lang("Felhasználók")."\">");
+      echo("</form>");
+      echo("<form class=adminmenuform method=post>");
+      echo("<input type=hidden id=page1 name=page1 value=\"$p1\">");
+      echo("<input type=hidden id=page2 name=page2 value=\"$p2\">");
+      echo("<input type=hidden id=adminpage name=adminpage value=\"1\">");
+      echo("<input type=submit class=menubutton id=menu name=menu value=\"".$fwlang->lang("Paraméterek")."\">");
+      echo("</form>");
+      echo("<form class=adminmenuform method=post>");
+      echo("<input type=hidden id=page1 name=page1 value=\"$p1\">");
+      echo("<input type=hidden id=page2 name=page2 value=\"$p2\">");
+      echo("<input type=hidden id=adminpage name=adminpage value=\"2\">");
+      echo("<input class=\"pagerbutton\" type=submit id=menu name=menu value=\"".$fwlang->lang("Mentés")."\">");
+      echo("</form>");
+      echo("</div>");
+      if (isset($_POST['adminpage'])){
+        $this->ADMIN_PAGE=$_POST['adminpage'];
+      }
+      $form=true;
+      $m=$this->ADMIN_PAGE;
+      switch($m){
+        case 0:
+          if (isset($_POST['nextu'])or(isset($_POST['delu']))){
+            $form=$this->admin_mod_user();
+          }
+          if (isset($_POST['newu'])){
+            $form=$this->admin_new_user();
+          }
+          if ($form){
+            $this->admin_table_user();
+          }
+          break;
+        case 1:
+          if (isset($_POST['nextp'])or(isset($_POST['delp']))){
+            $form=$this->admin_mod_param();
+          }
+          if (isset($_POST['newp'])){
+            $form=$this->admin_new_param();
+          }
+          if ($form){
+            $this->admin_table_param();
+          }
+          break;
+        case 2:
+          $this->admin_backup();
+          break;
+        default:
+          break;
+      }
     }
-    if (isset($_POST['nextu'])or(isset($_POST['delu']))){
-      $form=$this->admin_mod_user();
-    }
-    if (isset($_POST['newp'])){
-      $form=$this->admin_new_param();
-    }
-    if (isset($_POST['newu'])){
-      $form=$this->admin_new_user();
-    }
-    if ($form){
-      $this->admin_table();
+  }
+
+
+
+  # mentés
+  function admin_backup(){
+    global $fwlang,$fwsql,$fwsqlm,$fwapp,$fwcfg;
+
+    echo("<div class=placeh></div>");
+    echo("<h3>".$fwlang->lang("Mentés")."</h3>");
+    echo("<div class=placeh></div>");
+    if (!isset($_POST['backup'])){
+      echo("<div class=formbox>");
+      echo("<form method=post>");
+      echo("<input type=hidden id=adminpage name=adminpage value=\"2\">");
+      echo("<input type=submit id=backup name=backup value=\"".$fwlang->lang("Mentés indítása")."\">");
+      echo("</div>");
+    }else{
+      echo("<div class=placeh></div>");
+      echo("<div class=formbox>");
+      $fwsqlm->SQL_TABLE_APP[]="afw_param";
+      $fwapp->app_backup();
+      $filesql=$fwcfg->FW_URI_MAIN_DIR."/".$fwcfg->FW_MEDIA_DIR."/".$fwcfg->FW_SQL_DB.".sql";
+      $file=$fwcfg->FW_URI_MAIN_DIR."/".$fwcfg->FW_MEDIA_DIR."/".$fwapp->APP_NAME.".tar.gz";
+      echo("<div class=placeh></div>");
+      echo("<a href=\"$filesql\"><input type=submit id=backup name=backup value=\"".$fwlang->lang("SQL mentés letöltése")."\"></a>");
+      echo("<a href=\"$file\"><input type=submit id=backup name=backup value=\"".$fwlang->lang("Fájlmentés letöltése")."\"></a>");
+      echo("</div>");
     }
   }
 
@@ -118,6 +204,7 @@ class fw_app_admin{
     echo("<input type=\"text\" id=\"ptext\" name=\"ptext\" placeholder=\"\" value=\"$pt\"><br>");
     echo("<input type=hidden id=page1 name=page1 value=\"$p1\">");
     echo("<input type=hidden id=page2 name=page2 value=\"$p2\">");
+    echo("<input type=hidden id=adminpage name=adminpage value=\"$this->ADMIN_PAGE\">");
     echo("<input type=hidden id=id name=id value=\"$id\">");
     echo("<div class=placeh></div>");
     if ($id<>""){
@@ -204,6 +291,7 @@ class fw_app_admin{
     echo("<input type=\"text\" id=\"autext\" name=\"autext\" placeholder=\"\" value=\"$ut\"><br>");
     echo("<input type=hidden id=page1 name=page1 value=\"$p1\">");
     echo("<input type=hidden id=page2 name=page2 value=\"$p2\">");
+    echo("<input type=hidden id=adminpage name=adminpage value=\"$this->ADMIN_PAGE\">");
     echo("<input type=hidden id=id name=id value=\"$id\">");
     echo("<div class=placeh></div>");
     if ($id<>""){
@@ -221,8 +309,8 @@ class fw_app_admin{
 
 
 
-  # adattáblák
-  function admin_table(){
+  # paraméter adattábla
+  function admin_table_param(){
     global $fwlang,$fwsql,$fwsqlm,$fwapp;
 
     if (isset($_POST['page1'])){
@@ -244,6 +332,7 @@ class fw_app_admin{
       echo("<form method=post>");
       echo("<input type=hidden id=page1 name=page1 value=\"$p1\">");
       echo("<input type=hidden id=page2 name=page2 value=\"$p2\">");
+      echo("<input type=hidden id=adminpage name=adminpage value=\"$this->ADMIN_PAGE\">");
       echo("<input type=submit id=newp name=newp value=\"+\">");
       echo("</form>");
       echo("</div>");
@@ -255,14 +344,16 @@ class fw_app_admin{
       echo("<th class='df_th4'>".$fwlang->lang("Törlés / Módosítás")."</th>");
       echo("</tr>");
       $db=count($fwsql->SQL_RESULT);
-    echo("$db - $p1 - $p2<br />");
       if ($p1>0){
         $ind=$p1-1;
       }else{
         $ind=0;
       }
-      $st1=$ind*$fwapp->APP_TABLE_ROW;
-      $st2=$st1+$fwapp->APP_TABLE_ROW;
+      $st1=$ind*$this->ADMIN_TABLE_ROW;
+      if($st1>$db){
+        $st1=0;
+      }
+      $st2=$st1+$this->ADMIN_TABLE_ROW;
       if($st2>$db){
         $st2=$db;
       }
@@ -282,6 +373,7 @@ class fw_app_admin{
         echo("<form method=post>");
         echo("<input type=hidden id=page1 name=page1 value=\"$p1\">");
         echo("<input type=hidden id=page2 name=page2 value=\"$p2\">");
+        echo("<input type=hidden id=adminpage name=adminpage value=\"$this->ADMIN_PAGE\">");
         echo("<input type=hidden id=id name=id value=\"$s[0]\">");
         echo("<input type=submit id=nextp name=nextp class=\"\" value=\"&gt;&gt;\">");
         echo("</form>");
@@ -291,11 +383,29 @@ class fw_app_admin{
       }
       echo("</table>");
       echo("<div class=placeh></div>");
-      $c=$this->pager($db,$fwapp->APP_TABLE_ROW,$p1,"page1",$p2,"page2");
+      $c=$this->pager($db,$this->ADMIN_TABLE_ROW,$p1,"page1",$p2,"page2");
       echo($c);
       echo("<div class=placeh></div>");
     }
     echo("<div class=placeh></div>");
+  }
+
+
+
+  # felhasználó adattábla
+  function admin_table_user(){
+    global $fwlang,$fwsql,$fwsqlm,$fwapp;
+
+    if (isset($_POST['page1'])){
+      $p1=$_POST['page1'];
+    }else{
+      $p1=0;
+    }
+    if (isset($_POST['page2'])){
+      $p2=$_POST['page2'];
+    }else{
+      $p2=0;
+    }
     $t=$fwsqlm->SQL_TABLE_SYS[1];
     $sql="SELECT * from $t;";
     if ($fwsql->sql_run($sql)){
@@ -305,26 +415,29 @@ class fw_app_admin{
       echo("<form method=post>");
       echo("<input type=hidden id=page1 name=page1 value=\"$p1\">");
       echo("<input type=hidden id=page2 name=page2 value=\"$p2\">");
+      echo("<input type=hidden id=adminpage name=adminpage value=\"$this->ADMIN_PAGE\">");
       echo("<input type=submit id=newu name=newu value=\"+\">");
       echo("</form>");
       echo("</div>");
       echo("<table class='df_table' id=utable>");
       echo("<tr class='df_trh'>");
       echo("<th class='df_th4'>".$fwlang->lang("ID")."</th>");
-      echo("<th class='df_th'>".$fwlang->lang("Név")."</th>");
+      echo("<th class='df_th2'>".$fwlang->lang("Név")."</th>");
       echo("<th class='df_th4'>".$fwlang->lang("Szerepkör")."</th>");
       echo("<th class='df_th'>".$fwlang->lang("Információ")."</th>");
       echo("<th class='df_th4'>".$fwlang->lang("Törlés / Módosítás")."</th>");
       echo("</tr>");
       $db=count($fwsql->SQL_RESULT);
-    echo("$db - $p1 - $p2<br />");
       if ($p2>0){
         $ind=$p2-1;
       }else{
         $ind=0;
       }
-      $st1=$ind*$fwapp->APP_TABLE_ROW;
-      $st2=$st1+$fwapp->APP_TABLE_ROW;
+      $st1=$ind*$this->ADMIN_TABLE_ROW;
+      if($st1>$db){
+        $st1=0;
+      }
+      $st2=$st1+$this->ADMIN_TABLE_ROW;
       if($st2>$db){
         $st2=$db;
       }
@@ -347,6 +460,7 @@ class fw_app_admin{
         echo("<form method=post>");
         echo("<input type=hidden id=page1 name=page1 value=\"$p1\">");
         echo("<input type=hidden id=page2 name=page2 value=\"$p2\">");
+        echo("<input type=hidden id=adminpage name=adminpage value=\"$this->ADMIN_PAGE\">");
         echo("<input type=hidden id=id name=id value=\"$s[0]\">");
         echo("<input type=submit id=nextu name=nextu value=\"&gt;&gt;\">");
         echo("</form>");
@@ -356,7 +470,7 @@ class fw_app_admin{
       }
       echo("</table>");
       echo("<div class=placeh></div>");
-      $c=$this->pager($db,$fwapp->APP_TABLE_ROW,$p2,"page2",$p1,"page1");
+      $c=$this->pager($db,$this->ADMIN_TABLE_ROW,$p2,"page2",$p1,"page1");
       echo($c);
       echo("<div class=placeh></div>");
     }
@@ -366,7 +480,7 @@ class fw_app_admin{
 
 
   # lapozó felhasználói felületen
-  function pager($db=0,$row=0,$apage=0,$formid="",$apage2="",$formid2="",$little=false){
+  function pager($db=0,$row=1,$apage=0,$formid="",$apage2="",$formid2="",$little=false){
     global $fwlang;
 
     $content="";
@@ -378,11 +492,13 @@ class fw_app_admin{
         $content=$content."<form class=\"pagerform\" method=\"post\">";
         $content=$content."<input type=\"hidden\" id=\"$formid\" name=\"$formid\" value=\"1\">";
         $content=$content."<input type=\"hidden\" id=\"$formid2\" name=\"$formid2\" value=\"$apage2\">";
+        $content=$content."<input type=hidden id=adminpage name=adminpage value=\"$this->ADMIN_PAGE\">";
         $content=$content."<input class=\"pagerbutton\" type=\"submit\" id=\"$formid$i\" name=\"$formid$i\" value=\"".$fwlang->lang("Első")."\">";
         $content=$content."</form>";
         $content=$content."<form class=\"pagerform\" method=\"post\">";
         $content=$content."<input type=\"hidden\" id=\"$formid\" name=\"$formid\" value=\"$i\">";
         $content=$content."<input type=\"hidden\" id=\"$formid2\" name=\"$formid2\" value=\"$apage2\">";
+        $content=$content."<input type=hidden id=adminpage name=adminpage value=\"$this->ADMIN_PAGE\">";
         $content=$content."<input class=\"pagerbutton\" type=\"submit\" id=\"$formid$i\" name=\"$formid$i\" value=\"&lt;&lt;\">";
         $content=$content."</form>";
       }
@@ -444,6 +560,7 @@ class fw_app_admin{
         $content=$content."<form class=\"pagerform\" method=\"post\">";
         $content=$content."<input type=\"hidden\" id=\"$formid\" name=\"$formid\" value=\"$i\">";
         $content=$content."<input type=\"hidden\" id=\"$formid2\" name=\"$formid2\" value=\"$apage2\">";
+        $content=$content."<input type=hidden id=adminpage name=adminpage value=\"$this->ADMIN_PAGE\">";
         if ($apage==$i){
           $content=$content."<input class=\"pagerbutton\" type=\"submit\" id=\"$formid$i\" name=\"$formid$i\" value=\"$i\">";
           $content=$content."<script>document.getElementById(\"$formid$i\").disabled=true</script>";
@@ -460,12 +577,14 @@ class fw_app_admin{
         $content=$content."<form class=\"pagerform\" method=\"post\">";
         $content=$content."<input type=\"hidden\" id=\"$formid\" name=\"$formid\" value=\"$i\">";
         $content=$content."<input type=\"hidden\" id=\"$formid2\" name=\"$formid2\" value=\"$apage2\">";
+        $content=$content."<input type=hidden id=adminpage name=adminpage value=\"$this->ADMIN_PAGE\">";
         $content=$content."<input class=\"pagerbutton\" type=\"submit\" id=\"$formid$i\" name=\"$formid$i\" value=\"&gt;&gt;\">";
         $content=$content."</form>";
         $content=$content."<form class=\"pagerform\" method=\"post\">";
         $up=round(($db/$row),0);
         $content=$content."<input type=\"hidden\" id=\"$formid\" name=\"$formid\" value=\"$up\">";
         $content=$content."<input type=\"hidden\" id=\"$formid2\" name=\"$formid2\" value=\"$apage2\">";
+        $content=$content."<input type=hidden id=adminpage name=adminpage value=\"$this->ADMIN_PAGE\">";
         $content=$content."<input class=\"pagerbutton\" type=\"submit\" id=\"$formid$i\" name=\"$formid$i\" value=\"".$fwlang->lang("Utolsó")."\">";
         $content=$content."</form>";
       }

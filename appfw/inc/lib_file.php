@@ -79,7 +79,7 @@ function dir_list($dir="",$devmode=false){
 function dir_backup($file="",$dir="",$devmode=false){
   if (($file<>"")and($dir<>"")){
     if ($devmode){
-      echo($file." - ".$dir."<br />");
+      echo($dir." - ".$file.".tar.gz<br />");
     }
     try {
       if (file_exists($file.".tar.gz")){

@@ -233,10 +233,11 @@ class fw_app{
     global $fwcfg,$fwsqlm,$fwsql;
 
     $r=$fwsql->sql_backup_tables($fwsqlm->SQL_TABLE_SYS);
-    $filesql=$fwcfg->{'FW_FS_MAIN_DIR'}."/".$fwcfg->{'FW_MEDIA_DIR'}."/".$fwcfg->{'FW_SQL_DB'}.".sql";
-    file_write($filesql,$r,$fwcfg->{'FW_DEV_MODE'});
-    $file=$fwcfg->{'FW_FS_MAIN_DIR'}."/".$fwcfg->{'FW_MEDIA_DIR'}."/".$this->APP_NAME;
-    dir_backup($filesql,$fwcfg->{'FW_DEV_MODE'});
+    $r=$r.$fwsql->sql_backup_tables($fwsqlm->SQL_TABLE_APP);
+    $filesql=$fwcfg->FW_FS_MAIN_DIR."/".$fwcfg->FW_MEDIA_DIR."/".$fwcfg->FW_SQL_DB.".sql";
+    file_write($filesql,$r,$fwcfg->FW_DEV_MODE);
+    $file=$fwcfg->FW_FS_MAIN_DIR."/".$fwcfg->FW_MEDIA_DIR."/".$this->APP_NAME;
+    dir_backup($file,$fwcfg->FW_FS_MAIN_DIR,$fwcfg->FW_DEV_MODE);
   }
 
 
@@ -245,7 +246,7 @@ class fw_app{
   function app_restore(){
     global $fwcfg,$fwsql;
   
-    $filesql=$fwcfg->{'FW_FS_MAIN_DIR'}."/".$fwcfg->{'FW_MEDIA_DIR'}."/".$fwcfg->FW_SQL_DB.".sql";
+    $filesql=$fwcfg->FW_FS_MAIN_DIR."/".$fwcfg->FW_MEDIA_DIR."/".$fwcfg->FW_SQL_DB.".sql";
     $fwsql->sql_restore_tables($filesql);
   }
 

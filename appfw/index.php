@@ -110,6 +110,7 @@ $SYS_OK=$SYS_OK and $APP_OK and $TEMP_OK;
 if ($SYS_OK){
   # app alapján a template előkészítése
   $fi=starturl(__DIR__).$fwcfg->FW_MEDIA_DIR."/".$fwapp->APP_FAVICON;
+  $fwcfg->FW_URI_MAIN_DIR=starturl(__DIR__);
   $fd=$fwcfg->FW_TEMPLATE_DIR."/".$fwapp->APP_TEMPLATE;
   $fwtemp->title($fwapp->APP_TITLE,$fi,$fd);
 

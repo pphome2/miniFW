@@ -23,6 +23,11 @@
   margin:5px;
 }
 
+.adminmenuform {
+  padding:5px;
+  width:10%;
+}
+
 .pagerbutton:disabled {
   color:black;
 }
@@ -39,6 +44,16 @@
   margin-left:5%;
   margin-right:5%;
   float:right;
+  display:flex;
+  justify-content:flex-end;
+}
+
+.amenuline {
+  width:90%;
+  max-width:90%;
+  margin-left:5%;
+  margin-right:5%;
+  float:middle;
   display:flex;
   justify-content:flex-end;
 }
