@@ -61,6 +61,16 @@ class fw_sqlm{
 
 
 
+  # sql frissítés
+  function sql_update($oldver=""){
+    global $fwsql,$fwsqlm;
+
+    #echo("FRISSÍTÉS - $oldver - $his->SQL_VERSION");
+    $this->save_param($fwsql->SQL_VERSION_STR,$fwsql->SQL_VERSION);
+  }
+
+
+
   # verzió ellenőrzése
   function version_check(){
     global $fwsql,$fwapp,$fwtemp;
@@ -81,16 +91,6 @@ class fw_sqlm{
     if ($r===""){
       $this->save_param($fwtemp->TEMP_VERSION_STR,"$fwtemp->TEMP_VERSION");
     }
-  }
-
-
-
-  # sql frissítés
-  function sql_update($oldver=""){
-    global $fwsql,$fwsqlm;
-
-    #echo("FRISSÍTÉS - $oldver - $his->SQL_VERSION");
-    $this->save_param($fwsql->SQL_VERSION_STR,$fwsql->SQL_VERSION);
   }
 
 

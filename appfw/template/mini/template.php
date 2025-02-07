@@ -20,6 +20,7 @@ class mini{
   public $TEMP_DIR="";
 
 
+
   function __construct($t="",$fi="",$td=""){
     global $fwapp;
 
@@ -37,6 +38,16 @@ class mini{
 
 
 
+  # template frissítés
+  function temp_update($oldver=""){
+    global $fwsqlm;
+
+    #echo("FRISSÍTÉS - $oldver - $his->SQL_VERSION");
+    $fwsqlm->save_param($this->TEMP_VERSION_STR,$his->TEMP_VERSION);
+  }
+
+
+
   # cím beállítás
   function title($t,$fi,$td){
     $this->TEMP_TITLE=$t;
@@ -48,16 +59,6 @@ class mini{
 
   # beérkező adatok feldolgozása
   function postdata(){
-  }
-
-
-
-  # template frissítés
-  function temp_update($oldver=""){
-    global $fwsqlm;
-
-    #echo("FRISSÍTÉS - $oldver - $his->SQL_VERSION");
-    $fwsqlm->save_param($this->TEMP_VERSION_STR,$his->TEMP_VERSION);
   }
 
 
@@ -163,12 +164,12 @@ class mini{
     echo("<li class=\"lileft\"><a>$fwapp->APP_COPYRIGHT</a></li>");
     if ($fwcfg->FW_ADMIN_MODE){
       echo("<li class=\"liright\"><a href=\"?\">");
-      echo($fwlang->lang("Kilépés"));
+      echo($fwlang->lang("Kilépés beállításokból"));
       echo("</a></li>");
     }else{
       echo("<li class=\"liright\"><a href=\"?$fwcfg->FW_ADMIN_LINK=x\">");
-      #echo($fwlang->lang("Belépés"));
-      echo(" [ ".$fwcfg->FW_ADMIN_LINK." ] ");
+      echo($fwlang->lang("Beállítások"));
+      #echo(" [ ".$fwcfg->FW_ADMIN_LINK." ] ");
       echo("</a></li>");
     }
     echo("</ul>");

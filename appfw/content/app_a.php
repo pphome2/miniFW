@@ -38,28 +38,30 @@ class fw_app_admin{
         $p2=0;
       }
       echo("<div class=\"amenuline\">");
-      echo("<form class=adminmenuform method=post>");
+      echo("<form class=adminmenuform id=f0 method=post>");
       echo("<input type=hidden id=page1 name=page1 value=\"$p1\">");
       echo("<input type=hidden id=page2 name=page2 value=\"$p2\">");
       echo("<input type=hidden id=adminpage name=adminpage value=\"0\">");
-      echo("<input type=submit class=menubutton d=menu name=menu value=\"".$fwlang->lang("Felhasználók")."\">");
+      echo("<input type=submit class=menubutton id=\"admenu0\" name=\"admenu0\" value=\"".$fwlang->lang("Felhasználók")."\">");
       echo("</form>");
-      echo("<form class=adminmenuform method=post>");
+      echo("<form class=adminmenuform id=f1 method=post>");
       echo("<input type=hidden id=page1 name=page1 value=\"$p1\">");
       echo("<input type=hidden id=page2 name=page2 value=\"$p2\">");
       echo("<input type=hidden id=adminpage name=adminpage value=\"1\">");
-      echo("<input type=submit class=menubutton id=menu name=menu value=\"".$fwlang->lang("Paraméterek")."\">");
+      echo("<input type=submit class=menubutton id=\"admenu1\" name=\"admenu1\" value=\"".$fwlang->lang("Paraméterek")."\">");
       echo("</form>");
-      echo("<form class=adminmenuform method=post>");
+      echo("<form class=adminmenuform id=f2 method=post>");
       echo("<input type=hidden id=page1 name=page1 value=\"$p1\">");
       echo("<input type=hidden id=page2 name=page2 value=\"$p2\">");
       echo("<input type=hidden id=adminpage name=adminpage value=\"2\">");
-      echo("<input class=\"pagerbutton\" type=submit id=menu name=menu value=\"".$fwlang->lang("Mentés")."\">");
+      echo("<input type=submit class=menubutton id=\"admenu2\" name=\"admenu2\" value=\"".$fwlang->lang("Mentés")."\">");
       echo("</form>");
       echo("</div>");
       if (isset($_POST['adminpage'])){
         $this->ADMIN_PAGE=$_POST['adminpage'];
       }
+      $mid="admenu".$this->ADMIN_PAGE;
+      echo("<script>document.getElementById(\"$mid\").disabled=true;</script>");
       $form=true;
       $m=$this->ADMIN_PAGE;
       switch($m){
@@ -115,11 +117,39 @@ class fw_app_admin{
       $fwsqlm->SQL_TABLE_APP[]="afw_param";
       $fwapp->app_backup();
       $filesql=$fwcfg->FW_URI_MAIN_DIR."/".$fwcfg->FW_MEDIA_DIR."/".$fwcfg->FW_SQL_DB.".sql";
-      $file=$fwcfg->FW_URI_MAIN_DIR."/".$fwcfg->FW_MEDIA_DIR."/".$fwapp->APP_NAME.".tar.gz";
+      $filegz=$fwcfg->FW_URI_MAIN_DIR."/".$fwcfg->FW_MEDIA_DIR."/".$fwapp->APP_NAME.".tar.gz";
       echo("<div class=placeh></div>");
       echo("<a href=\"$filesql\"><input type=submit id=backup name=backup value=\"".$fwlang->lang("SQL mentés letöltése")."\"></a>");
-      echo("<a href=\"$file\"><input type=submit id=backup name=backup value=\"".$fwlang->lang("Fájlmentés letöltése")."\"></a>");
+      echo("<a href=\"$filegz\"><input type=submit id=backup name=backup value=\"".$fwlang->lang("Fájlmentés letöltése")."\"></a>");
       echo("</div>");
+    }
+    $filesql=$fwcfg->FW_FS_MAIN_DIR."/".$fwcfg->FW_MEDIA_DIR."/".$fwcfg->FW_SQL_DB.".sql";
+    $filegz=$fwcfg->FW_FS_MAIN_DIR."/".$fwcfg->FW_MEDIA_DIR."/".$fwapp->APP_NAME.".tar.gz";
+    if (isset($_POST['delbackup'])){
+      if (file_exists($filesql)){
+        try{
+          unlink($filesql);
+        }catch (Exception $e){
+        }
+      }
+      if (file_exists($filegz)){
+        try{
+          unlink($filegz);
+        }catch (Exception $e){
+        }
+      }
+    }
+    if ((file_exists($filesql))or(file_exists($filegz))){
+      echo("<div class=placeh></div>");
+      echo("<div class=placeh></div>");
+      echo("<h3>".$fwlang->lang("Korábbi mentés")."</h3>");
+      echo("<div class=placeh></div>");
+      echo("<div class=formbox>");
+      echo("<form method=post>");
+      echo("<input type=hidden id=adminpage name=adminpage value=\"2\">");
+      echo("<input type=submit id=delbackup name=delbackup value=\"".$fwlang->lang("Mentésfájlok törlése")."\">");
+      echo("</div>");
+      echo("<div class=placeh></div>");
     }
   }
 
@@ -284,7 +314,7 @@ class fw_app_admin{
     echo("<label for=\"0\">".$fwlang->lang("Név").":</label><br>");
     echo("<input type=\"text\" id=\"auname\" name=\"auname\" placeholder=\"\" value=\"$un\"><br>");
     echo("<label for=\"0\">".$fwlang->lang("Jelszó").":</label><br>");
-    echo("<input type=\"password\" id=\"aupass\" name=\"aupass\" placeholder=\"\" value=\"$up\"><br>");
+    echo("<input type=\"password\" id=\"aupass\" name=\"aupass\" placeholder=\"\" value=\"\"><br>");
     echo("<label for=\"0\">".$fwlang->lang("Szerepkör").":</label><br>");
     echo("<input type=\"text\" id=\"aurole\" name=\"aurole\" placeholder=\"\" value=\"$ur\"><br>");
     echo("<label for=\"0\">".$fwlang->lang("Leírás").":</label><br>");

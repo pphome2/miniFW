@@ -57,7 +57,7 @@ class fw_app{
                         array($fwlang->lang("Menü1"),$fwcfg->FW_ADMIN_LINK."=a&".$this->APP_MENU_LETTER."=1"),
                         array($fwlang->lang("Menü2"),$fwcfg->FW_ADMIN_LINK."=a&".$this->APP_MENU_LETTER."=2"),
                         array($fwlang->lang("Menü3"),$fwcfg->FW_ADMIN_LINK."=a&".$this->APP_MENU_LETTER."=3"),
-                        array($fwlang->lang("Admin"),$fwcfg->FW_ADMIN_LINK."=a&".$this->APP_MENU_LETTER."=4")
+                        array($fwlang->lang("Beállítások"),$fwcfg->FW_ADMIN_LINK."=a&".$this->APP_MENU_LETTER."=4")
                       );
     }else{
       $this->APP_MENU=array(
@@ -73,6 +73,21 @@ class fw_app{
                       );
 
     # admin felhasználó
+    #if ($fwsqlm->get_user($this->APP_USER_ADMIN)===""){
+    #  $pass=$this->APP_NAME.date('Ym');
+    #  $fwsqlm->save_user($this->APP_USER_ADMIN,$pass,0,"Admin felhasználó");
+    #  #echo("$this->APP_USER_ADMIN - $pass");
+    #}
+  }
+
+
+
+  # az app frissítése
+  function app_update($oldver=""){
+    global $fwsqlm;
+
+    #echo("FRISSÍTÉS - $oldver - $his->APP_VERSION");
+    $fwsqlm->save_param($this->APP_VERSION_STR,$his->APP_VERSION);
     if ($fwsqlm->get_user($this->APP_USER_ADMIN)===""){
       $pass=$this->APP_NAME.date('Ym');
       $fwsqlm->save_user($this->APP_USER_ADMIN,$pass,0,"Admin felhasználó");
@@ -164,7 +179,7 @@ class fw_app{
     # echo($cuser[1]."-".$this->APP_USER_NAME);
     $fwsqlm->set_user_role($this->APP_USER_NAME,$this->APP_USER_ROLE);
     if ($this->APP_USER_ROLE==="0"){
-      $fwcfg->FW_ADMIN_MODE=true;
+      #$fwcfg->FW_ADMIN_MODE=true;
     }
     # menüoldal beállítása
     $l=$this->APP_MENU_LETTER;
@@ -189,21 +204,6 @@ class fw_app{
         default:
           break;
       }
-    }
-  }
-
-
-
-  # az app frissítése
-  function app_update($oldver=""){
-    global $fwsqlm;
-
-    #echo("FRISSÍTÉS - $oldver - $his->APP_VERSION");
-    $fwsqlm->save_param($this->APP_VERSION_STR,$his->APP_VERSION);
-    if ($fwsqlm->get_user($this->APP_USER_ADMIN)===""){
-      $pass=$this->APP_NAME.date('Ym');
-      $fwsqlm->save_user($this->APP_USER_ADMIN,$pass,0,"Admin felhasználó");
-      #echo("$this->APP_USER_ADMIN - $pass");
     }
   }
 
