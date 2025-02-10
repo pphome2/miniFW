@@ -19,7 +19,7 @@ class fw_app{
   public $APP_CONTENT_DIR="";
   public $APP_JS="app.js";
   public $APP_CSS="app.css";
-  public $APP_FILES=array("app_a.php");
+  public $APP_FILES=array("app_a.php","app_view.php");
 
   # beállítások
   public $APP_TITLE="Tesztelő app";

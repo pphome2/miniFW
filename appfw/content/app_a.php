@@ -11,7 +11,7 @@
 class fw_app_admin{
 
   public $ADMIN_PAGE=0;
-  public $ADMIN_TABLE_ROW=10;
+  public $ADMIN_TABLE_ROW=2;
 
 
 
@@ -62,6 +62,8 @@ class fw_app_admin{
       }
       $mid="admenu".$this->ADMIN_PAGE;
       echo("<script>document.getElementById(\"$mid\").disabled=true;</script>");
+      message_ok("Teszt üzenet.");
+      message_error("Teszt üzenet.");
       $form=true;
       $m=$this->ADMIN_PAGE;
       switch($m){
@@ -369,7 +371,7 @@ class fw_app_admin{
       echo("<table class='df_table' id=ptable>");
       echo("<tr class='df_trh'>");
       echo("<th class='df_th4'>".$fwlang->lang("ID")."</th>");
-      echo("<th class='df_th'>".$fwlang->lang("Név")."</th>");
+      echo("<th class='df_th3'>".$fwlang->lang("Név")."</th>");
       echo("<th class='df_th'>".$fwlang->lang("Érték")."</th>");
       echo("<th class='df_th4'>".$fwlang->lang("Törlés / Módosítás")."</th>");
       echo("</tr>");
@@ -413,7 +415,7 @@ class fw_app_admin{
       }
       echo("</table>");
       echo("<div class=placeh></div>");
-      $c=$this->pager($db,$this->ADMIN_TABLE_ROW,$p1,"page1",$p2,"page2");
+      $c=pager($db,$this->ADMIN_TABLE_ROW,$p1,"page1",$this->ADMIN_PAGE,"adminpage");
       echo($c);
       echo("<div class=placeh></div>");
     }
@@ -500,127 +502,11 @@ class fw_app_admin{
       }
       echo("</table>");
       echo("<div class=placeh></div>");
-      $c=$this->pager($db,$this->ADMIN_TABLE_ROW,$p2,"page2",$p1,"page1");
+      $c=pager($db,$this->ADMIN_TABLE_ROW,$p2,"page2",$p1,"page1");
       echo($c);
       echo("<div class=placeh></div>");
     }
     echo("<div class=placeh></div>");
-  }
-
-
-
-  # lapozó felhasználói felületen
-  function pager($db=0,$row=1,$apage=0,$formid="",$apage2="",$formid2="",$little=false){
-    global $fwlang;
-
-    $content="";
-    if ($db>$row){
-      $content=$content."<div class=\"pagerline\">";
-      $op=ceil($db/$row);
-      if (($apage<>1)and($op>1)){
-        $i=$apage-1;
-        $content=$content."<form class=\"pagerform\" method=\"post\">";
-        $content=$content."<input type=\"hidden\" id=\"$formid\" name=\"$formid\" value=\"1\">";
-        $content=$content."<input type=\"hidden\" id=\"$formid2\" name=\"$formid2\" value=\"$apage2\">";
-        $content=$content."<input type=hidden id=adminpage name=adminpage value=\"$this->ADMIN_PAGE\">";
-        $content=$content."<input class=\"pagerbutton\" type=\"submit\" id=\"$formid$i\" name=\"$formid$i\" value=\"".$fwlang->lang("Első")."\">";
-        $content=$content."</form>";
-        $content=$content."<form class=\"pagerform\" method=\"post\">";
-        $content=$content."<input type=\"hidden\" id=\"$formid\" name=\"$formid\" value=\"$i\">";
-        $content=$content."<input type=\"hidden\" id=\"$formid2\" name=\"$formid2\" value=\"$apage2\">";
-        $content=$content."<input type=hidden id=adminpage name=adminpage value=\"$this->ADMIN_PAGE\">";
-        $content=$content."<input class=\"pagerbutton\" type=\"submit\" id=\"$formid$i\" name=\"$formid$i\" value=\"&lt;&lt;\">";
-        $content=$content."</form>";
-      }
-      $endl=false;
-      $l1=1;
-      $l2=$op;
-      if ($little){
-        if ($op>3){
-          $l1=$apage-1;
-          $l2=$apage+1;
-          if ($l1<1){
-            $l1=1;
-            $l2=3;
-          }else{
-            if ($l1>1){
-              $content=$content." <span class=\"pagerdots\">...</span>";
-            }
-          }
-          if ($l2>=$op){
-            $l2=$op;
-            //$l1=$op-9;
-          }else{
-            $endl=true;
-          }
-          if (($l2-$l1)<3){
-            $l1=$l2-2;
-          }
-        }else{
-          $l1=1;
-          $l2=$op;
-        }
-      }else{
-        if ($op>9){
-          $l1=$apage-4;
-          $l2=$apage+4;
-          if ($l1<1){
-            $l1=1;
-            $l2=9;
-          }else{
-            if ($l1>1){
-              $content=$content." <span class=\"pagerdots\">...</span>";
-            }
-          }
-          if ($l2>=$op){
-           $l2=$op;
-            //$l1=$op-9;
-          }else{
-            $endl=true;
-          }
-          if (($l2-$l1)<9){
-            $l1=$l2-8;
-          }
-        }else{
-          $l1=1;
-          $l2=$op;
-        }
-      }
-      for($i=$l1;$i<=$l2;$i++){
-        $content=$content."<form class=\"pagerform\" method=\"post\">";
-        $content=$content."<input type=\"hidden\" id=\"$formid\" name=\"$formid\" value=\"$i\">";
-        $content=$content."<input type=\"hidden\" id=\"$formid2\" name=\"$formid2\" value=\"$apage2\">";
-        $content=$content."<input type=hidden id=adminpage name=adminpage value=\"$this->ADMIN_PAGE\">";
-        if ($apage==$i){
-          $content=$content."<input class=\"pagerbutton\" type=\"submit\" id=\"$formid$i\" name=\"$formid$i\" value=\"$i\">";
-          $content=$content."<script>document.getElementById(\"$formid$i\").disabled=true</script>";
-        }else{
-          $content=$content."<input class=\"pagerbutton\" type=\"submit\" id=\"$formid$i\" name=\"$formid$i\" value=\"$i\">";
-        }
-        $content=$content."</form>";
-      }
-      if ($endl){
-        $content=$content." <span class=\"pagerdots\">...</span>";
-      }
-      if (($apage<$op)and($op>1)){
-        $i=$apage+1;
-        $content=$content."<form class=\"pagerform\" method=\"post\">";
-        $content=$content."<input type=\"hidden\" id=\"$formid\" name=\"$formid\" value=\"$i\">";
-        $content=$content."<input type=\"hidden\" id=\"$formid2\" name=\"$formid2\" value=\"$apage2\">";
-        $content=$content."<input type=hidden id=adminpage name=adminpage value=\"$this->ADMIN_PAGE\">";
-        $content=$content."<input class=\"pagerbutton\" type=\"submit\" id=\"$formid$i\" name=\"$formid$i\" value=\"&gt;&gt;\">";
-        $content=$content."</form>";
-        $content=$content."<form class=\"pagerform\" method=\"post\">";
-        $up=round(($db/$row),0);
-        $content=$content."<input type=\"hidden\" id=\"$formid\" name=\"$formid\" value=\"$up\">";
-        $content=$content."<input type=\"hidden\" id=\"$formid2\" name=\"$formid2\" value=\"$apage2\">";
-        $content=$content."<input type=hidden id=adminpage name=adminpage value=\"$this->ADMIN_PAGE\">";
-        $content=$content."<input class=\"pagerbutton\" type=\"submit\" id=\"$formid$i\" name=\"$formid$i\" value=\"".$fwlang->lang("Utolsó")."\">";
-        $content=$content."</form>";
-      }
-      $content=$content."</div>";
-    }
-    return($content);
   }
 
 

@@ -138,19 +138,23 @@ li:last-child {
 	}
 }
 
-.message {
+.message_ok {
 	position: relative;
 	display: block;
-	padding: 20px;
-	background-color: red;
+	padding: 2em;
+	margin:2em;
+	background-color: blue;
 	color: white;
 	cursor: default;
+	border: 0px solid;
+	border-radius:10px;
 }
 
 .message_error {
 	position:relative;
 	display:block;
-	padding:0px;
+	padding:2em;
+	margin:2em;
 	background-color:red;
 	color:white;
 	cursor:default;
