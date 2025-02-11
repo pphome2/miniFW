@@ -115,6 +115,7 @@ class fw_sqlm{
   function save_param($name="",$data=""){
     global $fwsql;
 
+    $ret=false;
     $sql="SELECT * FROM $this->SQL_TABLE_PARAM WHERE name='$name';";
     if ($fwsql->sql_run($sql)){
       if (count($fwsql->SQL_RESULT)>0){
@@ -122,8 +123,9 @@ class fw_sqlm{
       }else{
         $sql="INSERT INTO $this->SQL_TABLE_PARAM (name,text) VALUES ('$name','$data');";
       }
-      $fwsql->sql_run($sql);
+      $ret=$fwsql->sql_run($sql);
     }
+    return($ret);
   }
 
 
@@ -132,6 +134,7 @@ class fw_sqlm{
   function save_param_id($id="",$name="",$data=""){
     global $fwsql;
 
+    $ret=false;
     $sql="SELECT * FROM $this->SQL_TABLE_PARAM WHERE id='$id';";
     if ($fwsql->sql_run($sql)){
       if (count($fwsql->SQL_RESULT)>0){
@@ -139,8 +142,9 @@ class fw_sqlm{
       }else{
         $sql="INSERT INTO $this->SQL_TABLE_PARAM (name,text) VALUES ('$name','$data');";
       }
-      $fwsql->sql_run($sql);
+      $ret=$fwsql->sql_run($sql);
     }
+    return($ret);
   }
 
 
@@ -165,6 +169,7 @@ class fw_sqlm{
   function save_user($uname="",$upass="",$urole="",$text=""){
     global $fwsql;
 
+    $ret=false;
     $sql="SELECT * FROM $this->SQL_TABLE_USERS WHERE uname='$uname';";
     if ($fwsql->sql_run($sql)){
       if (count($fwsql->SQL_RESULT)>0){
@@ -180,8 +185,9 @@ class fw_sqlm{
         $ur=(int)$urole;
         $sql="INSERT INTO $this->SQL_TABLE_USERS (uname,upass,urole,text) VALUES ('$uname','$upass','$ur','$text');";
       }
-      $fwsql->sql_run($sql);
+      $ret=$sql->sql_run($sql);
     }
+    return($ret);
   }
 
 
@@ -190,6 +196,7 @@ class fw_sqlm{
   function save_user_id($id="",$uname="",$upass="",$urole="",$text=""){
     global $fwsql;
 
+    $ret=false;
     $sql="SELECT * FROM $this->SQL_TABLE_USERS WHERE id='$id';";
     if ($fwsql->sql_run($sql)){
       if (count($fwsql->SQL_RESULT)>0){
@@ -205,8 +212,9 @@ class fw_sqlm{
         $ur=(int)$urole;
         $sql="INSERT INTO $this->SQL_TABLE_USERS (uname,upass,urole,text) VALUES ('$uname','$upass','$ur','$text');";
       }
-      $fwsql->sql_run($sql);
+      $ret=$fwsql->sql_run($sql);
     }
+    return($ret);
   }
 
 

@@ -146,8 +146,10 @@ li:last-child {
 	background-color: blue;
 	color: white;
 	cursor: default;
-	border: 0px solid;
-	border-radius:10px;
+	border-left: 1em solid;
+	border-right: 1em solid;
+	border-color:lightgreen;
+	bborder-radius:10px;
 }
 
 .message_error {
@@ -158,8 +160,9 @@ li:last-child {
 	background-color:red;
 	color:white;
 	cursor:default;
-	border: 0px solid;
-	border-radius:10px;
+	border-left: 1em solid;
+	border-right: 1em solid;
+	border-color:lightgray;
 }
 
 .center {

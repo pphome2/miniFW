@@ -62,8 +62,6 @@ class fw_app_admin{
       }
       $mid="admenu".$this->ADMIN_PAGE;
       echo("<script>document.getElementById(\"$mid\").disabled=true;</script>");
-      message_ok("Teszt üzenet.");
-      message_error("Teszt üzenet.");
       $form=true;
       $m=$this->ADMIN_PAGE;
       switch($m){
@@ -107,6 +105,45 @@ class fw_app_admin{
     echo("<div class=placeh></div>");
     echo("<h3>".$fwlang->lang("Mentés")."</h3>");
     echo("<div class=placeh></div>");
+    $filesql=$fwcfg->FW_FS_MAIN_DIR."/".$fwcfg->FW_MEDIA_DIR."/".$fwcfg->FW_SQL_DB.".sql";
+    $filegz=$fwcfg->FW_FS_MAIN_DIR."/".$fwcfg->FW_MEDIA_DIR."/".$fwapp->APP_NAME.".tar.gz";
+    if (isset($_POST['delbackup'])){
+      $ok=true;
+      if (file_exists($filesql)){
+        try{
+          unlink($filesql);
+        }catch (Exception $e){
+          $c=$fwlang->lang("Hiba a törlés közben");
+          if(function_exists('message_error')){
+            message_error($c.".");
+          }else{
+            echo("<br /><br /><b>! $c.</b><br /><br />");
+          }
+          $ok=false;
+        }
+      }
+      if (file_exists($filegz)){
+        try{
+          unlink($filegz);
+        }catch (Exception $e){
+          $c=$fwlang->lang("Hiba a törlés közben");
+          if(function_exists('message_error')){
+            message_error($c.".");
+          }else{
+            echo("<br /><br /><b>! $c.</b><br /><br />");
+          }
+          $ok=false;
+        }
+      }
+      if($ok){
+        $c=$fwlang->lang("A törlés megtörtént");
+        if(function_exists('message_ok')){
+          message_ok($c.".");
+        }else{
+          echo("<br /><br /><b>$c.</b><br /><br />");
+        }
+      }
+    }
     if (!isset($_POST['backup'])){
       echo("<div class=formbox>");
       echo("<form method=post>");
@@ -118,28 +155,12 @@ class fw_app_admin{
       echo("<div class=formbox>");
       $fwsqlm->SQL_TABLE_APP[]="afw_param";
       $fwapp->app_backup();
-      $filesql=$fwcfg->FW_URI_MAIN_DIR."/".$fwcfg->FW_MEDIA_DIR."/".$fwcfg->FW_SQL_DB.".sql";
-      $filegz=$fwcfg->FW_URI_MAIN_DIR."/".$fwcfg->FW_MEDIA_DIR."/".$fwapp->APP_NAME.".tar.gz";
+      $filesqlu=$fwcfg->FW_URI_MAIN_DIR."/".$fwcfg->FW_MEDIA_DIR."/".$fwcfg->FW_SQL_DB.".sql";
+      $filegzu=$fwcfg->FW_URI_MAIN_DIR."/".$fwcfg->FW_MEDIA_DIR."/".$fwapp->APP_NAME.".tar.gz";
       echo("<div class=placeh></div>");
-      echo("<a href=\"$filesql\"><input type=submit id=backup name=backup value=\"".$fwlang->lang("SQL mentés letöltése")."\"></a>");
-      echo("<a href=\"$filegz\"><input type=submit id=backup name=backup value=\"".$fwlang->lang("Fájlmentés letöltése")."\"></a>");
+      echo("<a href=\"$filesqlu\"><input type=submit id=backup name=backup value=\"".$fwlang->lang("SQL mentés letöltése")."\"></a>");
+      echo("<a href=\"$filegzu\"><input type=submit id=backup name=backup value=\"".$fwlang->lang("Fájlmentés letöltése")."\"></a>");
       echo("</div>");
-    }
-    $filesql=$fwcfg->FW_FS_MAIN_DIR."/".$fwcfg->FW_MEDIA_DIR."/".$fwcfg->FW_SQL_DB.".sql";
-    $filegz=$fwcfg->FW_FS_MAIN_DIR."/".$fwcfg->FW_MEDIA_DIR."/".$fwapp->APP_NAME.".tar.gz";
-    if (isset($_POST['delbackup'])){
-      if (file_exists($filesql)){
-        try{
-          unlink($filesql);
-        }catch (Exception $e){
-        }
-      }
-      if (file_exists($filegz)){
-        try{
-          unlink($filegz);
-        }catch (Exception $e){
-        }
-      }
     }
     if ((file_exists($filesql))or(file_exists($filegz))){
       echo("<div class=placeh></div>");
@@ -185,7 +206,21 @@ class fw_app_admin{
       $p2=$_POST['page2'];
       if (isset($_POST['nextp'])){
         if (isset($_POST['pname'])){
-          $fwsqlm->save_param_id($_POST['id'],$_POST['pname'],$_POST['ptext']);
+          if ($fwsqlm->save_param_id($_POST['id'],$_POST['pname'],$_POST['ptext'])){
+            $c=$fwlang->lang("Hiba történt");
+            if(function_exists('message_error')){
+              message_error($c.": ".$fwsql->SQL_ERROR);
+            }else{
+              echo("<br /><br /><b>! $c: $fwsql->SQL_ERROR</b><br /><br />");
+            }
+          }else{
+            $c=$fwlang->lang("Adattárolás megtörtént");
+            if(function_exists('message_ok')){
+              message_ok($c.".");
+            }else{
+              echo("<br /><br /><b>$c.</b><br /><br />");
+            }
+          }
           $ret=true;
         }else{
           $t=$fwsqlm->SQL_TABLE_SYS[0];
@@ -209,7 +244,20 @@ class fw_app_admin{
             $t=$fwsqlm->SQL_TABLE_SYS[0];
             $id=$_POST['id'];
             $sql="DELETE FROM $t WHERE id=$id;";
-            if ($fwsql->sql_run($sql)){
+            if (!$fwsql->sql_run($sql)){
+              $c=$fwlang->lang("Hiba történt");
+              if(function_exists('message_error')){
+                message_error($c.": ".$fwsql->SQL_ERROR);
+              }else{
+                echo("<br /><br /><b>! $c: $fwsql->SQL_ERROR</b><br /><br />");
+              }
+            }else{
+              $c=$fwlang->lang("Adattörlés megtörtént");
+              if(function_exists('message_ok')){
+                message_ok($c.".");
+              }else{
+                echo("<br /><br /><b>$c.</b><br /><br />");
+              }
             }
           }
         }
@@ -264,7 +312,21 @@ class fw_app_admin{
       $p2=$_POST['page2'];
       if (isset($_POST['nextu'])){
         if (isset($_POST['auname'])){
-          $fwsqlm->save_user_id($_POST['id'],$_POST['auname'],$_POST['aupass'],$_POST['aurole'],$_POST['autext']);
+          if(!$fwsqlm->save_user_id($_POST['id'],$_POST['auname'],$_POST['aupass'],$_POST['aurole'],$_POST['autext'])){
+            $c=$fwlang->lang("Hiba történt");
+            if(function_exists('message_error')){
+              message_error($c.": ".$fwsql->SQL_ERROR);
+            }else{
+              echo("<br /><br /><b>! $c: $fwsql->SQL_ERROR</b><br /><br />");
+            }
+          }else{
+            $c=$fwlang->lang("Adattárolás megtörtént");
+            if(function_exists('message_ok')){
+              message_ok($c.".");
+            }else{
+              echo("<br /><br /><b>$c.</b><br /><br />");
+            }
+          }
           $ret=true;
         }else{
           $t=$fwsqlm->SQL_TABLE_SYS[1];
@@ -292,7 +354,20 @@ class fw_app_admin{
             $t=$fwsqlm->SQL_TABLE_SYS[1];
             $id=$_POST['id'];
             $sql="DELETE FROM $t WHERE id=$id;";
-            if ($fwsql->sql_run($sql)){
+            if (!$fwsql->sql_run($sql)){
+              $c=$fwlang->lang("Hiba történt");
+              if(function_exists('message_error')){
+                message_error($c.": ".$fwsql->SQL_ERROR);
+              }else{
+                echo("<br /><br /><b>! $c: $fwsql->SQL_ERROR</b><br /><br />");
+              }
+            }else{
+              $c=$fwlang->lang("Adattörlés megtörtént");
+              if(function_exists('message_ok')){
+                message_ok($c.".");
+              }else{
+                echo("<br /><br /><b>$c.</b><br /><br />");
+              }
             }
           }
         }

@@ -81,8 +81,12 @@ class fw_sql{
       }
     }
     if (($this->SQL_ERROR<>"")and($this->SQL_DEV_MODE)){
-      echo("<br /><br />!!! $sqlcomm<br />");
-      echo("$this->SQL_ERROR<br /><br />");
+      if(function_exists('mesage_error')){
+        message_error($this->SQL_ERROR);
+      }else{
+        echo("<br /><br />! $sqlcomm<br />");
+        echo("! $this->SQL_ERROR<br /><br />");
+      }
     }
     return($ret);
   }
