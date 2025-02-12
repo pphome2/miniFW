@@ -107,33 +107,27 @@ class fw_app_admin{
     echo("<div class=placeh></div>");
     $filesql=$fwcfg->FW_FS_MAIN_DIR."/".$fwcfg->FW_MEDIA_DIR."/".$fwcfg->FW_SQL_DB.".sql";
     $filegz=$fwcfg->FW_FS_MAIN_DIR."/".$fwcfg->FW_MEDIA_DIR."/".$fwapp->APP_NAME.".tar.gz";
+    $fileinsu=$fwcfg->FW_FS_MAIN_DIR."/".$fwcfg->FW_MEDIA_DIR."/install.php";
     if (isset($_POST['delbackup'])){
       $ok=true;
-      if (file_exists($filesql)){
-        try{
+      try{
+        if (file_exists($filesql)){
           unlink($filesql);
-        }catch (Exception $e){
-          $c=$fwlang->lang("Hiba a törlés közben");
-          if(function_exists('message_error')){
-            message_error($c.".");
-          }else{
-            echo("<br /><br /><b>! $c.</b><br /><br />");
-          }
-          $ok=false;
         }
-      }
-      if (file_exists($filegz)){
-        try{
+        if (file_exists($filegz)){
           unlink($filegz);
-        }catch (Exception $e){
-          $c=$fwlang->lang("Hiba a törlés közben");
-          if(function_exists('message_error')){
-            message_error($c.".");
-          }else{
-            echo("<br /><br /><b>! $c.</b><br /><br />");
-          }
-          $ok=false;
         }
+        if (file_exists($fileinsu)){
+          unlink($fileinsu);
+        }
+      }catch (Exception $e){
+        $c=$fwlang->lang("Hiba a törlés közben");
+        if(function_exists('message_error')){
+          message_error($c.".");
+        }else{
+          echo("<br /><br /><b>! $c.</b><br /><br />");
+        }
+        $ok=false;
       }
       if($ok){
         $c=$fwlang->lang("A törlés megtörtént");
@@ -158,8 +152,25 @@ class fw_app_admin{
       $filesqlu=$fwcfg->FW_URI_MAIN_DIR."/".$fwcfg->FW_MEDIA_DIR."/".$fwcfg->FW_SQL_DB.".sql";
       $filegzu=$fwcfg->FW_URI_MAIN_DIR."/".$fwcfg->FW_MEDIA_DIR."/".$fwapp->APP_NAME.".tar.gz";
       echo("<div class=placeh></div>");
-      echo("<a href=\"$filesqlu\"><input type=submit id=backup name=backup value=\"".$fwlang->lang("SQL mentés letöltése")."\"></a>");
-      echo("<a href=\"$filegzu\"><input type=submit id=backup name=backup value=\"".$fwlang->lang("Fájlmentés letöltése")."\"></a>");
+      echo("<a href=\"$filesqlu\" download><input type=submit id=backup name=backup value=\"".$fwlang->lang("SQL mentés letöltése")."\"></a>");
+      echo("<a href=\"$filegzu\" download><input type=submit id=backup name=backup value=\"".$fwlang->lang("Fájlmentés letöltése")."\"></a>");
+      $fileinsus=$fwcfg->FW_FS_MAIN_DIR."/".$fwcfg->FW_INCLUDE_DIR."/install.php";
+      $fileinsu=$fwcfg->FW_FS_MAIN_DIR."/".$fwcfg->FW_MEDIA_DIR."/install.php";
+      try{
+        copy($fileinsus,$fileinsu);
+      }catch (Exception $e){
+        $c=$fwlang->lang("Másolási hiba");
+        if(function_exists('message_error')){
+          message_error($c.".");
+        }else{
+          echo("<br /><br /><b>! $c.</b><br /><br />");
+        }
+      }
+      if (file_exists($fileinsu)){
+        echo("<div class=placeh></div>");
+        $fileinsu=$fwcfg->FW_URI_MAIN_DIR."/".$fwcfg->FW_MEDIA_DIR."/install.php";
+        echo("<a href=\"$fileinsu\" download><input type=submit id=backup name=backup value=\"".$fwlang->lang("Telepítő program letöltése")."\"></a>");
+      }
       echo("</div>");
     }
     if ((file_exists($filesql))or(file_exists($filegz))){

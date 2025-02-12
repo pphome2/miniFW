@@ -1,21 +1,20 @@
 <?php
-//
-// Wordpress WSWDTeam plugin mentésének visszaállítása
-//
-// Új helyre telepítés
-//
-// v1.0
-// WSWDTeam
-//
+#
+# AppFW
+#
+# Új helyre telepítés, beállítás
+#
+# WSWDTeam
+#
 
 
-// hibák kiírása
+# hibák kiírása
 ini_set('display_errors', '1');
 ini_set('display_startup_errors', '1');
 error_reporting(E_ALL);
 
-// language
-// nyelvi adatok
+# language
+# nyelvi adatok
 $L_TITLE="Install";
 $L_PAGE_ADDRESS="Telepítés";
 $L_PAGE_1="Szükséges adatok megadása";
@@ -25,9 +24,8 @@ $L_SQL_DB="Adatbázis neve";
 $L_SQL_USER="Felhasználónév";
 $L_SQL_PW="Jelszó";
 $L_SQL_GO="Mehet";
-$L_SQL_TABLE_PRE="Adattáblák prefix";
 $L_SQL_PHASE_1="SQL ellenőrzés";
-$L_SQL_PHASE_2="SQL prefix";
+$L_SQL_PHASE_2="SQL 2";
 $L_SQL_PHASE_3="SQL domain";
 $L_PHASE_1="Fájl kicsomagolva";
 $L_PHASE_2="Fájl kicsomagolva";
@@ -38,10 +36,12 @@ $L_NEXT="Tovább";
 $L_ERROR="Hiba történt. Hibaüzenet:";
 $L_FILE_ERROR="Adatfájlok nem elérhetőek.";
 $L_WARNING="Figyelem!";
-$L_WARNING_FOUND_CONFIG="A táblázatban szereplő adatok a megtalált wp-config.php fájlból származnak";
+$L_WARNING_FOUND_CONFIG="A táblázatban szereplő adatok a megtalált beállítás fájlból származnak";
 
+# beállítások
+$I_CONFIG_FILE="config/config.php";
 
-// fej
+# fej
 echo("<!DOCTYPE html>");
 echo("<head>");
 echo("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />");
@@ -81,12 +81,12 @@ echo("<html>");
 echo("<body>");
 echo("<div class=box>");
 
-// fájlok felderítése
+# fájlok felderítése
 echo("<h1>$L_PAGE_ADDRESS</h1>");
 echo("<span class=placeholder></span>");
 
 
-// fájl elérések ellenőrzése
+# fájl elérések ellenőrzése
 $allok=true;
 $ok1=false;
 $ok2=false;
@@ -114,7 +114,6 @@ if ($ok1 and $ok2){
     $sqldb=$_POST['1'];
     $sqluser=$_POST['2'];
     $sqlpw=$_POST['3'];
-    $sqlpre=$_POST['4'];
     try{
       $sqlconn=new mysqli($sqlsrv,$sqluser,$sqlpw,$sqldb);
       $ok=true;
@@ -126,7 +125,7 @@ if ($ok1 and $ok2){
     }
   }
 
-  // adatbekérés
+  # adatbekérés
   if (!$ok){
     echo("<h2>$L_PAGE_1</h2>");
     echo("<span class=placeholder></span>");
@@ -143,7 +142,7 @@ if ($ok1 and $ok2){
 
 
 
-// fájlok feldolgozása
+# fájlok feldolgozása
 function inst_main(){
   global $L_END,$L_NEXT,$L_PHASE_1,$L_PHASE_2,$L_PHASE_3,$L_ERROR,
          $sqlsrv,$sqluser,$sqlpw,$sqldb,$allok;
@@ -157,8 +156,10 @@ function inst_main(){
           $sqlfile=$md."/".$l;
           if (file_exists($sqlfile)){
             $sqlconn=new mysqli($sqlsrv,$sqluser,$sqlpw,$sqldb);
-            inst_sql($sqlfile,$sqlconn);
-            mysqli_close($sqlconn);
+            if ($sqlconn){
+              inst_sql($sqlfile,$sqlconn);
+              mysqli_close($sqlconn);
+            }
           }
           echo("<br />");
         break;
@@ -179,9 +180,9 @@ function inst_main(){
         break;
     }
   }
-  //config fájl elkészítése
+  #config fájl elkészítése
   inst_config();
-  // láb
+  # láb
   echo("<span class=placeholder></span>");
   echo($L_END);
   echo("<span class=placeholder></span>");
@@ -192,14 +193,16 @@ function inst_main(){
   }
   if($allok){
     try{
-      if (file_exists($sqlfile)){
+      if (($sqlfile<>"")and(file_exists($sqlfile))){
         unlink($sqlfile);
       }
-      if (file_exists($fngz)){
+      if (($fngz<>"")and(file_exists($fngz))){
         unlink($fngz);
       }
-      if (file_exists($fntar)){
-        unlink($fntar);
+      $instf=__FILE__;
+      #echo($instf);
+      if (file_exists($instf)){
+        unlink($instf);
       }
     }catch(Exception $e){
       echo("$L_ERROR ".$e->getMessage());
@@ -218,35 +221,33 @@ function inst_main(){
 
 
 
-//config fájl elkészítése
+#config fájl elkészítése
 function inst_config(){
-  global $L_ERROR,$L_CONFIG_PHASE_1,$sqlsrv,$sqldb,$sqlpre,$sqlpw,$sqluser,$allok;
+  global $L_ERROR,$L_CONFIG_PHASE_1,$sqlsrv,$sqldb,$sqlpw,$sqluser,$allok,
+         $I_CONFIG_FILE;
 
-  if (file_exists("wp-config.php")){
+  if (file_exists("$I_CONFIG_FILE")){
     echo("- $L_CONFIG_PHASE_1.<br />");
     try{
       $out="";
-      foreach(file("wp-config.php") as $line){
-        //echo($line."<br />");
-        if (strpos($line,"DB_NAME")<>0){
-          $line="define( 'DB_NAME', '".$sqldb."' );".PHP_EOL;
+      foreach(file("$I_CONFIG_FILE") as $line){
+        #echo($line."<br />");
+        if (strpos($line,"\$FW_SQL_SERVER")<>0){
+          $line="  public \$FW_SQL_SERVER=\"$sqlsrv\";".PHP_EOL;
         }
-        if (strpos($line,"DB_USER")<>0){
-          $line="define( 'DB_USER', '".$sqluser."' );".PHP_EOL;
+        if (strpos($line,"\$FW_SQL_DB")<>0){
+          $line="  public \$FW_SQL_DB=\"$sqldb\";".PHP_EOL;
         }
-        if (strpos($line,"DB_PASSWORD")<>0){
-          $line="define( 'DB_PASSWORD', '".$sqlpw."' );".PHP_EOL;
+        if (strpos($line,"\$FW_SQL_USER")<>0){
+          $line="  public \$FW_SQL_USER=\"$sqluser\";".PHP_EOL;
         }
-        if (strpos($line,"DB_HOST")<>0){
-          $line="define( 'DB_HOST', '".$sqlsrv."' );".PHP_EOL;
-        }
-        if (strpos($line,"table_prefix")<>0){
-          $line="\$table_prefix = '".$sqlpre."';".PHP_EOL;
+        if (strpos($line,"\$FW_SQL_PASS")<>0){
+          $line="  public \$FW_SQL_PASS=\"$sqlpw\";".PHP_EOL;
         }
         $out=$out.$line;
       }
       try{
-        $handle=fopen("wp-config.php",'w+');
+        $handle=fopen("$I_CONFIG_FILE",'w+');
         fwrite($handle,$out);
         fclose($handle);
       }catch (Exception $e){
@@ -262,7 +263,7 @@ function inst_config(){
 
 
 
-// fájl kicsomagolása
+# fájl kicsomagolása
 function inst_files($md,$fn,$tarfile){
   global $L_PHASE_1,$L_PHASE_2,$L_PHASE_3,$L_ERROR,$allok;
 
@@ -273,12 +274,12 @@ function inst_files($md,$fn,$tarfile){
     echo("- $L_PHASE_1 (gz).<br />");
     $p=new PharData($fn);
     $p->decompress();
-    // kicsomagolás
+    # kicsomagolás
     $fn=$md."/".$tarfile.".tar";
     echo("- $L_PHASE_2 (tar).<br />");
     $phar=new PharData($tarfile);
     $phar->extractTo($md,null,true);
-    // törlés
+    # törlés
     echo("- $L_PHASE_3.<br />");
     if (file_exists($tarfile)){
        unlink($tarfile);
@@ -291,23 +292,13 @@ function inst_files($md,$fn,$tarfile){
 
 
 
-// sql feldolgozás
-function inst_sql($sqlfile="",$sqlconn){
-  global $L_SQL_PHASE_1,$L_SQL_PHASE_2,$L_SQL_PHASE_3,$sqlsrv,$sqldb,$sqlpre,$sqlpw,$sqluser;
+# sql feldolgozás
+function inst_sql($sqlfile="",$sqlconn=false){
+  global $L_SQL_PHASE_1,$L_SQL_PHASE_2,$L_SQL_PHASE_3,$sqlsrv,$sqldb,$sqlpw,$sqluser;
 
   if (file_exists($sqlfile)){
     echo("- $L_SQL_PHASE_1.<br />");
-    if ($sqlpre===""){
-      $sqlpre=substr($_SERVER['HTTP_HOST'],0,3)."_";
-    }
-    if ($_SERVER['HTTPS']!="on"){
-      $newurl="http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['REQUEST_URI']);
-    }else{
-      $newurl="https://".$_SERVER['HTTP_HOST'].dirname($_SERVER['REQUEST_URI']);
-    }
-    $oldurl="";
     $first=true;
-    $oldpre="";
     $sql="USE $sqldb;";
     try{
       if ($r=$sqlconn->query($sql)){
@@ -318,35 +309,7 @@ function inst_sql($sqlfile="",$sqlconn){
         if ($line<>''){
           $sql=$sql." ".$line;
           if (substr($line,-1)===";"){
-            //echo("X<br /><br />");
-            // pre csere
-            if ($first){
-              $first=false;
-              // DROP TABLE levétele
-              $l=explode(" ",$sql);
-              $l2=explode("_",$l[5]);
-              $oldpre=$l2[0]."_";
-              //echo($oldpre);
-              echo("- $L_SQL_PHASE_2.<br />");
-            }
-            if (($oldpre<>"")and($sqlpre<>"")){
-              $sql=str_replace($oldpre,$sqlpre,$sql);
-              //echo($oldpre." ".$sqlpre." ".$sql."<br />");
-            }
-            // domain csere
-            if ($oldurl===""){
-              if (strpos($sql,"siteurl")<>0){
-                $oldurl=substr($sql,strpos($sql,"siteurl")+10,strlen($sql));
-                $l3=explode("'",$oldurl);
-                $oldurl=$l3[0];
-                //echo($oldurl."<br />");
-                echo("- $L_SQL_PHASE_3.<br />");
-              }
-            }
-            if (($oldurl<>"")and($newurl<>"")){
-              $sql=str_replace($oldurl,$newurl,$sql);
-              //echo($sql."<br />");
-            }
+            #echo("- $L_SQL_PHASE_2.<br />");
             if ($r=$sqlconn->query($sql)){
             }
             $sql="";
@@ -362,41 +325,39 @@ function inst_sql($sqlfile="",$sqlconn){
 
 
 
-// adatbekérés
+# adatbekérés
 function inst_form(){
-  global $L_SQL_DB,$L_SQL_GO,$L_SQL_PW,$L_SQL_SRV,$L_SQL_TABLE_PRE,$L_SQL_USER,$L_WARNING_FOUND_CONFIG,$L_WARNING;
+  global $L_SQL_DB,$L_SQL_GO,$L_SQL_PW,$L_SQL_SRV,$L_SQL_TABLE_PRE,
+         $L_SQL_USER,$L_WARNING_FOUND_CONFIG,$L_WARNING,
+         $I_CONFIG_FILE;
 
   $dbname="";
   $dbuser="";
   $dbpass="";
   $dbhost="";
   $pre="";
-  if (file_exists("wp-config.php")){
+  if (file_exists("$I_CONFIG_FILE")){
     try{
-      foreach(file("wp-config.php") as $line){
-        if (strpos($line,"DB_NAME")<>0){
-          $a=explode("'",$line);
-          $dbname=$a[3];
+      foreach(file("$I_CONFIG_FILE") as $line){
+        if (strpos($line,"FW_SQL_DB")<>0){
+          $a=explode("\"",$line);
+          $dbname=$a[1];
         }
-        if (strpos($line,"DB_USER")<>0){
-          $a=explode("'",$line);
-          $dbuser=$a[3];
+        if (strpos($line,"FW_SQL_USER")<>0){
+          $a=explode("\"",$line);
+          $dbuser=$a[1];
         }
-        if (strpos($line,"DB_PASSWORD")<>0){
-          $a=explode("'",$line);
-          $dbpass=$a[3];
+        if (strpos($line,"FW_SQL_PASS")<>0){
+          $a=explode("\"",$line);
+          $dbpass=$a[1];
         }
-        if (strpos($line,"DB_HOST")<>0){
-          $a=explode("'",$line);
-          $dbhost=$a[3];
-        }
-        if (strpos($line,"table_prefix")<>0){
-          $a=explode("'",$line);
-          $pre=$a[1];
+        if (strpos($line,"FW_SQL_SERVER")<>0){
+          $a=explode("\"",$line);
+          $dbhost=$a[1];
         }
       }
     }catch(Exception $e){
-      //echo($sql." - ".$e->getMessage()."<br />");
+      #echo($sql." - ".$e->getMessage()."<br />");
     }
     echo("<b>".$L_WARNING."</b> ");
     echo($L_WARNING_FOUND_CONFIG.".<br /><br /><br />");
@@ -414,11 +375,6 @@ function inst_form(){
   echo("<label for=\"3\">$L_SQL_PW:</label><br>");
   echo("<input type=\"password\" id=\"3\" name=\"3\" value=\"".$dbpass."\"><br>");
   echo("<br />");
-  if(empty($pre)){
-    $pre=substr($_SERVER['HTTP_HOST'],0,3)."_";
-  }
-  echo("<label for=\"4\">$L_SQL_TABLE_PRE:</label><br>");
-  echo("<input type=\"text\" id=\"4\" name=\"4\" value=\"".$pre."\"><br>");
   echo("<br /><br />");
   echo("<input type=submit id=\"db\" name=\"db\" value=\"".$L_SQL_GO."\">");
   echo("</form>");

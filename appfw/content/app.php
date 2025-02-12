@@ -19,7 +19,9 @@ class fw_app{
   public $APP_CONTENT_DIR="";
   public $APP_JS="app.js";
   public $APP_CSS="app.css";
-  public $APP_FILES=array("app_a.php","app_view.php");
+  public $APP_FILES=array("app_view.php",
+                          "admin/app_a.php"
+                          );
 
   # beállítások
   public $APP_TITLE="Tesztelő app";
@@ -232,12 +234,13 @@ class fw_app{
   function app_backup(){
     global $fwcfg,$fwsqlm,$fwsql;
 
+    $file=$fwcfg->FW_FS_MAIN_DIR."/".$fwcfg->FW_MEDIA_DIR."/".$this->APP_NAME;
+    dir_backup($file,$fwcfg->FW_FS_MAIN_DIR,$fwcfg->FW_DEV_MODE);
     $r=$fwsql->sql_backup_tables($fwsqlm->SQL_TABLE_SYS);
     $r=$r.$fwsql->sql_backup_tables($fwsqlm->SQL_TABLE_APP);
     $filesql=$fwcfg->FW_FS_MAIN_DIR."/".$fwcfg->FW_MEDIA_DIR."/".$fwcfg->FW_SQL_DB.".sql";
     file_write($filesql,$r,$fwcfg->FW_DEV_MODE);
-    $file=$fwcfg->FW_FS_MAIN_DIR."/".$fwcfg->FW_MEDIA_DIR."/".$this->APP_NAME;
-    dir_backup($file,$fwcfg->FW_FS_MAIN_DIR,$fwcfg->FW_DEV_MODE);
+
   }
 
 
