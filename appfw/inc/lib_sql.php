@@ -24,12 +24,19 @@ class fw_sql{
   public $SQL_DEV_MODE=false;
   public $SQL_DEV_MODE_STR="DEV_MODE";
 
+
+
   function __construct($s="",$d="",$u="",$p="",$dm=""){
     $this->{'SQL_SERVER'}=$s;
     $this->{'SQL_DB'}=$d;
     $this->{'SQL_USER'}=$u;
     $this->{'SQL_PASS'}=$p;
     $this->{'SQL_DEV_MODE'}=$dm;
+  }
+
+
+
+  function __destruct(){
   }
 
 
@@ -56,8 +63,9 @@ class fw_sql{
         }
         $this->SQL_ERROR="";
         $this->SQL_RESULT=array();
-        $sqllink=mysqli_connect("$this->SQL_SERVER","$this->SQL_USER","$this->SQL_PASS","$this->SQL_DB");
-        $this->SQL_ERROR=mysqli_error($sqllink);
+        if (!$sqllink=mysqli_connect("$this->SQL_SERVER","$this->SQL_USER","$this->SQL_PASS","$this->SQL_DB")){
+          $this->SQL_ERROR="connect error";
+        }
         if ($this->SQL_ERROR===""){
           $result=mysqli_query($sqllink,$sqlcomm);
           $this->SQL_ERROR=mysqli_error($sqllink);
@@ -95,18 +103,23 @@ class fw_sql{
 
   # teszt
   function sql_test(){
-    $r="SQL:<br /><br />";
-    $r=$r.$this->SQL_SERVER."<br />";
-    $r=$r.$this->SQL_DB."<br />";
-    $r=$r.$this->SQL_USER."<br />";
-    $r=$r.$this->SQL_PASS."<br />";
-    $r=$r."<br /><br />";
-    if ($this->sql_run("SHOW TABLES;")){
-      foreach ($this->SQL_RESULT as $c){
-        $r=$r.$c[0]."<br />";
+    global $fwcfg;
+
+    $r="";
+    if ($fwcfg->FW_DEV_MODE){
+      $r="SQL:<br /><br />";
+      $r=$r.$this->SQL_SERVER."<br />";
+      $r=$r.$this->SQL_DB."<br />";
+      $r=$r.$this->SQL_USER."<br />";
+      $r=$r.$this->SQL_PASS."<br />";
+      $r=$r."<br /><br />";
+      if ($this->sql_run("SHOW TABLES;")){
+        foreach ($this->SQL_RESULT as $c){
+          $r=$r.$c[0]."<br />";
+        }
       }
+      $r=$r."<br /><br />";
     }
-    $r=$r."<br /><br />";
     return($r);
   }
 

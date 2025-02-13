@@ -27,6 +27,11 @@ class fw_lang{
 
 
 
+  function __destruct(){
+  }
+
+
+
   # nyelvi adat lekérdezése
   function lang($s){
     if (isset($this->LANG[$s])){
@@ -42,8 +47,12 @@ class fw_lang{
 
   # nyelvi adat lekérdezése
   function lang_new(){
-    foreach($this->LANG_NEW as $l){
-      echo($l."<br />");
+    global $fwcfg;
+
+    if ($fwcfg->FW_DEV_MODE){
+      foreach($this->LANG_NEW as $l){
+        echo($l."<br />");
+      }
     }
   }
 

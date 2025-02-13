@@ -20,6 +20,11 @@ class fw_app_admin{
 
 
 
+  function __destruct(){
+  }
+
+
+
   # vezérlő
   function main(){
     global $fwapp,$fwlang;
@@ -217,7 +222,7 @@ class fw_app_admin{
       $p2=$_POST['page2'];
       if (isset($_POST['nextp'])){
         if (isset($_POST['pname'])){
-          if ($fwsqlm->save_param_id($_POST['id'],$_POST['pname'],$_POST['ptext'])){
+          if (!$fwsqlm->save_param_id($_POST['id'],$_POST['pname'],$_POST['ptext'])){
             $c=$fwlang->lang("Hiba történt");
             if(function_exists('message_error')){
               message_error($c.": ".$fwsql->SQL_ERROR);
@@ -434,12 +439,12 @@ class fw_app_admin{
     if (isset($_POST['page1'])){
       $p1=$_POST['page1'];
     }else{
-      $p1=0;
+      $p1=1;
     }
     if (isset($_POST['page2'])){
       $p2=$_POST['page2'];
     }else{
-      $p2=0;
+      $p2=1;
     }
     $t=$fwsqlm->SQL_TABLE_SYS[0];
     $sql="SELECT * from $t;";
@@ -517,12 +522,12 @@ class fw_app_admin{
     if (isset($_POST['page1'])){
       $p1=$_POST['page1'];
     }else{
-      $p1=0;
+      $p1=1;
     }
     if (isset($_POST['page2'])){
       $p2=$_POST['page2'];
     }else{
-      $p2=0;
+      $p2=1;
     }
     $t=$fwsqlm->SQL_TABLE_SYS[1];
     $sql="SELECT * from $t;";

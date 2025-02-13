@@ -61,6 +61,11 @@ class fw_sqlm{
 
 
 
+  function __destruct(){
+  }
+
+
+
   # sql frissítés
   function sql_update($oldver=""){
     global $fwsql,$fwsqlm;
@@ -99,14 +104,16 @@ class fw_sqlm{
   function versions(){
     global $fwcfg,$fwsql,$fwapp,$fwtemp;
 
-    $r=$this->get_param($fwcfg->FW_VERSION_STR);
-    echo("$fwcfg->FW_VERSION_STR - $fwcfg->FW_VERSION<br />");
-    $r=$this->get_param($fwsql->SQL_VERSION_STR);
-    echo("$fwsql->SQL_VERSION_STR - $fwsql->SQL_VERSION<br />");
-    $r=$this->get_param($fwapp->APP_VERSION_STR);
-    echo("$fwapp->APP_VERSION_STR - $fwapp->APP_VERSION<br />");
-    $r=$this->get_param($fwtemp->TEMP_VERSION_STR);
-    echo("$fwtemp->TEMP_VERSION_STR - $fwtemp->TEMP_VERSION<br />");
+    if ($fwcfg->FW_DEV_MODE){
+      $r=$this->get_param($fwcfg->FW_VERSION_STR);
+      echo("$fwcfg->FW_VERSION_STR - $fwcfg->FW_VERSION<br />");
+      $r=$this->get_param($fwsql->SQL_VERSION_STR);
+      echo("$fwsql->SQL_VERSION_STR - $fwsql->SQL_VERSION<br />");
+      $r=$this->get_param($fwapp->APP_VERSION_STR);
+      echo("$fwapp->APP_VERSION_STR - $fwapp->APP_VERSION<br />");
+      $r=$this->get_param($fwtemp->TEMP_VERSION_STR);
+      echo("$fwtemp->TEMP_VERSION_STR - $fwtemp->TEMP_VERSION<br />");
+    }
   }
 
 

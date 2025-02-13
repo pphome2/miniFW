@@ -84,6 +84,11 @@ class fw_app{
 
 
 
+  function __destruct(){
+  }
+
+
+
   # az app frissítése
   function app_update($oldver=""){
     global $fwsqlm;
