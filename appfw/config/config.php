@@ -44,9 +44,11 @@ class fw_config{
   public $FW_LIB=array(
               "lib_file.php",
               "lib_lang.php",
+              "lib_plugin.php",
               "lib_sql.php",
               "lib_sqlm.php",
-              "lib_sys.php"
+              "lib_sys.php",
+              "lib_update.php"
               );
 
   # betöltendő modulok (könyvtárnév, betöti az azonos nevű .php fájlt)
@@ -59,6 +61,7 @@ class fw_config{
   # APPLICATION ZONE
   #
   public $FW_APP_PHP="app.php";
+  public $FW_APP_MAIN_PHP="mapp.php";
 
   #
   #
@@ -77,78 +80,43 @@ class fw_config{
   function __destruct(){
   }
 
-  const DEVELOPER="WSWDTeam";
-  function byebye() {
-    return(self::DEVELOPER);
-  }
-
-
-
-  # öröklődés
-  # class d{
-  #   protected static function get(){return("get");}
-  # }
-  # class dx extends d{
-  #   public $n;
-  #   public function __construct() {
-  #     $this->n=parent::get();
-  #   }
-  # }
-  #
-  # interfész
-  # - nincs változó
-  # - csak publikus fg
-  # - öröklés után megírv a fg-k
-  # interface inter1{
-  #   public function fg1();
-  #   public function fg2($n,$c);
-  # }
-  #
-  # absztrakt
-  # abstract class abs{
-  #   public $n;
-  #   public function fg($n) {
-  # }
-  #
-  # öröklés, kiterjesztés
-  # class test extends inter1{
-  #   function fg1(){echo("1");}
-  #   function fg2(){echo("2");}
-  # }
-  #
-  # többszörös öröklés
-  # trait m1 {
-  #   public function msg1() {echo("1");}
-  # }
-  # trait m2 {
-  #   public function msg2() {echo("2");}
-  # }
-  # class or{
-  #   use m1,m2
-  # }
-  #
-  # staikus fg - nem kell létrehozni obj-t
-  # a class írásakor már használható a saját fg
-  # class gr{
-  #   public static $stat="W";
-  #   public static function w(){echo("H");}
-  # }
-  # gr::w();
-  # gr::$stat;
-  #
-  # első sor kell legyen a fájlban
-  # namespace Html;
-  # class T{}
-  # hivatkozás a namspace objektumra
-  # $x=new Html/T();
-  # alias: fájl első sora
-  # use Html as H;
-  # $x=new H/T();
-  # alias obj
-  # use H/T as Tx;
-  # $x=new Tx();
 
 }
+
+
+
+class developer{
+  const DEVELOPER="WSWDTeam";
+  const SOFTWARE="appfw";
+  const VERSION="0";
+  private static $FW_VERSION="0";
+
+  protected static function dev() {
+    return(self::DEVELOPER);
+  }
+  protected static function sw(){
+    #return(self::SOFTWARE." ".self::$FW_VERSION);
+    return(self::SOFTWARE." ".self::VERSION);
+  }
+}
+
+
+
+# fejlesztői adatok
+class dev extends developer{
+  public $fv;
+
+  function __construct() {
+    $this->fv=parent::dev()." ".parent::sw();
+  }
+  function copyright(){
+    return($this->fv);
+  }
+}
+
+
+#$appinfo=new dev();
+#echo($appinfo->fv);
 
 
 

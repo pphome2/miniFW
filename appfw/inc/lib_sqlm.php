@@ -66,16 +66,6 @@ class fw_sqlm{
 
 
 
-  # sql frissítés
-  function sql_update($oldver=""){
-    global $fwsql,$fwsqlm;
-
-    #echo("FRISSÍTÉS - $oldver - $his->SQL_VERSION");
-    $this->save_param($fwsql->SQL_VERSION_STR,$fwsql->SQL_VERSION);
-  }
-
-
-
   # verzió ellenőrzése
   function version_check(){
     global $fwsql,$fwapp,$fwtemp;
@@ -87,10 +77,6 @@ class fw_sqlm{
     $r=$this->get_param($fwsql->SQL_VERSION_STR);
     if ($r===""){
       $this->save_param($fwsql->SQL_VERSION_STR,"$fwsql->SQL_VERSION");
-    }else{
-      if ($r<>$fwsql->SQL_VERSION){
-        $this->sql_update($r);
-      }
     }
     $r=$this->get_param($fwtemp->TEMP_VERSION_STR);
     if ($r===""){
@@ -106,13 +92,13 @@ class fw_sqlm{
 
     if ($fwcfg->FW_DEV_MODE){
       $r=$this->get_param($fwcfg->FW_VERSION_STR);
-      echo("$fwcfg->FW_VERSION_STR - $fwcfg->FW_VERSION<br />");
+      echo("$fwcfg->FW_VERSION_STR - cfg $fwcfg->FW_VERSION - sql $r<br />");
       $r=$this->get_param($fwsql->SQL_VERSION_STR);
-      echo("$fwsql->SQL_VERSION_STR - $fwsql->SQL_VERSION<br />");
+      echo("$fwsql->SQL_VERSION_STR - cfg $fwsql->SQL_VERSION - sql $r<br />");
       $r=$this->get_param($fwapp->APP_VERSION_STR);
-      echo("$fwapp->APP_VERSION_STR - $fwapp->APP_VERSION<br />");
+      echo("$fwapp->APP_VERSION_STR - cfg $fwapp->APP_VERSION - sql $r<br />");
       $r=$this->get_param($fwtemp->TEMP_VERSION_STR);
-      echo("$fwtemp->TEMP_VERSION_STR - $fwtemp->TEMP_VERSION<br />");
+      echo("$fwtemp->TEMP_VERSION_STR - cfg $fwtemp->TEMP_VERSION - sql $r<br />");
     }
   }
 

@@ -5,19 +5,22 @@
  #
  # template
  #
+ 
+#use Temp as T;
+#class mini extends T\template{}
 
 
-
-class mini{
+class mini extends Temp\template{
   # verzió adatok
   public $TEMP_VERSION="0";
   public $TEMP_VERSION_STR="TEMP_VERSION";
+  # app adatok
   public $TEMP_TITLE="appfw";
-  # include files
   public $TEMP_FAVICON="";
-  public $TEMP_JS="template.js";
-  public $TEMP_CSS="template.css";
+  # betöltendő fájlok
   public $TEMP_DIR="";
+  public $TEMP_JS="mini.js";
+  public $TEMP_CSS="mini.css";
 
 
 
