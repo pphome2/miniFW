@@ -23,7 +23,7 @@ class fw_app extends App\app{
                           "admin/app_a.php"
                           );
   # könyvtárnveke, betöltés: könyvtárnév.php
-  public $APP_PLUGIN_FILES=array("1");
+  public $APP_PLUGIN_FILES=array("p1");
 
   # beállítások
   public $APP_TITLE="Tesztelő app";

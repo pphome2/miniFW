@@ -9,8 +9,8 @@
 
 
 class fw_update{
-  private static $UP_SQL_VERSION="";
-  private static $UP_SYS_VERSION="";
+  private $UP_SQL_VERSION="";
+  private $UP_SYS_VERSION="";
 
 
 

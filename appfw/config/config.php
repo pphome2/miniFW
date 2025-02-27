@@ -45,6 +45,7 @@ class fw_config{
               "lib_file.php",
               "lib_lang.php",
               "lib_plugin.php",
+              "lib_search.php",
               "lib_sql.php",
               "lib_sqlm.php",
               "lib_sys.php",

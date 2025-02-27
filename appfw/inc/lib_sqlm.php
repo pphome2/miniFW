@@ -234,8 +234,10 @@ class fw_sqlm{
 
     $sql="SELECT * FROM $this->SQL_TABLE_USERS WHERE uname='$uname';";
     if ($fwsql->sql_run($sql)){
-      $r=$fwsql->SQL_RESULT[0];
-      $urole=$r[3];
+      if(count($fwsql->SQL_RESULT)>0){
+        $r=$fwsql->SQL_RESULT[0];
+        $urole=$r[3];
+      }
     }
   }
 

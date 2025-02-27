@@ -74,9 +74,6 @@ if ($SYS_OK){
     $fwcfg->FW_DEV_MOD=true;
   }
 
-  # sys és sql verzió ellenőrzés és frissítés
-  $fwupdate=new fw_update();
-  $fwupdate->system_update();
 
   # app betöltése
   $APP_OK=false;
@@ -99,24 +96,19 @@ if ($SYS_OK){
     foreach($fwapp->APP_FILES as $f){
       $fn=$fwcfg->FW_CONTENT_DIR."/".$f;
   	  if (file_exists($fn)){
-	    $SYS_OK=$SYS_OK and include($fn);
+  	    $SYS_OK=$SYS_OK and include($fn);
   	  }else{
-  	      $SYS_OK=false;
+  	    $SYS_OK=false;
 	    }
     }
     # plugin fájlok
     foreach($fwapp->APP_PLUGIN_FILES as $f){
       $fn=$fwcfg->FW_PLUGIN_DIR."/".$f."/".$f.".php";
   	  if (file_exists($fn)){
-	    $SYS_OK=$SYS_OK and include($fn);
-  	  }else{
-  	      $SYS_OK=false;
+	      $SYS_OK=$SYS_OK and include($fn);
 	    }
     }
   }
-
-  # plugin támogatás
-  $fwplugin=new fw_plugin();
 
   # template betöltése
   $TEMP_OK=false;
@@ -141,6 +133,12 @@ if ($SYS_OK){
 }
 $SYS_OK=$SYS_OK and $APP_OK and $TEMP_OK;
 
+# frissítés ellenőrzése
+if ($SYS_OK){
+  # sys és sql verzió ellenőrzés és frissítés
+  $fwupdate=new fw_update();
+  $fwupdate->system_update();
+}
 
 # a rendszer elindítása
 if ($SYS_OK){

@@ -7,19 +7,12 @@
  #
 
 
-
-class fw_plugin{
-
-
-
-  function __construct(){
-  }
-
-
-
-  function __destruct(){
-  }
-
+# plugin kapcsolat
+interface fw_plugin{
+  # a plugin előkészítése használatra
+  public function load();
+  # plugin futtatása
+  public function run();
 }
 
 
