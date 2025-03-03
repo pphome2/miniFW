@@ -116,7 +116,6 @@ class fw_sqlm{
       }else{
         $sql="INSERT INTO $this->SQL_TABLE_PARAM (name,text) VALUES ('$name','$data');";
       }
-      echo($sql);
     }
     return($ret);
   }
