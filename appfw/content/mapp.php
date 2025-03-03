@@ -96,7 +96,7 @@ class fw_app extends App\app{
     global $fwsqlm;
 
     #echo("FRISSÍTÉS - $oldver - $his->APP_VERSION");
-    $fwsqlm->save_param($this->APP_VERSION_STR,$his->APP_VERSION);
+    $fwsqlm->save_param($this->APP_VERSION_STR,$this->APP_VERSION);
     if ($fwsqlm->get_user($this->APP_USER_ADMIN)===""){
       $pass=$this->APP_NAME.date('Ym');
       $fwsqlm->save_user($this->APP_USER_ADMIN,$pass,0,"Admin felhasználó");
