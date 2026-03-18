@@ -2,19 +2,11 @@
 
 ## Programcsomag webes alkalmazások készítéséhez
 
-Fejlesztő: [pphome2](https:/github.com/pphome2)
+appfw: oop egyszerű keretrendszer
+wpfw: Wordpress plugin
+minifw: php keretrendszer
 
-**Aktuális verzió: 2025.**
-**Első megjelenés: 2020.**
-
-
-
-**Aktuális: minifw-2 **
-**Elavult: minifw-1 **
-**Fejlesztés alatt: minifw-3 **
-
-
-
+---
 
 Egyszerű alkalmazások gyors készítését segíti.
 
