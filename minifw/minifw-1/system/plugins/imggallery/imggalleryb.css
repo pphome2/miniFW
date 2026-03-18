@@ -1,0 +1,106 @@
+<style>
+
+#bim-myImg {
+    border-radius: 5px 25px;
+    box-shadow: 0 0 10px black;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-left:33%;
+    width:34%;
+
+}
+
+#bim-myImg:hover {opacity: 0.7;}
+
+/* The Modal (background) */
+.bim-modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 100; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+}
+
+.bim-modal-content img{
+    padding:auto;
+    margin:auto;
+    border-radius: 5px;
+    width:100%;
+}
+
+/* Modal Content (image) */
+.bim-modal-content {
+    margin: auto;
+    display: block;
+    width: 90%;
+    mmax-width: 700px;
+}
+
+/* Caption of Modal Image */
+#bim-caption {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+    text-align: center;
+    color: #ccc;
+    padding: 10px 0;
+    height: 150px;
+}
+
+/* Add Animation */
+.bim-modal-content, #bim-caption {    
+    -webkit-animation-name: zoom;
+    -webkit-animation-duration: 0.6s;
+    animation-name: zoom;
+    animation-duration: 0.6s;
+}
+
+@-webkit-keyframes zoom {
+    from {-webkit-transform:scale(0)} 
+    to {-webkit-transform:scale(1)}
+}
+
+@keyframes zoom {
+    from {transform:scale(0)} 
+    to {transform:scale(1)}
+}
+
+/* The Close Button */
+.bim-close {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.bim-close:after{
+    content:"close";
+    font-family: "Material Icons";
+    font-size:1em;
+}
+
+.bim-close:hover,
+.bim-close:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* 100% Image Width on Smaller Screens */
+@media only screen and (max-width: 700px){
+    .bim-modal-content {
+        width: 100%;
+    }
+}
+
+</style>

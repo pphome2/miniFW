@@ -1,0 +1,91 @@
+<style>
+
+.sn-closebtn {
+    text-decoration:none;
+    position:absolute;
+    right:10px;
+    top:5px;
+    ffont-size:1.5em;
+    color: #818181;
+}
+
+.sn-closebtn:after{
+    content:"close";
+    font-family: "Material Icons";
+    font-size:1.5em;
+}
+
+.sn-closebtn:hover {
+    color: #f1f1f1;
+}
+
+.sn-sidenavicon{
+	font-size:1.5em;
+	cursor:pointer
+}
+
+.sn-sidenavicon:after {
+    content:"menu";
+    font-family: "Material Icons";
+    font-size:1.5em;
+}
+
+.sn-sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+}
+
+.sn-sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 1.2em;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+}
+
+.sn-sidenav a:hover {
+    color: #f1f1f1;
+}
+
+.sn-labtext {
+    padding: 8px 8px 0px 32px;
+    text-decoration: none;
+    font-size: 1.2em;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+    cursor:pointer;
+}
+
+.sn-labtext a:hover {
+    color: #f1f1f1;
+}
+
+.sn-sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 2em;
+    margin-left: 50px;
+}
+
+#sn-main {
+    transition: margin-left .5s;
+    padding: 16px;
+}
+
+@media screen and (max-height: 450px) {
+  .sn-sidenav {padding-top: 15px;}
+  .sn-sidenav a {font-size: 18px;}
+}
+
+</style>

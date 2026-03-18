@@ -1,0 +1,160 @@
+<style>
+
+/* image box */
+
+.im-box {
+	text-align:center;
+	width:100%;
+	margin:auto;
+}
+
+.im-box img {
+	border-radius:5px;
+	border:2px solid black;
+    box-shadow: 0 0 20px black;
+    transition: opacity 4s ease-in-out;
+}
+
+.im-littlebox img {
+	border-radius:5px 5px 0px 0px;
+}
+
+.im-littlebox {
+	text-align:center;
+	width:70%;
+	margin:auto;
+	border-radius:5px;
+    box-shadow: 0 0 20px black;
+}
+
+
+/* image auto slider */
+
+.im-myAutoSlides {
+	display:none;
+	opacity:0;
+	width:80%;
+	margin:auto;
+}
+
+.im-imgtext {
+	display:none;
+	position:relative;
+	max-width:80%;
+	margin:auto;
+	background-color:black;
+	color:white;
+	opacity:0.5;
+	top:-35px;
+	height:15px;
+	max-height:20px;
+	padding:10px 0px 10px 0px;
+	font-size:1em;
+	border-radius:0px 0px 5px 5px;
+}
+.im-imgtextx {
+	display:none;
+	position:relative;
+	width:100%;
+	margin:auto;
+	background-color:black;
+	color:white;
+	opacity:0.5;
+	padding:10px 0px 10px 0px;
+	font-size:1em;
+	border-radius:0px 0px 5px 5px;
+}
+
+
+/* image slider */
+
+.im-mySlides {
+	display:none;
+	width:100%;
+	margin:auto;
+}
+
+
+.im-mySlides img{
+	border-radius:5px;
+}
+
+
+.im-badge{
+    color:black;
+    display:inline-block;
+    text-align:center;
+    text-decoration:none;
+    border-radius:50%
+	cursor:pointer;
+}
+
+.im-badge:after{
+    content:"fiber_manual_record";
+    font-family: "Material Icons";
+    font-size:1.8em;
+}
+
+.im-badge-light{
+	opacity:1;
+	color:red;
+}
+
+.im-badge-light:hover{
+	opacity:1;
+	cursor:pointer;
+}
+
+.im-badge-nolight{
+	opacity:0.5;
+}
+
+.im-badge-nolight:hover{
+	opacity:1;
+	cursor:pointer;
+}
+
+
+/* buttons */
+
+.im-bottomleft, .im-bottomleftmenu{
+    text-decoration:none;
+    float:left;
+    padding:2px;
+    color:black;
+    cursor:pointer;
+}
+
+.im-bottomleftmenu:after{
+    content:"chevron_left";
+    font-family: "Material Icons";
+    font-size:2em;
+    cursor:pointer;
+}
+
+.im-bottomright, .im-bottomrightmenu{
+    text-decoration:none;
+    float:right;
+    padding:2px;
+    color:black;
+    cursor:pointer;
+}
+
+.im-bottomrightmenu:after{
+    content:"chevron_right";
+    font-family: "Material Icons";
+    font-size:2em;
+    cursor:pointer;
+}
+
+.im-bottomcenter {
+    text-decoration:none;
+    position:absolute;
+    padding:5px;
+    left: 50%;
+    transform:translate(-50%,0%);
+    -ms-transform:translate(-50%,0%);
+}
+
+
+</style>

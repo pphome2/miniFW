@@ -1,0 +1,465 @@
+<style>
+
+
+.card-row{
+	width:90%;
+	position:relative;
+	padding-left:5%;
+	padding-right:5%;
+	display:block;
+    clear:both;
+    text-align:center;
+    align-content: center;
+}
+.card-row:after{
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.card-col501{
+	width:49.5%;
+	margin:auto;
+	float:left;
+}
+.card-col502{
+	width:49.5%;
+	margin:auto;
+	float:right;
+}
+
+.card-col331{
+	width:32.6%;
+	margin:auto;
+	float:left;
+}
+.card-col332{
+	width:32.6%;
+	margin:auto;
+	padding-left:1%;
+	float:left;
+}
+.card-col333{
+	width:32.6%;
+	margin:auto;
+	float:right;
+}
+.card-col251{
+	width:24%;
+	margin:auto;
+	float:left;
+}
+.card-col252{
+	width:24%;
+	margin:auto;
+	padding-left:1.33%;
+	float:left;
+}
+.card-col253{
+	width:24%;
+	margin:auto;
+	padding-left:1.33%;
+	float:left;
+}
+.card-col254{
+	width:24%;
+	margin:auto;
+	float:right;
+}
+
+.card-card2{
+	width:100%;
+	margin:auto;
+}
+
+.card-card{
+	width:100%;
+	margin:auto;
+}
+
+/* icons for header line */
+
+.card-toprightmenubtn{
+    text-decoration:none;
+    position:absolute;
+    right:10px;
+    top:10px;
+    font-size:1em;
+    color:black;
+    cursor:pointer;
+}
+
+.card-toprightmenubtn:after {
+    content:"more_vert";
+    font-family: "Material Icons";
+    font-size:1.5em;
+}
+
+.card-topleftmenubtn{
+    text-decoration:none;
+    position:absolute;
+    left:10px;
+    top:10px;
+    font-size:1em;
+    color:black;
+    cursor:pointer;
+}
+
+.card-topleftmenubtn:after {
+    content:"more_vert";
+    font-family: "Material Icons";
+    font-size:1.5em;
+}
+
+.card-toprightmenu-content {
+    display: none;
+    position: absolute;
+    top:20px;
+    right:0px;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.card-toprightmenu-content span {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.card-toprightmenu-content span:hover {
+	background-color: #f1f1f1
+}
+
+.card-toprightmenubtn:hover .card-toprightmenu-content {
+    display: block;
+}
+
+.card-topleftmenu-content {
+    display: none;
+    position: absolute;
+    top:20px;
+    left:0px;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.card-topleftmenu-content span {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.card-topleftmenu-content span:hover {
+	background-color: #f1f1f1
+}
+
+.card-topleftmenubtn:hover .card-topleftmenu-content {
+    display: block;
+}
+
+
+.card-topleft, .card-topleftclose {
+    text-decoration:none;
+    position:absolute;
+    left:5px;
+    top:5px;
+    font-size:1.2em;
+    color:white;
+    cursor:pointer;
+}
+
+.card-topleftclose {
+    padding-right:5px;
+}
+
+.card-topleftclose:before {
+    content:"close";
+    font-family: "Material Icons";
+    font-size:1.5em;
+}
+
+.card-topright, .card-toprightclose {
+    text-decoration:none;
+    position:absolute;
+    right:10px;
+    top:10px;
+    font-size:1em;
+    color:white;
+    cursor:pointer;
+}
+
+.card-toprightclose:after {
+    content:"close";
+    font-family: "Material Icons";
+    font-size:1.5em;
+}
+
+.card-toprightmenu{
+    text-decoration:none;
+    position:absolute;
+    right:40px;
+    top:10px;
+    font-size:1em;
+    color:white;
+    cursor:pointer;
+}
+
+.card-toprightmenu:after {
+    content:"expand_less";
+    font-family: "Material Icons";
+    font-size:1.5em;
+}
+
+.card-toprightmenuactive:after {
+    content:"expand_more";
+    font-family: "Material Icons";
+    font-size:1.5em;
+}
+
+
+.card-topleft, .card-topleftmenu{
+    text-decoration:none;
+    position:absolute;
+    left:10px;
+    top:10px;
+    font-size:1em;
+    color:white;
+    cursor:pointer;
+}
+
+.card-topleftmenu:before {
+    content:"menu";
+    font-family: "Material Icons";
+    font-size:1.5em;
+    cursor:pointer;
+    padding-left:10px;
+    padding-right:10px;
+    vertical-align:middle;
+}
+
+
+
+/* buttons */
+
+.card-bottomleft, .card-bottomleftmenu, .card-bottomleftmenuw {
+    text-decoration:none;
+    position:absolute;
+    padding:2px;
+    left: 5px;
+    color:black;
+    cursor:pointer;
+}
+
+.card-bottomleftmenuw {
+    color:white;
+    cursor:pointer;
+}
+
+.card-bottomleftmenu:after, .card-bottomleftmenuw:after{
+    content:"menu";
+    font-family: "Material Icons";
+    font-size:1.5em;
+}
+
+.card-bottomright, .card-bottomrightmenu, .card-bottomrightmenuw {
+    text-decoration:none;
+    position:absolute;
+    padding:2px;
+    right:5px;
+    color:black;
+    cursor:pointer;
+}
+
+.card-bottomrightmenu:after, .card-bottomrightmenuw:after {
+    content:"arrow_forward";
+    font-family: "Material Icons";
+    font-size:1.5em;
+}
+
+.card-bottomrightmenuw {
+    color:white;
+}
+
+.card-bottomcenter {
+    text-decoration:none;
+    position:absolute;
+    padding:5px;
+    left: 50%;
+    transform:translate(-50%,0%);
+    -ms-transform:translate(-50%,0%);
+}
+
+
+
+/* card box (header, content, buttons) */
+
+.card-card p{
+	padding:20px;
+	padding-top:10px;
+	padding-bottom:25px;
+	font-size:1.2em;
+}
+
+.card-card, .card-containerbox {
+    position:relative;
+    display:block;
+    cursor:default;
+    clear:both;
+    margin-top:20px;
+    margin-bottom:20px;
+    text-align:left;
+    box-shadow:0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
+}
+.card-header {
+    padding:10px;
+    background-color:#2196F3;
+    color:white;
+    font-size:1.3em;
+    cursor: default;
+    text-align:left;
+}
+.card-header-error {
+    padding:10px;
+    background-color:red;
+    color:white;
+    font-size:1.3em;
+    text-align:left;
+    cursor: default;
+}
+.card-header-menu {
+    padding:10px;
+    text-align:center;
+    background-color:#2196F3;
+    color:white;
+    font-size:1.3em;
+    cursor: default;
+}
+.card-header-error-menu {
+    padding:10px;
+    text-align:center;
+    background-color:red;
+    color:white;
+    font-size:1.3em;
+    cursor: default;
+}
+.card-header-text{
+	padding-left:15px;
+	font-size:1em;
+	width:80%;
+	text-align:left;
+}
+.card-header-text2{
+	font-size:1em;
+	width:90%;
+	ttext-align:center;
+	text-align:left;
+}
+.card-header-tab {
+    background-color:#2196F3;
+    color:white;
+    font-size:1.2em;
+    padding:0px;
+}
+.card-footer {
+    padding:10px;
+    background-color:#2196F3;
+    color:white;
+}
+.card-footer2 {
+    padding:10px;
+    text-align:right;
+    background-color:#2196F3;
+    color:white;
+}
+.card-body {
+    padding:10px;
+    text-align:left;
+}
+
+.card-card img{
+	width:100%;
+    box-shadow: 0 0 20px black;
+}
+
+.card-body-hide {
+    padding:10px;
+    display:none;
+}
+
+.card-card p h2{padding:10px;}
+.card-card form {padding:20px;}
+
+
+
+
+
+
+
+
+.card-card-button {
+   color: white;
+   background-color:#2196F3;
+   border: none;
+   text-decoration: none;
+   display: inline-block;
+   margin:5px 5px 0px 5px;
+   font-size:1.2em;
+}
+.card-button:focus {
+   color:black;
+   background-color:white;
+   outline:none;
+}
+
+.card-header-tab button.active {
+   color:black;
+   background-color:white;
+   outline:none;
+}
+
+.card-button_ok {
+    padding-right:10px;
+    padding-left:10px;
+    color: green;
+    text-decoration:bold;
+}
+.card-button_ok:after {
+    content:"done";
+    font-family: "Material Icons";
+    font-size:1.5em;
+    cursor:pointer;
+}
+.card-button_bad{
+    padding-right:10px;
+    padding-left:10px;
+    color: red;
+    text-decoration:bold;
+}
+.card-button_bad:after {
+    content:"close";
+    font-family: "Material Icons";
+    font-size:1.5em;
+    cursor:pointer;
+}
+.card-button_next{
+    padding-right:10px;
+    padding-left:10px;
+    color: white;
+    text-decoration:bold;
+}
+.card-button_next:after{
+    content:"arrow_forward";
+    font-family: "Material Icons";
+    font-size:1.5em;
+    cursor:pointer;
+}
+
+
+
+</style>

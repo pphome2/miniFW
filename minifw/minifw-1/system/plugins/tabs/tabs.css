@@ -1,0 +1,68 @@
+<style>
+
+.tab-center{
+    width:90%;
+    clear:both;
+    margin:auto;
+}
+
+.tab-tab {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+}
+
+/* Style the buttons inside the tab */
+.tab-tab button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+    font-size: 1em;
+}
+
+/* Change background color of buttons on hover */
+.tab-tab button:hover {
+    background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab-tab button.active {
+    background-color: #ccc;
+}
+
+/* Style the tab content */
+.tab-tabcontent {
+    display: none;
+    border: 1px solid #ccc;
+    padding:15px;
+    border-top: none;
+}
+
+.tab-tabcontent p{
+}
+
+.tab-tabcontent img{
+	max-width:100%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 0 20px black;
+}
+
+/* Style the close button */
+.tab-topright {
+    float: right;
+    cursor: pointer;
+    font-size: 28px;
+}
+
+.tab-topright:hover {color: red;}
+
+</style>
+
+
+
